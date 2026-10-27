@@ -26,7 +26,10 @@ import {
   History,
   Layers,
   CheckCheck,
-  ExternalLink
+  ExternalLink,
+  Lock,
+  LogOut,
+  ShieldCheck
 } from 'lucide-react';
 
 const SCALE_OPTIONS: ScaleOption[] = [
@@ -85,9 +88,46 @@ export default function MobileBolognaShopifyApp() {
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
 
-  // History state
+  // History & Admin Auth state
   const [historyRecords, setHistoryRecords] = useState<any[]>([]);
   const [loadingHistory, setLoadingHistory] = useState(false);
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
+  const [adminUsernameInput, setAdminUsernameInput] = useState('');
+  const [adminPasswordInput, setAdminPasswordInput] = useState('');
+  const [adminLoginError, setAdminLoginError] = useState('');
+
+  // Check existing admin session from localStorage
+  useEffect(() => {
+    try {
+      const isAuth = localStorage.getItem('sbf_admin_auth');
+      if (isAuth === 'true') {
+        setIsAdminLoggedIn(true);
+      }
+    } catch (e) {
+      // ignore
+    }
+  }, []);
+
+  const handleAdminLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (adminUsernameInput.trim() === 'saglikbf' && adminPasswordInput.trim() === 'saglikbf') {
+      setIsAdminLoggedIn(true);
+      setAdminLoginError('');
+      try {
+        localStorage.setItem('sbf_admin_auth', 'true');
+      } catch (e) {}
+      fetchHistory();
+    } else {
+      setAdminLoginError('Hatalı kullanıcı adı veya şifre girdiniz.');
+    }
+  };
+
+  const handleAdminLogout = () => {
+    setIsAdminLoggedIn(false);
+    try {
+      localStorage.removeItem('sbf_admin_auth');
+    } catch (e) {}
+  };
 
   // Copied feedback
   const [copiedText, setCopiedText] = useState(false);
@@ -311,7 +351,7 @@ export default function MobileBolognaShopifyApp() {
   const fetchHistory = async () => {
     setLoadingHistory(true);
     try {
-      const res = await fetch(`/api/evaluations?class_year=${selectedYear}`);
+      const res = await fetch(`/api/evaluations`);
       const data = await res.json();
       if (data.success) {
         setHistoryRecords(data.data);
@@ -950,7 +990,7 @@ export default function MobileBolognaShopifyApp() {
         )}
 
         {/* ======================================================== */}
-        {/* STEP 6: VERİTABANI GEÇMİŞİ (HISTORY VIEW) */}
+        {/* STEP 6: VERİTABANI GEÇMİŞİ & YÖNETİCİ GİRİŞİ */}
         {/* ======================================================== */}
         {step === 'history' && (
           <div className="space-y-4 animate-fadeIn">
@@ -962,77 +1002,170 @@ export default function MobileBolognaShopifyApp() {
                 <ChevronLeft className="w-4 h-4" />
                 <span>Ankete Dön</span>
               </button>
-              <button
-                onClick={fetchHistory}
-                className="text-xs text-neon-green hover:underline font-mono"
-              >
-                Yenile
-              </button>
-            </div>
-
-            <div className="bg-deep-teal border border-dark-border rounded-2xl p-5 shadow-shopify-card">
-              <div className="flex items-center space-x-2 mb-1">
-                <span className="text-[11px] font-mono text-neon-green bg-forest px-2.5 py-0.5 rounded-pill border border-dark-border">
-                  PostgreSQL
-                </span>
-                <span className="text-xs text-muted-text font-light">Kayıtlı Veriler</span>
-              </div>
-              <h2 className="text-xl font-light text-white">
-                Sınıf Değerlendirmeleri
-              </h2>
-              <p className="text-xs text-muted-text mt-1 font-light">
-                Veritabanına kaydedilen tüm ders değerlendirmeleri aşağıdadır.
-              </p>
-            </div>
-
-            {loadingHistory ? (
-              <div className="py-12 text-center text-muted-text text-xs font-mono">
-                Veritabanından yükleniyor...
-              </div>
-            ) : historyRecords.length > 0 ? (
-              <div className="space-y-3">
-                {historyRecords.map((item) => (
-                  <div
-                    key={item.id}
-                    className="bg-deep-teal p-4 rounded-2xl border border-dark-border shadow-shopify-card space-y-2.5"
+              {isAdminLoggedIn && (
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={fetchHistory}
+                    className="text-xs text-neon-green hover:underline font-mono"
                   >
-                    <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded bg-forest text-neon-green border border-dark-border">
-                          {item.course_code}
-                        </span>
-                        <h3 className="text-sm font-light text-white mt-1">
-                          {item.course_name}
-                        </h3>
-                        <p className="text-xs text-muted-text font-light">{item.instructor}</p>
-                      </div>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-pill bg-forest border border-dark-border text-neon-green">
-                        {item.general_status}
-                      </span>
-                    </div>
+                    Yenile
+                  </button>
+                  <button
+                    onClick={handleAdminLogout}
+                    className="text-xs text-shade-50 hover:text-white flex items-center gap-1 px-2.5 py-1 rounded-pill bg-deep-teal border border-dark-border"
+                  >
+                    <LogOut className="w-3 h-3" />
+                    <span>Çıkış</span>
+                  </button>
+                </div>
+              )}
+            </div>
 
-                    <div className="text-xs text-aloe bg-void p-3 rounded-xl border border-dark-border font-mono whitespace-pre-wrap select-all">
-                      {item.summary_report}
-                    </div>
+            {/* ADMIN LOGIN FORM (Eğer giriş yapılmamışsa) */}
+            {!isAdminLoggedIn ? (
+              <div className="bg-deep-teal border border-dark-border rounded-2xl p-6 shadow-shopify-card space-y-4">
+                <div className="w-12 h-12 rounded-full bg-forest border border-dark-border flex items-center justify-center text-neon-green mx-auto mb-2 shadow-[0_0_15px_rgba(54,244,164,0.15)]">
+                  <Lock className="w-6 h-6" />
+                </div>
 
-                    <div className="flex items-center justify-between text-[11px] text-muted-text pt-1">
-                      <span>👤 {item.student_name}</span>
-                      <button
-                        onClick={() => {
-                          navigator.clipboard.writeText(item.summary_report);
-                          alert('Rapor panoya kopyalandı!');
-                        }}
-                        className="text-neon-green hover:underline font-mono"
-                      >
-                        Kopyala
-                      </button>
-                    </div>
+                <div className="text-center space-y-1">
+                  <div className="flex items-center justify-center space-x-1.5">
+                    <span className="text-[10px] font-mono text-neon-green bg-forest px-2.5 py-0.5 rounded-pill border border-dark-border uppercase">
+                      Admin Panel
+                    </span>
                   </div>
-                ))}
+                  <h2 className="text-xl font-light text-white tracking-tight pt-1">
+                    Yönetici Girişi
+                  </h2>
+                  <p className="text-xs text-muted-text font-light leading-relaxed max-w-xs mx-auto">
+                    Kayıtlı ders değerlendirmelerini ve sınıf raporlarını görüntülemek için giriş yapınız.
+                  </p>
+                </div>
+
+                <form onSubmit={handleAdminLogin} className="space-y-3 pt-2">
+                  <div className="space-y-1">
+                    <label className="text-xs font-mono text-muted-text uppercase tracking-wider block px-1">
+                      Kullanıcı Adı
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="saglikbf"
+                      value={adminUsernameInput}
+                      onChange={(e) => setAdminUsernameInput(e.target.value)}
+                      className="w-full p-3 text-xs bg-dark-forest border border-shade-70 rounded-xl text-white placeholder-shade-50 focus:outline-none focus:border-neon-green focus:ring-1 focus:ring-neon-green transition"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-xs font-mono text-muted-text uppercase tracking-wider block px-1">
+                      Şifre
+                    </label>
+                    <input
+                      type="password"
+                      required
+                      placeholder="••••••••"
+                      value={adminPasswordInput}
+                      onChange={(e) => setAdminPasswordInput(e.target.value)}
+                      className="w-full p-3 text-xs bg-dark-forest border border-shade-70 rounded-xl text-white placeholder-shade-50 focus:outline-none focus:border-neon-green focus:ring-1 focus:ring-neon-green transition"
+                    />
+                  </div>
+
+                  {adminLoginError && (
+                    <div className="p-2.5 rounded-xl bg-forest border border-rose-500/40 text-rose-300 text-xs font-light text-center">
+                      {adminLoginError}
+                    </div>
+                  )}
+
+                  <button
+                    type="submit"
+                    className="w-full py-3.5 px-6 bg-white hover:bg-shade-30 text-black font-medium text-xs rounded-pill shadow-lg shadow-black/60 flex items-center justify-center space-x-2 transition-all active:scale-[0.98] mt-2 focus:ring-2 focus:ring-neon-green"
+                  >
+                    <ShieldCheck className="w-4 h-4" />
+                    <span>Yönetici Olarak Giriş Yap</span>
+                  </button>
+                </form>
+
+                <p className="text-[11px] text-shade-50 text-center font-mono pt-2">
+                  Yetkili hesap: <span className="text-neon-green">saglikbf</span>
+                </p>
               </div>
             ) : (
-              <div className="bg-deep-teal border border-dark-border rounded-2xl p-8 text-center text-muted-text text-xs">
-                Henüz veritabanında kayıtlı bir değerlendirme bulunmuyor.
+              /* LOGGED IN ADMIN: RECORDS LIST */
+              <div className="space-y-4">
+                <div className="bg-deep-teal border border-dark-border rounded-2xl p-5 shadow-shopify-card">
+                  <div className="flex items-center space-x-2 mb-1">
+                    <span className="text-[11px] font-mono text-neon-green bg-forest px-2.5 py-0.5 rounded-pill border border-dark-border">
+                      Yönetici Paneli
+                    </span>
+                    <span className="text-xs text-muted-text font-light">PostgreSQL Canlı Veritabanı</span>
+                  </div>
+                  <h2 className="text-xl font-light text-white">
+                    Kayıtlı Ders Değerlendirmeleri
+                  </h2>
+                  <p className="text-xs text-muted-text mt-1 font-light">
+                    Öğrenci temsilcilerinin sisteme girdiği tüm değerlendirmeler aşağıdadır.
+                  </p>
+                </div>
+
+                {loadingHistory ? (
+                  <div className="py-12 text-center text-muted-text text-xs font-mono">
+                    Veritabanından yükleniyor...
+                  </div>
+                ) : historyRecords.length > 0 ? (
+                  <div className="space-y-3">
+                    {historyRecords.map((item) => (
+                      <div
+                        key={item.id}
+                        className="bg-deep-teal p-4.5 rounded-2xl border border-dark-border shadow-shopify-card space-y-3"
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <div>
+                            <div className="flex items-center space-x-2">
+                              <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded bg-forest text-neon-green border border-dark-border">
+                                {item.course_code}
+                              </span>
+                              <span className="text-[10px] text-muted-text font-mono">
+                                {item.class_year}. Sınıf ({item.term})
+                              </span>
+                            </div>
+                            <h3 className="text-sm font-light text-white mt-1.5">
+                              {item.course_name}
+                            </h3>
+                            <p className="text-xs text-muted-text font-light mt-0.5">
+                              {item.instructor}
+                            </p>
+                          </div>
+                          <span className="text-[10px] font-mono px-2.5 py-1 rounded-pill bg-forest border border-dark-border text-neon-green shrink-0">
+                            {item.general_status}
+                          </span>
+                        </div>
+
+                        {/* Exact professor output */}
+                        <div className="text-xs text-aloe bg-void p-3 rounded-xl border border-dark-border font-mono whitespace-pre-wrap select-all leading-relaxed">
+                          {item.summary_report}
+                        </div>
+
+                        <div className="flex items-center justify-between text-[11px] text-muted-text pt-1 border-t border-dark-border">
+                          <span>👤 {item.student_name}</span>
+                          <button
+                            onClick={() => {
+                              navigator.clipboard.writeText(item.summary_report);
+                              alert('Rapor panoya kopyalandı!');
+                            }}
+                            className="text-neon-green hover:underline font-mono text-xs"
+                          >
+                            Metni Kopyala
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="bg-deep-teal border border-dark-border rounded-2xl p-8 text-center text-muted-text text-xs">
+                    Henüz veritabanında kayıtlı bir değerlendirme bulunmuyor.
+                  </div>
+                )}
               </div>
             )}
           </div>
