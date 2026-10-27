@@ -1050,7 +1050,7 @@ export default function MobileBolognaShopifyApp() {
                     <input
                       type="text"
                       required
-                      placeholder="saglikbf"
+                      placeholder="Kullanıcı adınız"
                       value={adminUsernameInput}
                       onChange={(e) => setAdminUsernameInput(e.target.value)}
                       className="w-full p-3 text-xs bg-dark-forest border border-shade-70 rounded-xl text-white placeholder-shade-50 focus:outline-none focus:border-neon-green focus:ring-1 focus:ring-neon-green transition"
@@ -1085,10 +1085,6 @@ export default function MobileBolognaShopifyApp() {
                     <span>Yönetici Olarak Giriş Yap</span>
                   </button>
                 </form>
-
-                <p className="text-[11px] text-shade-50 text-center font-mono pt-2">
-                  Yetkili hesap: <span className="text-neon-green">saglikbf</span>
-                </p>
               </div>
             ) : (
               /* LOGGED IN ADMIN: RECORDS LIST */
