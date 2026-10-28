@@ -29,7 +29,13 @@ import {
   ExternalLink,
   Lock,
   LogOut,
-  ShieldCheck
+  ShieldCheck,
+  Eye,
+  Download,
+  X,
+  RefreshCw,
+  Filter,
+  FileSpreadsheet
 } from 'lucide-react';
 
 const SCALE_OPTIONS: ScaleOption[] = [
@@ -127,6 +133,126 @@ export default function MobileBolognaShopifyApp() {
     try {
       localStorage.removeItem('sbf_admin_auth');
     } catch (e) {}
+  };
+
+  // Table filters & Modal state
+  const [tableSearch, setTableSearch] = useState('');
+  const [tableYearFilter, setTableYearFilter] = useState<'all' | number>('all');
+  const [tableStatusFilter, setTableStatusFilter] = useState<'all' | string>('all');
+  const [selectedRecordModal, setSelectedRecordModal] = useState<any | null>(null);
+  const [modalCopied, setModalCopied] = useState(false);
+  const [rowCopiedId, setRowCopiedId] = useState<number | null>(null);
+
+  // Format timestamp
+  const formatDate = (isoString?: string) => {
+    if (!isoString) return '-';
+    try {
+      const d = new Date(isoString);
+      const day = String(d.getDate()).padStart(2, '0');
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const year = d.getFullYear();
+      const hours = String(d.getHours()).padStart(2, '0');
+      const minutes = String(d.getMinutes()).padStart(2, '0');
+      return `${day}.${month}.${year} ${hours}:${minutes}`;
+    } catch {
+      return isoString;
+    }
+  };
+
+  // Filtered history records for Table
+  const filteredHistoryRecords = useMemo(() => {
+    return historyRecords.filter((item) => {
+      const q = tableSearch.toLowerCase().trim();
+      const matchSearch =
+        !q ||
+        (item.course_name && item.course_name.toLowerCase().includes(q)) ||
+        (item.course_code && item.course_code.toLowerCase().includes(q)) ||
+        (item.instructor && item.instructor.toLowerCase().includes(q)) ||
+        (item.student_name && item.student_name.toLowerCase().includes(q));
+
+      const matchYear =
+        tableYearFilter === 'all' || item.class_year === tableYearFilter;
+
+      const matchStatus =
+        tableStatusFilter === 'all' || item.general_status === tableStatusFilter;
+
+      return matchSearch && matchYear && matchStatus;
+    });
+  }, [historyRecords, tableSearch, tableYearFilter, tableStatusFilter]);
+
+  // Table summary stats
+  const historyStats = useMemo(() => {
+    const total = historyRecords.length;
+    const uyumlu = historyRecords.filter(
+      (r) => r.general_status === 'Büyük ölçüde örtüşüyor'
+    ).length;
+    const aciklik = historyRecords.filter(
+      (r) => r.general_status === 'Açıklığa kavuşturulması gereken noktalar var'
+    ).length;
+    const ulasilamadi = historyRecords.filter(
+      (r) => r.general_status === 'Bilgi paketine ulaşılamadı'
+    ).length;
+    return { total, uyumlu, aciklik, ulasilamadi };
+  }, [historyRecords]);
+
+  // Export records to CSV / Excel
+  const exportToCSV = () => {
+    if (!filteredHistoryRecords.length) return;
+    const headers = [
+      'ID',
+      'Tarih',
+      'Sınıf',
+      'Dönem',
+      'Ders Kodu',
+      'Ders Adı',
+      'Öğretim Elemanı',
+      'Öğrenci/Temsilci',
+      'İncelenen Haftalar',
+      'Genel Durum',
+      'Somut Örnek',
+      'Hoca Rapor Metni'
+    ];
+
+    const rows = filteredHistoryRecords.map((r) => [
+      r.id,
+      `"${formatDate(r.created_at)}"`,
+      `"${r.class_year}. Sınıf"`,
+      `"${r.term}"`,
+      `"${r.course_code}"`,
+      `"${(r.course_name || '').replace(/"/g, '""')}"`,
+      `"${(r.instructor || '').replace(/"/g, '""')}"`,
+      `"${(r.student_name || '').replace(/"/g, '""')}"`,
+      `"${(r.reviewed_weeks || '').replace(/"/g, '""')}"`,
+      `"${(r.general_status || '').replace(/"/g, '""')}"`,
+      `"${(r.example_note || '').replace(/"/g, '""')}"`,
+      `"${(r.summary_report || '').replace(/"/g, '""')}"`
+    ]);
+
+    const csvContent =
+      '\uFEFF' + [headers.join(';'), ...rows.map((row) => row.join(';'))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute(
+      'download',
+      `bologna_ders_degerlendirmeleri_${new Date().toISOString().slice(0, 10)}.csv`
+    );
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleCopyRowReport = (report: string, id: number) => {
+    navigator.clipboard.writeText(report);
+    setRowCopiedId(id);
+    setTimeout(() => setRowCopiedId(null), 2000);
+  };
+
+  const handleCopyModalReport = (report: string) => {
+    navigator.clipboard.writeText(report);
+    setModalCopied(true);
+    setTimeout(() => setModalCopied(false), 2000);
   };
 
   // Copied feedback
@@ -374,7 +500,7 @@ export default function MobileBolognaShopifyApp() {
     <div className="min-h-screen bg-black text-white flex flex-col justify-between selection:bg-[#36F4A4] selection:text-black">
       {/* Cinematic Top Navigation (Forest #102620 background, subtle #1E2C31 border) */}
       <header className="bg-forest/90 backdrop-blur-md border-b border-dark-border px-4 py-3.5 sticky top-0 z-50">
-        <div className="max-w-md mx-auto flex items-center justify-between">
+        <div className={`mx-auto flex items-center justify-between transition-all duration-300 ${step === 'history' && isAdminLoggedIn ? 'max-w-6xl' : 'max-w-md'}`}>
           <div className="flex items-center space-x-3">
             {/* Ambient indicator dot */}
             <div className="w-2 h-2 rounded-full bg-neon-green shadow-[0_0_8px_#36F4A4]" />
@@ -409,7 +535,7 @@ export default function MobileBolognaShopifyApp() {
       </header>
 
       {/* Main Container */}
-      <main className="flex-1 max-w-md w-full mx-auto p-4 pb-28">
+      <main className={`flex-1 w-full mx-auto p-4 pb-28 transition-all duration-300 ${step === 'history' && isAdminLoggedIn ? 'max-w-6xl' : 'max-w-md'}`}>
         {/* ======================================================== */}
         {/* STEP 1: DÖNEM SEÇİNİZ */}
         {/* ======================================================== */}
@@ -1087,79 +1213,395 @@ export default function MobileBolognaShopifyApp() {
                 </form>
               </div>
             ) : (
-              /* LOGGED IN ADMIN: RECORDS LIST */
+              /* LOGGED IN ADMIN: RECORDS TABLE & METRICS */
               <div className="space-y-4">
+                {/* Header Card */}
                 <div className="bg-deep-teal border border-dark-border rounded-2xl p-5 shadow-shopify-card">
-                  <div className="flex items-center space-x-2 mb-1">
-                    <span className="text-[11px] font-mono text-neon-green bg-forest px-2.5 py-0.5 rounded-pill border border-dark-border">
-                      Yönetici Paneli
-                    </span>
-                    <span className="text-xs text-muted-text font-light">PostgreSQL Canlı Veritabanı</span>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                    <div>
+                      <div className="flex items-center space-x-2 mb-1.5">
+                        <span className="text-[11px] font-mono text-neon-green bg-forest px-2.5 py-0.5 rounded-pill border border-dark-border">
+                          Yönetici Paneli
+                        </span>
+                        <span className="text-xs text-muted-text font-light">
+                          PostgreSQL Canlı Veritabanı
+                        </span>
+                      </div>
+                      <h2 className="text-xl font-light text-white tracking-tight">
+                        Kayıtlı Ders Değerlendirmeleri
+                      </h2>
+                      <p className="text-xs text-muted-text mt-1 font-light leading-relaxed">
+                        Öğrenci temsilcilerinin sisteme kaydettiği tüm ders karşılaştırma raporları tablosu.
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-2 self-start sm:self-auto">
+                      <button
+                        onClick={exportToCSV}
+                        disabled={filteredHistoryRecords.length === 0}
+                        className="py-2 px-3.5 rounded-pill bg-forest hover:bg-forest/80 border border-dark-border hover:border-neon-green text-white text-xs font-light flex items-center gap-1.5 transition active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
+                        title="Tabloyu Excel / CSV olarak indir"
+                      >
+                        <FileSpreadsheet className="w-3.5 h-3.5 text-neon-green" />
+                        <span>Excel / CSV</span>
+                      </button>
+
+                      <button
+                        onClick={fetchHistory}
+                        disabled={loadingHistory}
+                        className="py-2 px-3 rounded-pill bg-dark-forest hover:bg-forest border border-dark-border text-muted-text hover:text-white text-xs font-light flex items-center gap-1 transition active:scale-95"
+                        title="Verileri Yenile"
+                      >
+                        <RefreshCw className={`w-3.5 h-3.5 ${loadingHistory ? 'animate-spin text-neon-green' : ''}`} />
+                        <span className="hidden sm:inline">Yenile</span>
+                      </button>
+                    </div>
                   </div>
-                  <h2 className="text-xl font-light text-white">
-                    Kayıtlı Ders Değerlendirmeleri
-                  </h2>
-                  <p className="text-xs text-muted-text mt-1 font-light">
-                    Öğrenci temsilcilerinin sisteme girdiği tüm değerlendirmeler aşağıdadır.
-                  </p>
+
+                  {/* Summary Metric Badges */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-4 mt-4 border-t border-dark-border/80">
+                    <div className="bg-dark-forest/80 border border-dark-border rounded-xl p-3">
+                      <div className="text-[11px] text-muted-text font-mono">Toplam Kayıt</div>
+                      <div className="text-lg font-light text-white font-mono mt-0.5">
+                        {historyStats.total}
+                      </div>
+                    </div>
+                    <div className="bg-forest/50 border border-neon-green/20 rounded-xl p-3">
+                      <div className="text-[11px] text-neon-green font-mono flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-neon-green" />
+                        Örtüşüyor
+                      </div>
+                      <div className="text-lg font-light text-white font-mono mt-0.5">
+                        {historyStats.uyumlu}
+                      </div>
+                    </div>
+                    <div className="bg-amber-950/20 border border-amber-600/30 rounded-xl p-3">
+                      <div className="text-[11px] text-amber-300 font-mono flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                        Açıklık Gereken
+                      </div>
+                      <div className="text-lg font-light text-white font-mono mt-0.5">
+                        {historyStats.aciklik}
+                      </div>
+                    </div>
+                    <div className="bg-rose-950/20 border border-rose-600/30 rounded-xl p-3">
+                      <div className="text-[11px] text-rose-300 font-mono flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
+                        Ulaşılamadı
+                      </div>
+                      <div className="text-lg font-light text-white font-mono mt-0.5">
+                        {historyStats.ulasilamadi}
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
-                {loadingHistory ? (
-                  <div className="py-12 text-center text-muted-text text-xs font-mono">
-                    Veritabanından yükleniyor...
-                  </div>
-                ) : historyRecords.length > 0 ? (
-                  <div className="space-y-3">
-                    {historyRecords.map((item) => (
-                      <div
-                        key={item.id}
-                        className="bg-deep-teal p-4.5 rounded-2xl border border-dark-border shadow-shopify-card space-y-3"
+                {/* Filter and Search Bar */}
+                <div className="bg-deep-teal border border-dark-border rounded-2xl p-3 shadow-shopify-card flex flex-col md:flex-row gap-2.5 items-stretch md:items-center justify-between">
+                  {/* Search Input */}
+                  <div className="relative flex-1">
+                    <Search className="w-4 h-4 text-shade-50 absolute left-3 top-1/2 -translate-y-1/2" />
+                    <input
+                      type="text"
+                      placeholder="Ders adı, kodu, hoca veya öğrenci ara..."
+                      value={tableSearch}
+                      onChange={(e) => setTableSearch(e.target.value)}
+                      className="w-full pl-9 pr-3 py-2 text-xs bg-dark-forest border border-dark-border rounded-xl text-white placeholder-shade-50 focus:outline-none focus:border-neon-green focus:ring-1 focus:ring-neon-green transition"
+                    />
+                    {tableSearch && (
+                      <button
+                        onClick={() => setTableSearch('')}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-shade-50 hover:text-white"
                       >
-                        <div className="flex items-start justify-between gap-2">
-                          <div>
-                            <div className="flex items-center space-x-2">
-                              <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded bg-forest text-neon-green border border-dark-border">
-                                {item.course_code}
-                              </span>
-                              <span className="text-[10px] text-muted-text font-mono">
-                                {item.class_year}. Sınıf ({item.term})
-                              </span>
-                            </div>
-                            <h3 className="text-sm font-light text-white mt-1.5">
-                              {item.course_name}
-                            </h3>
-                            <p className="text-xs text-muted-text font-light mt-0.5">
-                              {item.instructor}
-                            </p>
-                          </div>
-                          <span className="text-[10px] font-mono px-2.5 py-1 rounded-pill bg-forest border border-dark-border text-neon-green shrink-0">
-                            {item.general_status}
-                          </span>
-                        </div>
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+                  </div>
 
-                        {/* Exact professor output */}
-                        <div className="text-xs text-aloe bg-void p-3 rounded-xl border border-dark-border font-mono whitespace-pre-wrap select-all leading-relaxed">
-                          {item.summary_report}
-                        </div>
-
-                        <div className="flex items-center justify-between text-[11px] text-muted-text pt-1 border-t border-dark-border">
-                          <span>👤 {item.student_name}</span>
-                          <button
-                            onClick={() => {
-                              navigator.clipboard.writeText(item.summary_report);
-                              alert('Rapor panoya kopyalandı!');
-                            }}
-                            className="text-neon-green hover:underline font-mono text-xs"
-                          >
-                            Metni Kopyala
-                          </button>
-                        </div>
-                      </div>
+                  {/* Sınıf Filter Pills */}
+                  <div className="flex items-center gap-1 overflow-x-auto pb-1 md:pb-0">
+                    <span className="text-[11px] font-mono text-muted-text mr-1 hidden lg:inline">Sınıf:</span>
+                    {(['all', 1, 2, 3, 4] as const).map((yr) => (
+                      <button
+                        key={yr}
+                        onClick={() => setTableYearFilter(yr)}
+                        className={`px-2.5 py-1.5 rounded-lg text-xs font-mono transition whitespace-nowrap ${
+                          tableYearFilter === yr
+                            ? 'bg-white text-black font-medium'
+                            : 'bg-dark-forest text-shade-30 hover:text-white border border-dark-border'
+                        }`}
+                      >
+                        {yr === 'all' ? 'Tümü' : `${yr}. Sınıf`}
+                      </button>
                     ))}
                   </div>
+
+                  {/* Durum Filter Dropdown */}
+                  <div className="flex items-center gap-1">
+                    <select
+                      value={tableStatusFilter}
+                      onChange={(e) => setTableStatusFilter(e.target.value)}
+                      className="text-xs bg-dark-forest border border-dark-border text-shade-30 py-1.5 px-2.5 rounded-lg focus:outline-none focus:border-neon-green"
+                    >
+                      <option value="all">Tüm Durumlar</option>
+                      <option value="Büyük ölçüde örtüşüyor">Büyük Ölçüde Örtüşüyor</option>
+                      <option value="Açıklığa kavuşturulması gereken noktalar var">Açıklık Gereken</option>
+                      <option value="Bilgi paketine ulaşılamadı">Ulaşılamadı</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* TABLE CONTAINER */}
+                {loadingHistory ? (
+                  <div className="py-16 text-center text-muted-text text-xs font-mono bg-deep-teal border border-dark-border rounded-2xl flex flex-col items-center justify-center gap-2">
+                    <RefreshCw className="w-5 h-5 animate-spin text-neon-green" />
+                    <span>Veritabanından ders kayıtları alınıyor...</span>
+                  </div>
+                ) : filteredHistoryRecords.length > 0 ? (
+                  <div className="bg-deep-teal border border-dark-border rounded-2xl shadow-shopify-card overflow-hidden">
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left border-collapse min-w-[900px]">
+                        <thead className="bg-dark-forest/90 border-b border-dark-border font-mono text-[11px] uppercase tracking-wider text-muted-text">
+                          <tr>
+                            <th className="py-3 px-3.5 text-center w-12">#</th>
+                            <th className="py-3 px-3.5 w-32">Tarih</th>
+                            <th className="py-3 px-3.5">Ders Kodu & Adı</th>
+                            <th className="py-3 px-3.5 w-28">Sınıf / Dönem</th>
+                            <th className="py-3 px-3.5 w-44">Öğretim Elemanı</th>
+                            <th className="py-3 px-3.5 w-28">Haftalar</th>
+                            <th className="py-3 px-3.5 w-40">Genel Durum</th>
+                            <th className="py-3 px-3.5 w-36">Temsilci</th>
+                            <th className="py-3 px-3.5 text-right w-24">İşlem</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-dark-border/50 text-xs font-light">
+                          {filteredHistoryRecords.map((item) => (
+                            <tr
+                              key={item.id}
+                              className="hover:bg-dark-forest/70 transition-colors group cursor-pointer"
+                              onClick={() => setSelectedRecordModal(item)}
+                            >
+                              <td className="py-3.5 px-3.5 text-center font-mono text-shade-50">
+                                {item.id}
+                              </td>
+                              <td className="py-3.5 px-3.5 font-mono text-muted-text whitespace-nowrap text-[11px]">
+                                {formatDate(item.created_at)}
+                              </td>
+                              <td className="py-3.5 px-3.5">
+                                <div className="flex items-center gap-2">
+                                  <span className="font-mono text-[10px] font-medium px-2 py-0.5 rounded bg-forest text-neon-green border border-dark-border shrink-0">
+                                    {item.course_code}
+                                  </span>
+                                  <span className="text-white font-medium group-hover:text-neon-green transition-colors line-clamp-1">
+                                    {item.course_name}
+                                  </span>
+                                </div>
+                              </td>
+                              <td className="py-3.5 px-3.5 whitespace-nowrap font-mono text-shade-30 text-[11px]">
+                                {item.class_year}. Sınıf • {item.term}
+                              </td>
+                              <td className="py-3.5 px-3.5 text-shade-30 max-w-[170px] truncate">
+                                {item.instructor}
+                              </td>
+                              <td className="py-3.5 px-3.5 font-mono text-shade-50 whitespace-nowrap text-[11px]">
+                                {item.reviewed_weeks}
+                              </td>
+                              <td className="py-3.5 px-3.5 whitespace-nowrap">
+                                {item.general_status === 'Büyük ölçüde örtüşüyor' ? (
+                                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-pill bg-forest text-neon-green border border-neon-green/30 text-[11px] font-mono">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-neon-green" />
+                                    Örtüşüyor
+                                  </span>
+                                ) : item.general_status === 'Açıklığa kavuşturulması gereken noktalar var' ? (
+                                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-pill bg-amber-950/40 text-amber-300 border border-amber-600/30 text-[11px] font-mono">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                                    Açıklık Gerekli
+                                  </span>
+                                ) : (
+                                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-pill bg-rose-950/40 text-rose-300 border border-rose-600/30 text-[11px] font-mono">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
+                                    Ulaşılamadı
+                                  </span>
+                                )}
+                              </td>
+                              <td className="py-3.5 px-3.5 text-shade-50 whitespace-nowrap text-[11px] truncate max-w-[140px]">
+                                {item.student_name}
+                              </td>
+                              <td
+                                className="py-3.5 px-3.5 text-right whitespace-nowrap"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <div className="flex items-center justify-end gap-1.5">
+                                  <button
+                                    onClick={() => setSelectedRecordModal(item)}
+                                    title="Detaylı Raporu İncele"
+                                    className="p-1.5 rounded-lg bg-dark-forest border border-dark-border text-shade-30 hover:text-white hover:border-shade-70 transition active:scale-95"
+                                  >
+                                    <Eye className="w-3.5 h-3.5" />
+                                  </button>
+                                  <button
+                                    onClick={() => handleCopyRowReport(item.summary_report, item.id)}
+                                    title="Hoca Rapor Metnini Kopyala"
+                                    className="p-1.5 rounded-lg bg-dark-forest border border-dark-border text-shade-30 hover:text-neon-green hover:border-neon-green transition active:scale-95"
+                                  >
+                                    {rowCopiedId === item.id ? (
+                                      <CheckCheck className="w-3.5 h-3.5 text-neon-green" />
+                                    ) : (
+                                      <Copy className="w-3.5 h-3.5" />
+                                    )}
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div className="p-3 bg-dark-forest/50 border-t border-dark-border flex items-center justify-between text-xs text-muted-text font-mono">
+                      <span>Gösterilen: {filteredHistoryRecords.length} / {historyRecords.length} kayıt</span>
+                      <span className="text-[11px] text-shade-50">Satıra tıklayarak detaylı raporu açabilirsiniz</span>
+                    </div>
+                  </div>
                 ) : (
-                  <div className="bg-deep-teal border border-dark-border rounded-2xl p-8 text-center text-muted-text text-xs">
-                    Henüz veritabanında kayıtlı bir değerlendirme bulunmuyor.
+                  <div className="bg-deep-teal border border-dark-border rounded-2xl p-10 text-center space-y-2">
+                    <p className="text-white text-sm font-light">Eşleşen Değerlendirme Bulunamadı</p>
+                    <p className="text-muted-text text-xs font-light">
+                      {tableSearch || tableYearFilter !== 'all' || tableStatusFilter !== 'all'
+                        ? 'Arama veya filtre kriterlerinizi değiştirip tekrar deneyiniz.'
+                        : 'Henüz veritabanında kayıtlı bir ders değerlendirmesi bulunmuyor.'}
+                    </p>
+                    {(tableSearch || tableYearFilter !== 'all' || tableStatusFilter !== 'all') && (
+                      <button
+                        onClick={() => {
+                          setTableSearch('');
+                          setTableYearFilter('all');
+                          setTableStatusFilter('all');
+                        }}
+                        className="mt-3 px-4 py-1.5 rounded-pill bg-forest border border-dark-border text-xs text-neon-green hover:border-neon-green transition"
+                      >
+                        Filtreleri Temizle
+                      </button>
+                    )}
+                  </div>
+                )}
+
+                {/* DETAIL MODAL */}
+                {selectedRecordModal && (
+                  <div
+                    className="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn"
+                    onClick={() => setSelectedRecordModal(null)}
+                  >
+                    <div
+                      className="bg-deep-teal border border-dark-border rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-4 max-h-[88vh] overflow-y-auto relative"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {/* Modal Top Bar */}
+                      <div className="flex items-start justify-between gap-3 border-b border-dark-border pb-3">
+                        <div>
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-forest text-neon-green border border-dark-border">
+                              {selectedRecordModal.course_code}
+                            </span>
+                            <span className="text-[11px] font-mono text-muted-text">
+                              {selectedRecordModal.class_year}. Sınıf ({selectedRecordModal.term})
+                            </span>
+                            <span className="text-[10px] font-mono text-shade-50">
+                              #{selectedRecordModal.id}
+                            </span>
+                          </div>
+                          <h3 className="text-base font-light text-white">
+                            {selectedRecordModal.course_name}
+                          </h3>
+                          <p className="text-xs text-muted-text font-light mt-0.5">
+                            Öğretim Elemanı: <span className="text-white">{selectedRecordModal.instructor}</span>
+                          </p>
+                        </div>
+                        <button
+                          onClick={() => setSelectedRecordModal(null)}
+                          className="p-1.5 rounded-full bg-dark-forest border border-dark-border text-shade-30 hover:text-white transition"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+
+                      {/* Modal Meta Details */}
+                      <div className="grid grid-cols-2 gap-2 text-xs">
+                        <div className="bg-dark-forest/70 p-2.5 rounded-xl border border-dark-border">
+                          <span className="text-[10px] font-mono text-muted-text uppercase block">Tarih</span>
+                          <span className="text-white font-mono text-[11px]">{formatDate(selectedRecordModal.created_at)}</span>
+                        </div>
+                        <div className="bg-dark-forest/70 p-2.5 rounded-xl border border-dark-border">
+                          <span className="text-[10px] font-mono text-muted-text uppercase block">Temsilci / Öğrenci</span>
+                          <span className="text-white truncate block">{selectedRecordModal.student_name}</span>
+                        </div>
+                        <div className="bg-dark-forest/70 p-2.5 rounded-xl border border-dark-border">
+                          <span className="text-[10px] font-mono text-muted-text uppercase block">İncelenen Haftalar</span>
+                          <span className="text-white font-mono text-[11px]">{selectedRecordModal.reviewed_weeks}</span>
+                        </div>
+                        <div className="bg-dark-forest/70 p-2.5 rounded-xl border border-dark-border">
+                          <span className="text-[10px] font-mono text-muted-text uppercase block">Genel Durum</span>
+                          <span className="text-neon-green font-medium">{selectedRecordModal.general_status}</span>
+                        </div>
+                      </div>
+
+                      {/* Somut Örnek (if exists) */}
+                      {selectedRecordModal.example_note && (
+                        <div className="space-y-1">
+                          <label className="text-[11px] font-mono text-muted-text uppercase tracking-wider block">
+                            Varsa Somut Örnek & Notlar
+                          </label>
+                          <div className="p-3 bg-dark-forest border border-dark-border rounded-xl text-xs text-shade-30 font-light leading-relaxed">
+                            {selectedRecordModal.example_note}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Exact 4-item Professor Output */}
+                      <div className="space-y-1.5 pt-1">
+                        <div className="flex items-center justify-between">
+                          <label className="text-[11px] font-mono text-neon-green uppercase tracking-wider">
+                            Hoca Şablonundaki 4 Maddelik Rapor
+                          </label>
+                          <button
+                            onClick={() => handleCopyModalReport(selectedRecordModal.summary_report)}
+                            className="text-xs text-neon-green hover:underline flex items-center gap-1 font-mono"
+                          >
+                            {modalCopied ? (
+                              <>
+                                <CheckCheck className="w-3.5 h-3.5" />
+                                <span>Kopyalandı</span>
+                              </>
+                            ) : (
+                              <>
+                                <Copy className="w-3.5 h-3.5" />
+                                <span>Metni Kopyala</span>
+                              </>
+                            )}
+                          </button>
+                        </div>
+                        <div className="text-xs text-aloe bg-void p-3.5 rounded-xl border border-dark-border font-mono whitespace-pre-wrap select-all leading-relaxed">
+                          {selectedRecordModal.summary_report}
+                        </div>
+                      </div>
+
+                      {/* Modal Footer Actions */}
+                      <div className="flex items-center justify-end gap-2 pt-2 border-t border-dark-border">
+                        <button
+                          onClick={() => setSelectedRecordModal(null)}
+                          className="py-2.5 px-5 rounded-pill bg-dark-forest hover:bg-forest border border-dark-border text-xs text-shade-30 hover:text-white transition"
+                        >
+                          Kapat
+                        </button>
+                        <button
+                          onClick={() => handleCopyModalReport(selectedRecordModal.summary_report)}
+                          className="py-2.5 px-5 rounded-pill bg-white hover:bg-shade-30 text-black font-medium text-xs flex items-center gap-1.5 transition active:scale-95"
+                        >
+                          {modalCopied ? <CheckCheck className="w-3.5 h-3.5 text-black" /> : <Copy className="w-3.5 h-3.5 text-black" />}
+                          <span>{modalCopied ? 'Rapor Kopyalandı' : 'Raporu Kopyala'}</span>
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
