@@ -40,7 +40,7 @@ import {
   ChevronUp,
   MessageSquare
 } from 'lucide-react';
-import { downloadSingleCourseDocx, downloadStudentGroupedDocx } from '@/utils/docxExport';
+import { downloadSingleCourseDocx, downloadClassGroupedDocx } from '@/utils/docxExport';
 
 const SCALE_OPTIONS: ScaleOption[] = [
   {
@@ -276,11 +276,11 @@ export default function MobileBolognaShopifyApp() {
 
   const [isExportingDocx, setIsExportingDocx] = useState(false);
 
-  const handleDownloadStudentWordReport = async () => {
+  const handleDownloadClassWordReport = async () => {
     if (!filteredHistoryRecords.length) return;
     setIsExportingDocx(true);
     try {
-      await downloadStudentGroupedDocx(filteredHistoryRecords);
+      await downloadClassGroupedDocx(filteredHistoryRecords);
     } catch (err) {
       console.error('Word export error:', err);
       alert('Word raporu oluşturulurken bir hata oluştu.');
@@ -288,6 +288,7 @@ export default function MobileBolognaShopifyApp() {
       setIsExportingDocx(false);
     }
   };
+  const handleDownloadStudentWordReport = handleDownloadClassWordReport;
 
   const handleDownloadSingleCourseWord = async (record: any) => {
     try {
@@ -1317,13 +1318,13 @@ export default function MobileBolognaShopifyApp() {
 
                     <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
                       <button
-                        onClick={handleDownloadStudentWordReport}
+                        onClick={handleDownloadClassWordReport}
                         disabled={filteredHistoryRecords.length === 0 || isExportingDocx}
                         className="py-2 px-3.5 rounded-pill bg-forest hover:bg-forest/80 border border-neon-green/40 text-neon-green text-xs font-light flex items-center gap-1.5 transition active:scale-95 disabled:opacity-50 disabled:pointer-events-none shadow-sm"
-                        title="Öğrenci bazında gruplandırılmış resmi Word raporunu indir (.docx)"
+                        title="Sınıf bazında (1-4. Sınıf) ve mükerrer bildirim yapan öğrencileri ayrıştırarak resmi Word raporu indir (.docx)"
                       >
                         <FileText className="w-3.5 h-3.5 text-neon-green" />
-                        <span>{isExportingDocx ? 'Hazırlanıyor...' : 'Öğrenci Bazlı Word Raporu (.docx)'}</span>
+                        <span>{isExportingDocx ? 'Hazırlanıyor...' : 'Sınıf Bazlı Word Raporu (.docx)'}</span>
                       </button>
 
                       <button

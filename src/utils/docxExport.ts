@@ -348,31 +348,50 @@ export async function downloadSingleCourseDocx(record: EvaluationRecordDoc) {
 }
 
 /**
- * 2) ÖĞRENCİ BAŞINA GRUPLANMIŞ TOPLU WORD RAPORU (.docx)
- * "öğrenci başına gibi bir rapor şeklinde word olarak"
+ * 2) SINIF BAZLI (VE MÜKERRER BİLDİRİMLERİ AYRIŞTIRAN) RESMİ WORD RAPORU (.docx)
+ * Kullanıcı isteği: Sınıf bazlı gruplama ve mükerrer sınıf kayıtlarında (örn. 4. sınıftan hem A hem B bildirdiyse)
+ * isimlerin ve derslerin ayrı ayrı düzenlenmesi.
  */
-export async function downloadStudentGroupedDocx(records: EvaluationRecordDoc[]) {
+export async function downloadClassGroupedDocx(records: EvaluationRecordDoc[]) {
   if (!records.length) return;
 
-  // Group records by student_name
-  const grouped: { [student: string]: EvaluationRecordDoc[] } = {};
+  // Group primarily by class_year (1, 2, 3, 4)
+  const classMap: { [year: number]: EvaluationRecordDoc[] } = {};
   for (const r of records) {
-    const key = r.student_name?.trim() || 'Genel Sınıf Temsilcisi';
-    if (!grouped[key]) {
-      grouped[key] = [];
+    const yr = Number(r.class_year) || 1;
+    if (!classMap[yr]) {
+      classMap[yr] = [];
     }
-    grouped[key].push(r);
+    classMap[yr].push(r);
   }
+
+  // Sort class years: 1, 2, 3, 4
+  const sortedYears = Object.keys(classMap)
+    .map(Number)
+    .sort((a, b) => a - b);
 
   const sections: any[] = [];
 
-  // For each student, generate a comprehensive dedicated section
-  for (const [studentName, studentRecords] of Object.entries(grouped)) {
-    const classYear = studentRecords[0]?.class_year || 1;
-    const term = studentRecords[0]?.term || 'Güz';
+  for (const year of sortedYears) {
+    const classRecords = classMap[year];
+    const term = classRecords[0]?.term || 'Güz';
 
+    // Sub-group by student_name to detect duplicate / multiple representatives for the same class
+    const studentMap: { [student: string]: EvaluationRecordDoc[] } = {};
+    for (const r of classRecords) {
+      const sName = r.student_name?.trim() || `${year}. Sınıf Temsilcisi`;
+      if (!studentMap[sName]) {
+        studentMap[sName] = [];
+      }
+      studentMap[sName].push(r);
+    }
+
+    const studentNames = Object.keys(studentMap);
+    const hasMultipleStudents = studentNames.length > 1;
+
+    // Children elements for this class section
     const children: any[] = [
-      // Header
+      // University Header
       new Paragraph({
         alignment: AlignmentType.CENTER,
         children: [
@@ -408,18 +427,18 @@ export async function downloadStudentGroupedDocx(records: EvaluationRecordDoc[])
       }),
       new Paragraph({
         alignment: AlignmentType.CENTER,
-        spacing: { after: 300 },
+        spacing: { after: 250 },
         children: [
           new TextRun({
-            text: `ÖĞRENCİ / TEMSİLCİ BAZLI DERS DEĞERLENDİRME BİLDİRİM FORMU`,
+            text: `${year}. SINIF DERS İÇERİK UYUM VE AKREDİTASYON DEĞERLENDİRME RAPORU`,
             bold: true,
-            size: 19,
+            size: 20,
             color: '222222'
           })
         ]
       }),
 
-      // Student Profile Card Table
+      // Class Metadata Table
       new Table({
         width: { size: 100, type: WidthType.PERCENTAGE },
         rows: [
@@ -429,12 +448,12 @@ export async function downloadStudentGroupedDocx(records: EvaluationRecordDoc[])
                 width: { size: 28, type: WidthType.PERCENTAGE },
                 shading: { type: ShadingType.CLEAR, fill: 'EAEFEF' },
                 borders: cellBorders,
-                children: [new Paragraph({ children: [new TextRun({ text: 'Öğrenci / Temsilci:', bold: true, size: 18 })] })]
+                children: [new Paragraph({ children: [new TextRun({ text: 'Sınıf Düzeyi ve Dönem:', bold: true, size: 18 })] })]
               }),
               new TableCell({
                 width: { size: 72, type: WidthType.PERCENTAGE },
                 borders: cellBorders,
-                children: [new Paragraph({ children: [new TextRun({ text: studentName, bold: true, size: 18, color: '1A5C4A' })] })]
+                children: [new Paragraph({ children: [new TextRun({ text: `${year}. Sınıf (${term} Dönemi)`, bold: true, size: 18, color: '1A5C4A' })] })]
               })
             ]
           }),
@@ -443,11 +462,24 @@ export async function downloadStudentGroupedDocx(records: EvaluationRecordDoc[])
               new TableCell({
                 shading: { type: ShadingType.CLEAR, fill: 'EAEFEF' },
                 borders: cellBorders,
-                children: [new Paragraph({ children: [new TextRun({ text: 'Sınıf ve Dönem:', bold: true, size: 18 })] })]
+                children: [new Paragraph({ children: [new TextRun({ text: 'Bildirim Yapan Öğrenciler:', bold: true, size: 18 })] })]
               }),
               new TableCell({
                 borders: cellBorders,
-                children: [new Paragraph({ children: [new TextRun({ text: `${classYear}. Sınıf (${term} Dönemi)`, size: 18 })] })]
+                children: [
+                  new Paragraph({
+                    children: [
+                      new TextRun({
+                        text: hasMultipleStudents
+                          ? `${studentNames.length} Farklı Bildirim: ${studentNames.join(' | ')} (Mükerrer/Ayrı Bildirim)`
+                          : studentNames[0],
+                        bold: true,
+                        size: 18,
+                        color: hasMultipleStudents ? 'A05500' : '222222'
+                      })
+                    ]
+                  })
+                ]
               })
             ]
           }),
@@ -456,11 +488,11 @@ export async function downloadStudentGroupedDocx(records: EvaluationRecordDoc[])
               new TableCell({
                 shading: { type: ShadingType.CLEAR, fill: 'EAEFEF' },
                 borders: cellBorders,
-                children: [new Paragraph({ children: [new TextRun({ text: 'Değerlendirilen Dersler:', bold: true, size: 18 })] })]
+                children: [new Paragraph({ children: [new TextRun({ text: 'Değerlendirilen Ders Sayısı:', bold: true, size: 18 })] })]
               }),
               new TableCell({
                 borders: cellBorders,
-                children: [new Paragraph({ children: [new TextRun({ text: `${studentRecords.length} Ders Kaydı Bulunmaktadır`, size: 18, bold: true })] })]
+                children: [new Paragraph({ children: [new TextRun({ text: `${classRecords.length} Ders Kaydı Bulunmaktadır`, size: 18, bold: true })] })]
               })
             ]
           }),
@@ -478,63 +510,109 @@ export async function downloadStudentGroupedDocx(records: EvaluationRecordDoc[])
             ]
           })
         ]
-      }),
+      })
+    ];
 
-      new Paragraph({ spacing: { before: 300, after: 150 }, children: [] }),
+    // If multiple students submitted for this same class (mükerrer bildirim):
+    if (hasMultipleStudents) {
+      children.push(
+        new Paragraph({ spacing: { before: 200, after: 100 }, children: [] }),
+        new Table({
+          width: { size: 100, type: WidthType.PERCENTAGE },
+          rows: [
+            new TableRow({
+              children: [
+                new TableCell({
+                  shading: { type: ShadingType.CLEAR, fill: 'FFF8E6' },
+                  borders: {
+                    top: { style: BorderStyle.SINGLE, size: 6, color: 'D97706' },
+                    bottom: { style: BorderStyle.SINGLE, size: 6, color: 'D97706' },
+                    left: { style: BorderStyle.SINGLE, size: 6, color: 'D97706' },
+                    right: { style: BorderStyle.SINGLE, size: 6, color: 'D97706' }
+                  },
+                  children: [
+                    new Paragraph({
+                      children: [
+                        new TextRun({
+                          text: `⚠️ DİKKAT: ${year}. SINIF İÇİN ÇOKLU / MÜKERRER BİLDİRİM TESPİT EDİLDİ\n`,
+                          bold: true,
+                          size: 17,
+                          color: '92400E'
+                        }),
+                        new TextRun({
+                          text: `Bu sınıf düzeyi için sistemde birden fazla öğrenci (${studentNames.join(' ve ')}) tarafından ayrı bildirim yapılmıştır. Karışıklığı önlemek ve her temsilcinin değerlendirmesini objektif biçimde inceleyebilmek amacıyla, her öğrencinin bildirdiği dersler aşağıda kendi adı ve müstakil rapor kartı altında ayrıştırılmıştır.`,
+                          size: 16,
+                          color: '78350F'
+                        })
+                      ]
+                    })
+                  ]
+                })
+              ]
+            })
+          ]
+        })
+      );
+    }
 
-      // Table of evaluated courses by this student
+    // Combined Course Overview Table for this Class
+    children.push(
+      new Paragraph({ spacing: { before: 250, after: 120 }, children: [] }),
       new Paragraph({
         heading: HeadingLevel.HEADING_2,
         children: [
           new TextRun({
-            text: `Öğrencinin İncelediği Derslerin Özet Tablosu`,
+            text: `${year}. Sınıf Dersleri Genel Uyum Özeti Tablosu`,
             bold: true,
             size: 20,
             color: '1A5C4A'
           })
         ]
       }),
-
       new Table({
         width: { size: 100, type: WidthType.PERCENTAGE },
         rows: [
-          // Header Row
           new TableRow({
             children: [
               new TableCell({
-                width: { size: 15, type: WidthType.PERCENTAGE },
+                width: { size: 13, type: WidthType.PERCENTAGE },
                 shading: { type: ShadingType.CLEAR, fill: '1A5C4A' },
                 borders: cellBorders,
                 children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: 'Ders Kodu', bold: true, size: 16, color: 'FFFFFF' })] })]
               }),
               new TableCell({
-                width: { size: 35, type: WidthType.PERCENTAGE },
+                width: { size: 30, type: WidthType.PERCENTAGE },
                 shading: { type: ShadingType.CLEAR, fill: '1A5C4A' },
                 borders: cellBorders,
                 children: [new Paragraph({ children: [new TextRun({ text: 'Ders Adı', bold: true, size: 16, color: 'FFFFFF' })] })]
               }),
               new TableCell({
-                width: { size: 22, type: WidthType.PERCENTAGE },
+                width: { size: 20, type: WidthType.PERCENTAGE },
                 shading: { type: ShadingType.CLEAR, fill: '1A5C4A' },
                 borders: cellBorders,
                 children: [new Paragraph({ children: [new TextRun({ text: 'Öğretim Elemanı', bold: true, size: 16, color: 'FFFFFF' })] })]
               }),
               new TableCell({
-                width: { size: 14, type: WidthType.PERCENTAGE },
+                width: { size: 15, type: WidthType.PERCENTAGE },
+                shading: { type: ShadingType.CLEAR, fill: '1A5C4A' },
+                borders: cellBorders,
+                children: [new Paragraph({ children: [new TextRun({ text: 'Bildiren Öğrenci', bold: true, size: 16, color: 'FFFFFF' })] })]
+              }),
+              new TableCell({
+                width: { size: 10, type: WidthType.PERCENTAGE },
                 shading: { type: ShadingType.CLEAR, fill: '1A5C4A' },
                 borders: cellBorders,
                 children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: 'Haftalar', bold: true, size: 16, color: 'FFFFFF' })] })]
               }),
               new TableCell({
-                width: { size: 14, type: WidthType.PERCENTAGE },
+                width: { size: 12, type: WidthType.PERCENTAGE },
                 shading: { type: ShadingType.CLEAR, fill: '1A5C4A' },
                 borders: cellBorders,
                 children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: 'Genel Durum', bold: true, size: 16, color: 'FFFFFF' })] })]
               })
             ]
           }),
-          // Data Rows
-          ...studentRecords.map((r, idx) =>
+          ...classRecords.map((r) =>
             new TableRow({
               children: [
                 new TableCell({
@@ -551,7 +629,15 @@ export async function downloadStudentGroupedDocx(records: EvaluationRecordDoc[])
                 }),
                 new TableCell({
                   borders: cellBorders,
-                  children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: r.reviewed_weeks || '-', size: 16 })] })]
+                  shading: {
+                    type: ShadingType.CLEAR,
+                    fill: hasMultipleStudents ? 'F5F7FA' : 'FFFFFF'
+                  },
+                  children: [new Paragraph({ children: [new TextRun({ text: r.student_name || '-', size: 15, bold: hasMultipleStudents })] })]
+                }),
+                new TableCell({
+                  borders: cellBorders,
+                  children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: r.reviewed_weeks || '-', size: 15 })] })]
                 }),
                 new TableCell({
                   borders: cellBorders,
@@ -564,141 +650,161 @@ export async function downloadStudentGroupedDocx(records: EvaluationRecordDoc[])
                         ? 'FFF8E6'
                         : 'FDE8E8'
                   },
-                  children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: r.general_status, size: 14, bold: true })] })]
+                  children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: r.general_status, size: 13, bold: true })] })]
                 })
               ]
             })
           )
         ]
       }),
+      new Paragraph({ spacing: { before: 250 }, children: [] })
+    );
 
-      new Paragraph({ spacing: { before: 300 }, children: [] }),
+    // Now, loop through each distinct student in this class and output their distinct section & detailed reports
+    studentNames.forEach((sName, sIdx) => {
+      const studentRecs = studentMap[sName];
 
-      // Detailed feedback per course by this student
-      new Paragraph({
-        heading: HeadingLevel.HEADING_2,
-        children: [
-          new TextRun({
-            text: `Ders Bazında Ayrıntılı Değerlendirme Raporları`,
-            bold: true,
-            size: 20,
-            color: '1A5C4A'
-          })
-        ]
-      })
-    ];
-
-    // Append each course report card
-    studentRecords.forEach((record, index) => {
       children.push(
         new Paragraph({
-          spacing: { before: 200, after: 100 },
+          heading: HeadingLevel.HEADING_2,
+          spacing: { before: 300, after: 120 },
           children: [
             new TextRun({
-              text: `${index + 1}. ${record.course_code} - ${record.course_name}`,
+              text: hasMultipleStudents
+                ? `Bölüm ${sIdx + 1}: ${sName} Tarafından Yapılan Bildirimler (${studentRecs.length} Ders)`
+                : `Ders Bazında Ayrıntılı Değerlendirme Raporları (${sName})`,
               bold: true,
-              size: 18,
+              size: 20,
               color: '1A5C4A'
-            }),
-            new TextRun({
-              text: ` (${record.instructor})`,
-              size: 16,
-              color: '666666'
-            })
-          ]
-        }),
-        new Paragraph({
-          children: [
-            new TextRun({ text: 'İncelenen Hafta Aralığı: ', bold: true, size: 16 }),
-            new TextRun({ text: `${record.reviewed_weeks}    `, size: 16 }),
-            new TextRun({ text: 'Genel Durum: ', bold: true, size: 16 }),
-            new TextRun({ text: record.general_status, bold: true, size: 16, color: record.general_status === 'Büyük ölçüde örtüşüyor' ? '0E7044' : 'A05500' })
-          ]
-        }),
-        new Paragraph({
-          spacing: { before: 80, after: 80 },
-          shading: { type: ShadingType.CLEAR, fill: 'F7F9FA' },
-          children: [
-            new TextRun({
-              text: 'Resmi Bildirim Metni:\n',
-              bold: true,
-              size: 16,
-              color: '333333'
-            }),
-            new TextRun({
-              text: record.summary_report,
-              size: 16,
-              font: 'Consolas'
             })
           ]
         })
       );
 
-      if (record.example_note) {
+      // Render each course reported by this student
+      studentRecs.forEach((record, cIdx) => {
         children.push(
           new Paragraph({
-            spacing: { after: 150 },
+            spacing: { before: 180, after: 80 },
             children: [
-              new TextRun({ text: 'Öğrencinin Somut Örnek ve Notu: ', bold: true, size: 16 }),
-              new TextRun({ text: record.example_note, size: 16, italics: true })
-            ]
-          })
-        );
-      }
-    });
-
-    // Student Signature Block
-    children.push(
-      new Paragraph({ spacing: { before: 500 }, children: [] }),
-      new Table({
-        width: { size: 100, type: WidthType.PERCENTAGE },
-        rows: [
-          new TableRow({
-            children: [
-              new TableCell({
-                width: { size: 50, type: WidthType.PERCENTAGE },
-                borders: {
-                  top: { style: BorderStyle.NONE, size: 0, color: 'auto' },
-                  bottom: { style: BorderStyle.NONE, size: 0, color: 'auto' },
-                  left: { style: BorderStyle.NONE, size: 0, color: 'auto' },
-                  right: { style: BorderStyle.NONE, size: 0, color: 'auto' }
-                },
-                children: [
-                  new Paragraph({
-                    alignment: AlignmentType.CENTER,
-                    children: [
-                      new TextRun({ text: 'Raporu Düzenleyen Öğrenci / Temsilci', bold: true, size: 17 }),
-                      new TextRun({ text: `\n\n${studentName}`, size: 17, bold: true }),
-                      new TextRun({ text: '\nİmza: .......................................', size: 16, color: '777777' })
-                    ]
-                  })
-                ]
+              new TextRun({
+                text: `${cIdx + 1}. ${record.course_code} - ${record.course_name}`,
+                bold: true,
+                size: 18,
+                color: '1A5C4A'
               }),
-              new TableCell({
-                width: { size: 50, type: WidthType.PERCENTAGE },
-                borders: {
-                  top: { style: BorderStyle.NONE, size: 0, color: 'auto' },
-                  bottom: { style: BorderStyle.NONE, size: 0, color: 'auto' },
-                  left: { style: BorderStyle.NONE, size: 0, color: 'auto' },
-                  right: { style: BorderStyle.NONE, size: 0, color: 'auto' }
-                },
-                children: [
-                  new Paragraph({
-                    alignment: AlignmentType.CENTER,
-                    children: [
-                      new TextRun({ text: 'Teslim Alan Bölüm Yetkilisi', bold: true, size: 17 }),
-                      new TextRun({ text: '\n\nSağlık Yönetimi Akreditasyon Komisyonu', size: 17 }),
-                      new TextRun({ text: '\nİmza: .......................................', size: 16, color: '777777' })
-                    ]
-                  })
-                ]
+              new TextRun({
+                text: ` (${record.instructor})`,
+                size: 16,
+                color: '666666'
+              })
+            ]
+          }),
+          new Paragraph({
+            children: [
+              new TextRun({ text: 'Değerlendiren Öğrenci: ', bold: true, size: 16 }),
+              new TextRun({ text: `${record.student_name}    `, size: 16 }),
+              new TextRun({ text: 'İncelenen Hafta: ', bold: true, size: 16 }),
+              new TextRun({ text: `${record.reviewed_weeks}    `, size: 16 }),
+              new TextRun({ text: 'Genel Durum: ', bold: true, size: 16 }),
+              new TextRun({
+                text: record.general_status,
+                bold: true,
+                size: 16,
+                color: record.general_status === 'Büyük ölçüde örtüşüyor' ? '0E7044' : 'A05500'
+              })
+            ]
+          }),
+          new Paragraph({
+            spacing: { before: 80, after: 80 },
+            shading: { type: ShadingType.CLEAR, fill: 'F7F9FA' },
+            children: [
+              new TextRun({
+                text: 'Hocaya İletilecek Resmi 4 Maddelik Metin:\n',
+                bold: true,
+                size: 16,
+                color: '333333'
+              }),
+              new TextRun({
+                text: record.summary_report,
+                size: 16,
+                font: 'Consolas'
               })
             ]
           })
-        ]
-      })
-    );
+        );
 
+        if (record.example_note) {
+          children.push(
+            new Paragraph({
+              spacing: { after: 120 },
+              children: [
+                new TextRun({ text: 'Öğrencinin Somut Örnek ve Notu: ', bold: true, size: 16 }),
+                new TextRun({ text: record.example_note, size: 16, italics: true })
+              ]
+            })
+          );
+        }
+      });
+
+      // Signature block for this student
+      children.push(
+        new Paragraph({ spacing: { before: 300, after: 200 }, children: [] }),
+        new Table({
+          width: { size: 100, type: WidthType.PERCENTAGE },
+          rows: [
+            new TableRow({
+              children: [
+                new TableCell({
+                  width: { size: 50, type: WidthType.PERCENTAGE },
+                  borders: {
+                    top: { style: BorderStyle.NONE, size: 0, color: 'auto' },
+                    bottom: { style: BorderStyle.NONE, size: 0, color: 'auto' },
+                    left: { style: BorderStyle.NONE, size: 0, color: 'auto' },
+                    right: { style: BorderStyle.NONE, size: 0, color: 'auto' }
+                  },
+                  children: [
+                    new Paragraph({
+                      alignment: AlignmentType.CENTER,
+                      children: [
+                        new TextRun({
+                          text: hasMultipleStudents ? `${sName} (${year}. Sınıf Bildirimi)` : `Raporu Düzenleyen Öğrenci / Temsilci`,
+                          bold: true,
+                          size: 17
+                        }),
+                        new TextRun({ text: `\n\n${sName}`, size: 17, bold: true }),
+                        new TextRun({ text: '\nİmza: .......................................', size: 16, color: '777777' })
+                      ]
+                    })
+                  ]
+                }),
+                new TableCell({
+                  width: { size: 50, type: WidthType.PERCENTAGE },
+                  borders: {
+                    top: { style: BorderStyle.NONE, size: 0, color: 'auto' },
+                    bottom: { style: BorderStyle.NONE, size: 0, color: 'auto' },
+                    left: { style: BorderStyle.NONE, size: 0, color: 'auto' },
+                    right: { style: BorderStyle.NONE, size: 0, color: 'auto' }
+                  },
+                  children: [
+                    new Paragraph({
+                      alignment: AlignmentType.CENTER,
+                      children: [
+                        new TextRun({ text: 'Teslim Alan Bölüm Yetkilisi', bold: true, size: 17 }),
+                        new TextRun({ text: '\n\nSağlık Yönetimi Akreditasyon Komisyonu', size: 17 }),
+                        new TextRun({ text: '\nİmza: .......................................', size: 16, color: '777777' })
+                      ]
+                    })
+                  ]
+                })
+              ]
+            })
+          ]
+        })
+      );
+    });
+
+    // Add this class as a clean Word document section
     sections.push({
       properties: {},
       children
@@ -706,9 +812,12 @@ export async function downloadStudentGroupedDocx(records: EvaluationRecordDoc[])
   }
 
   const doc = new Document({ sections });
-  const filename = `Bologna_Ogrenci_Bazli_Degerlendirme_Raporu_${new Date().toISOString().slice(0, 10)}.docx`;
+  const filename = `Bologna_Sinif_Bazli_Degerlendirme_Raporu_${new Date().toISOString().slice(0, 10)}.docx`;
   await saveDocx(doc, filename);
 }
+
+// Keep downloadStudentGroupedDocx as an alias so existing callers work seamlessly
+export const downloadStudentGroupedDocx = downloadClassGroupedDocx;
 
 // Render weekly breakdown if available
 function renderWeeklyDetails(record: EvaluationRecordDoc): any[] {
