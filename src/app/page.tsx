@@ -37,6 +37,7 @@ import {
   Filter,
   FileSpreadsheet
 } from 'lucide-react';
+import { downloadSingleCourseDocx, downloadStudentGroupedDocx } from '@/utils/docxExport';
 
 const SCALE_OPTIONS: ScaleOption[] = [
   {
@@ -253,6 +254,57 @@ export default function MobileBolognaShopifyApp() {
     navigator.clipboard.writeText(report);
     setModalCopied(true);
     setTimeout(() => setModalCopied(false), 2000);
+  };
+
+  const [isExportingDocx, setIsExportingDocx] = useState(false);
+
+  const handleDownloadStudentWordReport = async () => {
+    if (!filteredHistoryRecords.length) return;
+    setIsExportingDocx(true);
+    try {
+      await downloadStudentGroupedDocx(filteredHistoryRecords);
+    } catch (err) {
+      console.error('Word export error:', err);
+      alert('Word raporu oluşturulurken bir hata oluştu.');
+    } finally {
+      setIsExportingDocx(false);
+    }
+  };
+
+  const handleDownloadSingleCourseWord = async (record: any) => {
+    try {
+      await downloadSingleCourseDocx(record);
+    } catch (err) {
+      console.error('Single Word export error:', err);
+      alert('Word raporu oluşturulurken bir hata oluştu.');
+    }
+  };
+
+  const handleDownloadCurrentCourseWord = async () => {
+    if (!selectedCourse) return;
+    try {
+      const currentRecord = {
+        id: 1,
+        created_at: new Date().toISOString(),
+        class_year: selectedYear,
+        semester: selectedCourse.semester,
+        term: selectedTerm,
+        course_id: selectedCourse.id,
+        course_code: selectedCourse.code,
+        course_name: selectedCourse.name,
+        instructor: selectedCourse.instructor,
+        student_name: studentName,
+        reviewed_weeks: `1-${targetWeekCount}. haftalar`,
+        general_status: generalStatus,
+        example_note: generalExampleNote,
+        week_answers: Object.values(weekAnswers),
+        summary_report: reportText,
+      };
+      await downloadSingleCourseDocx(currentRecord);
+    } catch (err) {
+      console.error('Download current word error:', err);
+      alert('Word raporu indirilirken hata oluştu.');
+    }
   };
 
   // Copied feedback
@@ -1100,8 +1152,18 @@ export default function MobileBolognaShopifyApp() {
                 {reportText}
               </div>
 
-              <p className="text-[11px] text-muted-text text-center font-light pt-1">
-                Metni panoya kopyalayıp WhatsApp&apos;tan hocanıza doğrudan gönderebilirsiniz.
+              <div className="pt-1 flex flex-col sm:flex-row gap-2">
+                <button
+                  onClick={handleDownloadCurrentCourseWord}
+                  className="w-full py-2.5 px-4 rounded-pill bg-forest hover:bg-forest/80 border border-neon-green/40 text-neon-green text-xs font-light flex items-center justify-center gap-2 transition active:scale-95"
+                >
+                  <FileText className="w-4 h-4 text-neon-green" />
+                  <span>Resmi Word Raporunu İndir (.docx)</span>
+                </button>
+              </div>
+
+              <p className="text-[11px] text-muted-text text-center font-light pt-0.5">
+                Metni panoya kopyalayıp WhatsApp&apos;tan hocanıza doğrudan gönderebilir veya resmi Word raporu olarak indirebilirsiniz.
               </p>
             </div>
 
@@ -1235,14 +1297,24 @@ export default function MobileBolognaShopifyApp() {
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-2 self-start sm:self-auto">
+                    <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
+                      <button
+                        onClick={handleDownloadStudentWordReport}
+                        disabled={filteredHistoryRecords.length === 0 || isExportingDocx}
+                        className="py-2 px-3.5 rounded-pill bg-forest hover:bg-forest/80 border border-neon-green/40 text-neon-green text-xs font-light flex items-center gap-1.5 transition active:scale-95 disabled:opacity-50 disabled:pointer-events-none shadow-sm"
+                        title="Öğrenci bazında gruplandırılmış resmi Word raporunu indir (.docx)"
+                      >
+                        <FileText className="w-3.5 h-3.5 text-neon-green" />
+                        <span>{isExportingDocx ? 'Hazırlanıyor...' : 'Öğrenci Bazlı Word Raporu (.docx)'}</span>
+                      </button>
+
                       <button
                         onClick={exportToCSV}
                         disabled={filteredHistoryRecords.length === 0}
-                        className="py-2 px-3.5 rounded-pill bg-forest hover:bg-forest/80 border border-dark-border hover:border-neon-green text-white text-xs font-light flex items-center gap-1.5 transition active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
+                        className="py-2 px-3.5 rounded-pill bg-dark-forest hover:bg-forest border border-dark-border hover:border-neon-green text-white text-xs font-light flex items-center gap-1.5 transition active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
                         title="Tabloyu Excel / CSV olarak indir"
                       >
-                        <FileSpreadsheet className="w-3.5 h-3.5 text-neon-green" />
+                        <FileSpreadsheet className="w-3.5 h-3.5 text-shade-30" />
                         <span>Excel / CSV</span>
                       </button>
 
@@ -1371,7 +1443,7 @@ export default function MobileBolognaShopifyApp() {
                             <th className="py-3 px-3.5 w-28">Haftalar</th>
                             <th className="py-3 px-3.5 w-40">Genel Durum</th>
                             <th className="py-3 px-3.5 w-36">Temsilci</th>
-                            <th className="py-3 px-3.5 text-right w-24">İşlem</th>
+                            <th className="py-3 px-3.5 text-right w-32">İşlem</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-dark-border/50 text-xs font-light">
@@ -1432,6 +1504,13 @@ export default function MobileBolognaShopifyApp() {
                                 onClick={(e) => e.stopPropagation()}
                               >
                                 <div className="flex items-center justify-end gap-1.5">
+                                  <button
+                                    onClick={() => handleDownloadSingleCourseWord(item)}
+                                    title="Bu Dersin Word Raporunu İndir (.docx)"
+                                    className="p-1.5 rounded-lg bg-dark-forest border border-dark-border text-shade-30 hover:text-neon-green hover:border-neon-green transition active:scale-95"
+                                  >
+                                    <FileText className="w-3.5 h-3.5" />
+                                  </button>
                                   <button
                                     onClick={() => setSelectedRecordModal(item)}
                                     title="Detaylı Raporu İncele"
@@ -1586,20 +1665,30 @@ export default function MobileBolognaShopifyApp() {
                       </div>
 
                       {/* Modal Footer Actions */}
-                      <div className="flex items-center justify-end gap-2 pt-2 border-t border-dark-border">
+                      <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-dark-border">
                         <button
-                          onClick={() => setSelectedRecordModal(null)}
-                          className="py-2.5 px-5 rounded-pill bg-dark-forest hover:bg-forest border border-dark-border text-xs text-shade-30 hover:text-white transition"
+                          onClick={() => handleDownloadSingleCourseWord(selectedRecordModal)}
+                          className="py-2.5 px-4 rounded-pill bg-forest hover:bg-forest/80 border border-neon-green/40 text-neon-green text-xs font-light flex items-center gap-1.5 transition active:scale-95"
                         >
-                          Kapat
+                          <FileText className="w-3.5 h-3.5 text-neon-green" />
+                          <span>Word Raporu İndir (.docx)</span>
                         </button>
-                        <button
-                          onClick={() => handleCopyModalReport(selectedRecordModal.summary_report)}
-                          className="py-2.5 px-5 rounded-pill bg-white hover:bg-shade-30 text-black font-medium text-xs flex items-center gap-1.5 transition active:scale-95"
-                        >
-                          {modalCopied ? <CheckCheck className="w-3.5 h-3.5 text-black" /> : <Copy className="w-3.5 h-3.5 text-black" />}
-                          <span>{modalCopied ? 'Rapor Kopyalandı' : 'Raporu Kopyala'}</span>
-                        </button>
+
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => setSelectedRecordModal(null)}
+                            className="py-2.5 px-4 rounded-pill bg-dark-forest hover:bg-forest border border-dark-border text-xs text-shade-30 hover:text-white transition"
+                          >
+                            Kapat
+                          </button>
+                          <button
+                            onClick={() => handleCopyModalReport(selectedRecordModal.summary_report)}
+                            className="py-2.5 px-4 rounded-pill bg-white hover:bg-shade-30 text-black font-medium text-xs flex items-center gap-1.5 transition active:scale-95"
+                          >
+                            {modalCopied ? <CheckCheck className="w-3.5 h-3.5 text-black" /> : <Copy className="w-3.5 h-3.5 text-black" />}
+                            <span>{modalCopied ? 'Kopyalandı' : 'Raporu Kopyala'}</span>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>

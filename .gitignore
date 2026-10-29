@@ -33,3 +33,4 @@ test_db.js
 # OS Files
 .DS_Store
 Thumbs.db
+*.tsbuildinfo
