@@ -35,7 +35,10 @@ import {
   X,
   RefreshCw,
   Filter,
-  FileSpreadsheet
+  FileSpreadsheet,
+  ChevronDown,
+  ChevronUp,
+  MessageSquare
 } from 'lucide-react';
 import { downloadSingleCourseDocx, downloadStudentGroupedDocx } from '@/utils/docxExport';
 
@@ -141,8 +144,23 @@ export default function MobileBolognaShopifyApp() {
   const [tableYearFilter, setTableYearFilter] = useState<'all' | number>('all');
   const [tableStatusFilter, setTableStatusFilter] = useState<'all' | string>('all');
   const [selectedRecordModal, setSelectedRecordModal] = useState<any | null>(null);
+  const [drawerRecord, setDrawerRecord] = useState<any | null>(null);
+  const [expandedRowId, setExpandedRowId] = useState<number | null>(null);
   const [modalCopied, setModalCopied] = useState(false);
   const [rowCopiedId, setRowCopiedId] = useState<number | null>(null);
+
+  // Helper to parse week answers safely
+  const parseWeekAnswers = (raw: any): any[] => {
+    if (!raw) return [];
+    if (Array.isArray(raw)) return raw;
+    if (typeof raw === 'string') {
+      try {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) return parsed;
+      } catch {}
+    }
+    return [];
+  };
 
   // Format timestamp
   const formatDate = (isoString?: string) => {
@@ -1435,7 +1453,7 @@ export default function MobileBolognaShopifyApp() {
                       <table className="w-full text-left border-collapse min-w-[900px]">
                         <thead className="bg-dark-forest/90 border-b border-dark-border font-mono text-[11px] uppercase tracking-wider text-muted-text">
                           <tr>
-                            <th className="py-3 px-3.5 text-center w-12">#</th>
+                            <th className="py-3 px-3 text-center w-14">#</th>
                             <th className="py-3 px-3.5 w-32">Tarih</th>
                             <th className="py-3 px-3.5">Ders Kodu & Adı</th>
                             <th className="py-3 px-3.5 w-28">Sınıf / Dönem</th>
@@ -1443,96 +1461,243 @@ export default function MobileBolognaShopifyApp() {
                             <th className="py-3 px-3.5 w-28">Haftalar</th>
                             <th className="py-3 px-3.5 w-40">Genel Durum</th>
                             <th className="py-3 px-3.5 w-36">Temsilci</th>
-                            <th className="py-3 px-3.5 text-right w-32">İşlem</th>
+                            <th className="py-3 px-3.5 text-right w-36">İşlem</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-dark-border/50 text-xs font-light">
-                          {filteredHistoryRecords.map((item) => (
-                            <tr
-                              key={item.id}
-                              className="hover:bg-dark-forest/70 transition-colors group cursor-pointer"
-                              onClick={() => setSelectedRecordModal(item)}
-                            >
-                              <td className="py-3.5 px-3.5 text-center font-mono text-shade-50">
-                                {item.id}
-                              </td>
-                              <td className="py-3.5 px-3.5 font-mono text-muted-text whitespace-nowrap text-[11px]">
-                                {formatDate(item.created_at)}
-                              </td>
-                              <td className="py-3.5 px-3.5">
-                                <div className="flex items-center gap-2">
-                                  <span className="font-mono text-[10px] font-medium px-2 py-0.5 rounded bg-forest text-neon-green border border-dark-border shrink-0">
-                                    {item.course_code}
-                                  </span>
-                                  <span className="text-white font-medium group-hover:text-neon-green transition-colors line-clamp-1">
-                                    {item.course_name}
-                                  </span>
-                                </div>
-                              </td>
-                              <td className="py-3.5 px-3.5 whitespace-nowrap font-mono text-shade-30 text-[11px]">
-                                {item.class_year}. Sınıf • {item.term}
-                              </td>
-                              <td className="py-3.5 px-3.5 text-shade-30 max-w-[170px] truncate">
-                                {item.instructor}
-                              </td>
-                              <td className="py-3.5 px-3.5 font-mono text-shade-50 whitespace-nowrap text-[11px]">
-                                {item.reviewed_weeks}
-                              </td>
-                              <td className="py-3.5 px-3.5 whitespace-nowrap">
-                                {item.general_status === 'Büyük ölçüde örtüşüyor' ? (
-                                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-pill bg-forest text-neon-green border border-neon-green/30 text-[11px] font-mono">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-neon-green" />
-                                    Örtüşüyor
-                                  </span>
-                                ) : item.general_status === 'Açıklığa kavuşturulması gereken noktalar var' ? (
-                                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-pill bg-amber-950/40 text-amber-300 border border-amber-600/30 text-[11px] font-mono">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                                    Açıklık Gerekli
-                                  </span>
-                                ) : (
-                                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-pill bg-rose-950/40 text-rose-300 border border-rose-600/30 text-[11px] font-mono">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
-                                    Ulaşılamadı
-                                  </span>
-                                )}
-                              </td>
-                              <td className="py-3.5 px-3.5 text-shade-50 whitespace-nowrap text-[11px] truncate max-w-[140px]">
-                                {item.student_name}
-                              </td>
-                              <td
-                                className="py-3.5 px-3.5 text-right whitespace-nowrap"
-                                onClick={(e) => e.stopPropagation()}
-                              >
-                                <div className="flex items-center justify-end gap-1.5">
-                                  <button
-                                    onClick={() => handleDownloadSingleCourseWord(item)}
-                                    title="Bu Dersin Word Raporunu İndir (.docx)"
-                                    className="p-1.5 rounded-lg bg-dark-forest border border-dark-border text-shade-30 hover:text-neon-green hover:border-neon-green transition active:scale-95"
-                                  >
-                                    <FileText className="w-3.5 h-3.5" />
-                                  </button>
-                                  <button
-                                    onClick={() => setSelectedRecordModal(item)}
-                                    title="Detaylı Raporu İncele"
-                                    className="p-1.5 rounded-lg bg-dark-forest border border-dark-border text-shade-30 hover:text-white hover:border-shade-70 transition active:scale-95"
-                                  >
-                                    <Eye className="w-3.5 h-3.5" />
-                                  </button>
-                                  <button
-                                    onClick={() => handleCopyRowReport(item.summary_report, item.id)}
-                                    title="Hoca Rapor Metnini Kopyala"
-                                    className="p-1.5 rounded-lg bg-dark-forest border border-dark-border text-shade-30 hover:text-neon-green hover:border-neon-green transition active:scale-95"
-                                  >
-                                    {rowCopiedId === item.id ? (
-                                      <CheckCheck className="w-3.5 h-3.5 text-neon-green" />
+                          {filteredHistoryRecords.map((item) => {
+                            const isExpanded = expandedRowId === item.id;
+                            const weeks = parseWeekAnswers(item.week_answers);
+                            const weeksWithNotesCount = weeks.filter((w: any) => w.note && w.note.trim()).length;
+
+                            return (
+                              <React.Fragment key={item.id}>
+                                <tr
+                                  className={`hover:bg-dark-forest/70 transition-colors group cursor-pointer ${
+                                    isExpanded ? 'bg-dark-forest/60' : ''
+                                  }`}
+                                  onClick={() => setExpandedRowId(isExpanded ? null : item.id)}
+                                >
+                                  <td className="py-3.5 px-2.5 text-center font-mono text-shade-50">
+                                    <button
+                                      type="button"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        setExpandedRowId(isExpanded ? null : item.id);
+                                      }}
+                                      title={isExpanded ? 'Haftalık Analizi Kapat' : 'Dersin Altına Haftalık Analizi Aç'}
+                                      className="inline-flex items-center justify-center p-1 rounded-md hover:bg-forest text-shade-30 hover:text-neon-green transition"
+                                    >
+                                      {isExpanded ? (
+                                        <ChevronDown className="w-3.5 h-3.5 text-neon-green" />
+                                      ) : (
+                                        <ChevronRight className="w-3.5 h-3.5" />
+                                      )}
+                                      <span className="text-[11px] ml-1">{item.id}</span>
+                                    </button>
+                                  </td>
+                                  <td className="py-3.5 px-3.5 font-mono text-muted-text whitespace-nowrap text-[11px]">
+                                    {formatDate(item.created_at)}
+                                  </td>
+                                  <td className="py-3.5 px-3.5">
+                                    <div className="flex items-center gap-2">
+                                      <span className="font-mono text-[10px] font-medium px-2 py-0.5 rounded bg-forest text-neon-green border border-dark-border shrink-0">
+                                        {item.course_code}
+                                      </span>
+                                      <span className="text-white font-medium group-hover:text-neon-green transition-colors line-clamp-1">
+                                        {item.course_name}
+                                      </span>
+                                    </div>
+                                  </td>
+                                  <td className="py-3.5 px-3.5 whitespace-nowrap font-mono text-shade-30 text-[11px]">
+                                    {item.class_year}. Sınıf • {item.term}
+                                  </td>
+                                  <td className="py-3.5 px-3.5 text-shade-30 max-w-[170px] truncate">
+                                    {item.instructor}
+                                  </td>
+                                  <td className="py-3.5 px-3.5 whitespace-nowrap">
+                                    <div className="flex items-center gap-1.5 font-mono text-shade-50 text-[11px]">
+                                      <span>{item.reviewed_weeks}</span>
+                                      {weeksWithNotesCount > 0 && (
+                                        <span
+                                          title={`${weeksWithNotesCount} haftada özel temsilci notu/analizi var`}
+                                          className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-forest text-neon-green text-[9px] border border-neon-green/30"
+                                        >
+                                          <MessageSquare className="w-2.5 h-2.5" />
+                                          {weeksWithNotesCount}
+                                        </span>
+                                      )}
+                                    </div>
+                                  </td>
+                                  <td className="py-3.5 px-3.5 whitespace-nowrap">
+                                    {item.general_status === 'Büyük ölçüde örtüşüyor' ? (
+                                      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-pill bg-forest text-neon-green border border-neon-green/30 text-[11px] font-mono">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-neon-green" />
+                                        Örtüşüyor
+                                      </span>
+                                    ) : item.general_status === 'Açıklığa kavuşturulması gereken noktalar var' ? (
+                                      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-pill bg-amber-950/40 text-amber-300 border border-amber-600/30 text-[11px] font-mono">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                                        Açıklık Gerekli
+                                      </span>
                                     ) : (
-                                      <Copy className="w-3.5 h-3.5" />
+                                      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-pill bg-rose-950/40 text-rose-300 border border-rose-600/30 text-[11px] font-mono">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
+                                        Ulaşılamadı
+                                      </span>
                                     )}
-                                  </button>
-                                </div>
-                              </td>
-                            </tr>
-                          ))}
+                                  </td>
+                                  <td className="py-3.5 px-3.5 text-shade-50 whitespace-nowrap text-[11px] truncate max-w-[140px]">
+                                    {item.student_name}
+                                  </td>
+                                  <td
+                                    className="py-3.5 px-3.5 text-right whitespace-nowrap"
+                                    onClick={(e) => e.stopPropagation()}
+                                  >
+                                    <div className="flex items-center justify-end gap-1.5">
+                                      <button
+                                        onClick={() => setDrawerRecord(item)}
+                                        title="Haftalık Yorum & Analiz Çekmecesini Aç (Drawer)"
+                                        className="p-1.5 rounded-lg bg-dark-forest border border-neon-green/30 text-neon-green hover:bg-forest hover:border-neon-green transition active:scale-95"
+                                      >
+                                        <MessageSquare className="w-3.5 h-3.5" />
+                                      </button>
+                                      <button
+                                        onClick={() => handleDownloadSingleCourseWord(item)}
+                                        title="Bu Dersin Word Raporunu İndir (.docx)"
+                                        className="p-1.5 rounded-lg bg-dark-forest border border-dark-border text-shade-30 hover:text-neon-green hover:border-neon-green transition active:scale-95"
+                                      >
+                                        <FileText className="w-3.5 h-3.5" />
+                                      </button>
+                                      <button
+                                        onClick={() => setSelectedRecordModal(item)}
+                                        title="Detaylı Raporu İncele"
+                                        className="p-1.5 rounded-lg bg-dark-forest border border-dark-border text-shade-30 hover:text-white hover:border-shade-70 transition active:scale-95"
+                                      >
+                                        <Eye className="w-3.5 h-3.5" />
+                                      </button>
+                                      <button
+                                        onClick={() => handleCopyRowReport(item.summary_report, item.id)}
+                                        title="Hoca Rapor Metnini Kopyala"
+                                        className="p-1.5 rounded-lg bg-dark-forest border border-dark-border text-shade-30 hover:text-neon-green hover:border-neon-green transition active:scale-95"
+                                      >
+                                        {rowCopiedId === item.id ? (
+                                          <CheckCheck className="w-3.5 h-3.5 text-neon-green" />
+                                        ) : (
+                                          <Copy className="w-3.5 h-3.5" />
+                                        )}
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+
+                                {/* IN-TABLE EXPANDABLE WEEKLY ANALYSIS ACCORDION (Dersin Tam Altına Açılan) */}
+                                {isExpanded && (
+                                  <tr className="bg-forest/20 border-b border-dark-border/80 animate-fadeIn">
+                                    <td colSpan={9} className="p-4 sm:p-5">
+                                      <div className="bg-dark-forest/95 border border-dark-border rounded-2xl p-4 sm:p-5 shadow-2xl space-y-4">
+                                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-dark-border pb-3">
+                                          <div>
+                                            <div className="flex items-center gap-2 mb-1">
+                                              <span className="text-[10px] font-mono uppercase text-neon-green bg-forest px-2.5 py-0.5 rounded-pill border border-dark-border">
+                                                Hafta Hafta Müfredat Analizi
+                                              </span>
+                                              <span className="text-xs text-white font-medium">
+                                                {item.course_code} - {item.course_name}
+                                              </span>
+                                            </div>
+                                            <p className="text-[11px] text-muted-text">
+                                              Bologna ders planındaki haftalık konular ile derste işlenenlerin karşılaştırması ve öğrenci yorumları.
+                                            </p>
+                                          </div>
+                                          
+                                          <div className="flex items-center gap-2 self-start sm:self-auto">
+                                            <button
+                                              onClick={() => setDrawerRecord(item)}
+                                              className="py-1.5 px-3 rounded-pill bg-deep-teal border border-dark-border hover:border-neon-green text-neon-green text-xs font-mono flex items-center gap-1.5 transition active:scale-95"
+                                            >
+                                              <MessageSquare className="w-3 h-3 text-neon-green" />
+                                              <span>Geniş Çekmecede Aç (Drawer)</span>
+                                            </button>
+                                            <button
+                                              onClick={() => setExpandedRowId(null)}
+                                              className="p-1.5 rounded-pill bg-dark-forest border border-dark-border text-shade-50 hover:text-white transition"
+                                              title="Kapat"
+                                            >
+                                              <X className="w-3.5 h-3.5" />
+                                            </button>
+                                          </div>
+                                        </div>
+
+                                        {weeks.length > 0 ? (
+                                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                            {weeks.map((w: any) => (
+                                              <div
+                                                key={w.week}
+                                                className={`p-3.5 rounded-xl border transition-all ${
+                                                  w.rating === 'tam_uyumlu'
+                                                    ? 'bg-deep-teal/90 border-dark-border hover:border-neon-green/30'
+                                                    : w.rating === 'kismen_uyumlu'
+                                                    ? 'bg-amber-950/20 border-amber-800/40'
+                                                    : 'bg-rose-950/20 border-rose-800/40'
+                                                }`}
+                                              >
+                                                <div className="flex items-center justify-between gap-2 mb-2">
+                                                  <div className="flex items-center gap-1.5">
+                                                    <span className="w-5 h-5 rounded-full bg-forest border border-neon-green/30 text-neon-green text-[10px] font-mono font-bold flex items-center justify-center">
+                                                      {w.week}
+                                                    </span>
+                                                    <span className="text-xs font-medium text-white">{w.week}. Hafta</span>
+                                                  </div>
+                                                  <span
+                                                    className={`text-[10px] font-mono px-2 py-0.5 rounded-pill border ${
+                                                      w.rating === 'tam_uyumlu'
+                                                        ? 'bg-forest text-neon-green border-neon-green/30'
+                                                        : w.rating === 'kismen_uyumlu'
+                                                        ? 'bg-amber-950/60 text-amber-300 border-amber-600/40'
+                                                        : 'bg-rose-950/60 text-rose-300 border-rose-600/40'
+                                                    }`}
+                                                  >
+                                                    {w.ratingLabel || (w.rating === 'tam_uyumlu' ? 'Birebir Örtüşüyor' : 'Farklı/Güncel')}
+                                                  </span>
+                                                </div>
+
+                                                <div className="text-xs text-white font-light">
+                                                  <span className="text-[10px] font-mono text-muted-text block mb-0.5">Bologna Konusu:</span>
+                                                  <p className="line-clamp-2 leading-relaxed">{w.topic}</p>
+                                                </div>
+
+                                                {/* Student Week Comment / Analysis */}
+                                                <div className="mt-2.5 pt-2 border-t border-dark-border/60">
+                                                  <div className="flex items-center gap-1 text-[10px] font-mono text-neon-green mb-1">
+                                                    <MessageSquare className="w-3 h-3" />
+                                                    <span>Öğrencinin Bu Hafta İçin Notu & Yorumu:</span>
+                                                  </div>
+                                                  {w.note && w.note.trim() ? (
+                                                    <div className="text-xs text-aloe bg-void/80 p-2.5 rounded-lg border border-dark-border font-mono leading-relaxed">
+                                                      &ldquo;{w.note}&rdquo;
+                                                    </div>
+                                                  ) : (
+                                                    <div className="text-[11px] text-shade-50 italic font-light p-1.5 rounded bg-void/30">
+                                                      Özel bir not girilmedi (Müfredatla tam uyumlu işlendi).
+                                                    </div>
+                                                  )}
+                                                </div>
+                                              </div>
+                                            ))}
+                                          </div>
+                                        ) : (
+                                          <div className="p-4 rounded-xl bg-deep-teal border border-dark-border text-center text-xs text-muted-text font-mono">
+                                            Haftalık detaylı konu yanıtı bulunamadı.
+                                          </div>
+                                        )}
+                                      </div>
+                                    </td>
+                                  </tr>
+                                )}
+                              </React.Fragment>
+                            );
+                          })}
                         </tbody>
                       </table>
                     </div>
@@ -1624,6 +1789,19 @@ export default function MobileBolognaShopifyApp() {
                         </div>
                       </div>
 
+                      {/* Quick jump to Weekly Drawer from Modal */}
+                      <button
+                        onClick={() => {
+                          const rec = selectedRecordModal;
+                          setSelectedRecordModal(null);
+                          setDrawerRecord(rec);
+                        }}
+                        className="w-full py-2.5 px-4 rounded-xl bg-forest/50 hover:bg-forest border border-neon-green/30 text-neon-green text-xs font-mono flex items-center justify-center gap-2 transition active:scale-95"
+                      >
+                        <MessageSquare className="w-3.5 h-3.5" />
+                        <span>Hafta Hafta Konu ve Yorum Dökümünü İncele (Drawer)</span>
+                      </button>
+
                       {/* Somut Örnek (if exists) */}
                       {selectedRecordModal.example_note && (
                         <div className="space-y-1">
@@ -1683,6 +1861,204 @@ export default function MobileBolognaShopifyApp() {
                           </button>
                           <button
                             onClick={() => handleCopyModalReport(selectedRecordModal.summary_report)}
+                            className="py-2.5 px-4 rounded-pill bg-white hover:bg-shade-30 text-black font-medium text-xs flex items-center gap-1.5 transition active:scale-95"
+                          >
+                            {modalCopied ? <CheckCheck className="w-3.5 h-3.5 text-black" /> : <Copy className="w-3.5 h-3.5 text-black" />}
+                            <span>{modalCopied ? 'Kopyalandı' : 'Raporu Kopyala'}</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* SLIDE-OVER WEEKLY ANALYSIS DRAWER (Sağdan Açılan Çekmece) */}
+                {drawerRecord && (
+                  <div
+                    className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 transition-opacity flex justify-end animate-fadeIn"
+                    onClick={() => setDrawerRecord(null)}
+                  >
+                    <div
+                      className="w-full max-w-xl bg-deep-teal border-l border-dark-border h-full flex flex-col shadow-2xl animate-slideLeft relative overflow-hidden"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {/* Drawer Top Header */}
+                      <div className="p-5 border-b border-dark-border bg-forest/40 flex items-start justify-between gap-3 shrink-0">
+                        <div>
+                          <div className="flex items-center gap-2 mb-1.5">
+                            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-forest text-neon-green border border-dark-border">
+                              {drawerRecord.course_code}
+                            </span>
+                            <span className="text-xs font-mono text-muted-text">
+                              {drawerRecord.class_year}. Sınıf • {drawerRecord.term}
+                            </span>
+                            <span className="text-[10px] font-mono text-shade-50">
+                              #{drawerRecord.id}
+                            </span>
+                          </div>
+                          <h3 className="text-lg font-light text-white leading-snug">
+                            {drawerRecord.course_name}
+                          </h3>
+                          <p className="text-xs text-muted-text font-light mt-0.5">
+                            {drawerRecord.instructor} • Temsilci: <span className="text-white">{drawerRecord.student_name}</span>
+                          </p>
+                        </div>
+
+                        <button
+                          onClick={() => setDrawerRecord(null)}
+                          className="p-2 rounded-full bg-dark-forest border border-dark-border text-shade-30 hover:text-white transition active:scale-95 shrink-0"
+                          title="Çekmeceyi Kapat"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+
+                      {/* Drawer Scrollable Content */}
+                      <div className="flex-1 overflow-y-auto p-5 space-y-4">
+                        {/* Status Summary Banner */}
+                        <div className="bg-dark-forest/70 border border-dark-border rounded-xl p-3.5 flex items-center justify-between">
+                          <div>
+                            <span className="text-[10px] font-mono text-muted-text uppercase block">İncelenen Hafta Aralığı</span>
+                            <span className="text-xs font-mono text-white">{drawerRecord.reviewed_weeks}</span>
+                          </div>
+                          <div className="text-right">
+                            <span className="text-[10px] font-mono text-muted-text uppercase block">Genel Durum</span>
+                            <span className="text-xs font-medium text-neon-green">{drawerRecord.general_status}</span>
+                          </div>
+                        </div>
+
+                        {/* Somut Örnek (if exists) */}
+                        {drawerRecord.example_note && (
+                          <div className="bg-dark-forest/70 border border-dark-border rounded-xl p-3.5 space-y-1">
+                            <span className="text-[10px] font-mono text-neon-green uppercase block">Genel Somut Örnek & Not</span>
+                            <p className="text-xs text-shade-30 font-light leading-relaxed">{drawerRecord.example_note}</p>
+                          </div>
+                        )}
+
+                        {/* Week-by-Week Section Title */}
+                        <div className="flex items-center justify-between pt-1">
+                          <h4 className="text-xs font-mono uppercase text-muted-text flex items-center gap-1.5">
+                            <Calendar className="w-3.5 h-3.5 text-neon-green" />
+                            <span>Haftalık Konu ve Öğrenci Not Dökümü</span>
+                          </h4>
+                          <span className="text-[10px] font-mono text-shade-50">
+                            {parseWeekAnswers(drawerRecord.week_answers).length} Hafta Kayıtlı
+                          </span>
+                        </div>
+
+                        {/* List of weeks */}
+                        {(() => {
+                          const weeks = parseWeekAnswers(drawerRecord.week_answers);
+                          if (!weeks.length) {
+                            return (
+                              <div className="p-6 rounded-xl bg-dark-forest border border-dark-border text-center text-xs text-muted-text font-mono">
+                                Bu ders için haftalık detaylı not verisi bulunamadı.
+                              </div>
+                            );
+                          }
+                          return (
+                            <div className="space-y-3">
+                              {weeks.map((w: any) => (
+                                <div
+                                  key={w.week}
+                                  className={`p-4 rounded-xl border transition-all ${
+                                    w.rating === 'tam_uyumlu'
+                                      ? 'bg-dark-forest/60 border-dark-border hover:border-dark-border/90'
+                                      : w.rating === 'kismen_uyumlu'
+                                      ? 'bg-amber-950/20 border-amber-800/40'
+                                      : 'bg-rose-950/20 border-rose-800/40'
+                                  }`}
+                                >
+                                  {/* Week Header */}
+                                  <div className="flex items-center justify-between gap-2 mb-2">
+                                    <div className="flex items-center gap-2">
+                                      <div className="w-6 h-6 rounded-full bg-forest border border-neon-green/30 text-neon-green text-xs font-mono font-bold flex items-center justify-center">
+                                        {w.week}
+                                      </div>
+                                      <span className="text-xs font-medium text-white">{w.week}. Hafta</span>
+                                    </div>
+                                    <span
+                                      className={`text-[10px] font-mono px-2.5 py-0.5 rounded-pill border ${
+                                        w.rating === 'tam_uyumlu'
+                                          ? 'bg-forest text-neon-green border-neon-green/30'
+                                          : w.rating === 'kismen_uyumlu'
+                                          ? 'bg-amber-950/50 text-amber-300 border-amber-600/40'
+                                          : 'bg-rose-950/50 text-rose-300 border-rose-600/40'
+                                      }`}
+                                    >
+                                      {w.ratingLabel || (w.rating === 'tam_uyumlu' ? 'Birebir Örtüşüyor' : 'Farklı/Güncel')}
+                                    </span>
+                                  </div>
+
+                                  {/* Bologna Syllabus Topic */}
+                                  <div className="space-y-1 mb-2">
+                                    <span className="text-[10px] font-mono text-muted-text uppercase block">
+                                      Bologna Konu Başlığı
+                                    </span>
+                                    <p className="text-xs text-white font-light leading-relaxed">
+                                      {w.topic}
+                                    </p>
+                                  </div>
+
+                                  {/* Resources if present */}
+                                  {w.resources && (
+                                    <p className="text-[11px] text-shade-50 font-light italic mb-2">
+                                      Kaynak: {w.resources}
+                                    </p>
+                                  )}
+
+                                  {/* Student's Comment / Analysis for this week */}
+                                  <div className="pt-2 border-t border-dark-border/70">
+                                    <div className="flex items-center gap-1.5 text-[10px] font-mono text-neon-green mb-1">
+                                      <MessageSquare className="w-3.5 h-3.5" />
+                                      <span>Temsilci / Öğrenci Analiz Yorumu:</span>
+                                    </div>
+                                    {w.note && w.note.trim() ? (
+                                      <div className="p-3 bg-void rounded-xl border border-dark-border text-xs text-aloe font-mono leading-relaxed">
+                                        &ldquo;{w.note}&rdquo;
+                                      </div>
+                                    ) : (
+                                      <div className="text-[11px] text-shade-50 italic font-light p-2 rounded-lg bg-void/40 border border-dark-border/40">
+                                        Özel bir not girilmedi. Konu müfredatla tam uyumlu ve eksiksiz işlendi.
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          );
+                        })()}
+
+                        {/* Official 4-item output preview */}
+                        <div className="space-y-1.5 pt-2">
+                          <label className="text-[11px] font-mono text-neon-green uppercase tracking-wider block">
+                            Hocaya İletilecek Resmi 4 Maddelik Özet
+                          </label>
+                          <div className="text-xs text-aloe bg-void p-3.5 rounded-xl border border-dark-border font-mono whitespace-pre-wrap leading-relaxed select-all">
+                            {drawerRecord.summary_report}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Drawer Footer Actions */}
+                      <div className="p-4 border-t border-dark-border bg-dark-forest/90 flex flex-wrap items-center justify-between gap-2 shrink-0">
+                        <button
+                          onClick={() => handleDownloadSingleCourseWord(drawerRecord)}
+                          className="py-2.5 px-4 rounded-pill bg-forest hover:bg-forest/80 border border-neon-green/40 text-neon-green text-xs font-light flex items-center gap-1.5 transition active:scale-95"
+                        >
+                          <FileText className="w-3.5 h-3.5 text-neon-green" />
+                          <span>Word Raporu İndir (.docx)</span>
+                        </button>
+
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => setDrawerRecord(null)}
+                            className="py-2.5 px-4 rounded-pill bg-deep-teal hover:bg-forest border border-dark-border text-xs text-shade-30 hover:text-white transition"
+                          >
+                            Kapat
+                          </button>
+                          <button
+                            onClick={() => handleCopyModalReport(drawerRecord.summary_report)}
                             className="py-2.5 px-4 rounded-pill bg-white hover:bg-shade-30 text-black font-medium text-xs flex items-center gap-1.5 transition active:scale-95"
                           >
                             {modalCopied ? <CheckCheck className="w-3.5 h-3.5 text-black" /> : <Copy className="w-3.5 h-3.5 text-black" />}
