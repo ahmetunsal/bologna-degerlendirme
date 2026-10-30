@@ -75,6 +75,336 @@ const cellBorders = {
 };
 
 /**
+ * Haftalık Konuları Kompakt Tablo Haline Getiren Yardımcı (Card İçine Gömülü)
+ */
+function createCompactWeeklyTable(answers: any[]): Table {
+  return new Table({
+    width: { size: 100, type: WidthType.PERCENTAGE },
+    rows: [
+      new TableRow({
+        children: [
+          new TableCell({
+            width: { size: 12, type: WidthType.PERCENTAGE },
+            shading: { type: ShadingType.CLEAR, fill: 'E2E8F0' },
+            borders: cellBorders,
+            margins: { top: 80, bottom: 80, left: 100, right: 100 },
+            children: [
+              new Paragraph({
+                alignment: AlignmentType.CENTER,
+                children: [new TextRun({ text: 'Hafta', bold: true, size: 15, color: '1E293B' })]
+              })
+            ]
+          }),
+          new TableCell({
+            width: { size: 48, type: WidthType.PERCENTAGE },
+            shading: { type: ShadingType.CLEAR, fill: 'E2E8F0' },
+            borders: cellBorders,
+            margins: { top: 80, bottom: 80, left: 100, right: 100 },
+            children: [
+              new Paragraph({
+                children: [new TextRun({ text: 'Bologna Konu Başlığı', bold: true, size: 15, color: '1E293B' })]
+              })
+            ]
+          }),
+          new TableCell({
+            width: { size: 20, type: WidthType.PERCENTAGE },
+            shading: { type: ShadingType.CLEAR, fill: 'E2E8F0' },
+            borders: cellBorders,
+            margins: { top: 80, bottom: 80, left: 100, right: 100 },
+            children: [
+              new Paragraph({
+                alignment: AlignmentType.CENTER,
+                children: [new TextRun({ text: 'Uyum Durumu', bold: true, size: 15, color: '1E293B' })]
+              })
+            ]
+          }),
+          new TableCell({
+            width: { size: 20, type: WidthType.PERCENTAGE },
+            shading: { type: ShadingType.CLEAR, fill: 'E2E8F0' },
+            borders: cellBorders,
+            margins: { top: 80, bottom: 80, left: 100, right: 100 },
+            children: [
+              new Paragraph({
+                children: [new TextRun({ text: 'Öğrenci Notu / Açıklama', bold: true, size: 15, color: '1E293B' })]
+              })
+            ]
+          })
+        ]
+      }),
+      ...answers.map((a: any) =>
+        new TableRow({
+          children: [
+            new TableCell({
+              borders: cellBorders,
+              margins: { top: 70, bottom: 70, left: 90, right: 90 },
+              children: [
+                new Paragraph({
+                  alignment: AlignmentType.CENTER,
+                  children: [new TextRun({ text: `${a.week}. Hafta`, size: 15, bold: true })]
+                })
+              ]
+            }),
+            new TableCell({
+              borders: cellBorders,
+              margins: { top: 70, bottom: 70, left: 90, right: 90 },
+              children: [
+                new Paragraph({
+                  children: [new TextRun({ text: a.topic || '-', size: 15 })]
+                })
+              ]
+            }),
+            new TableCell({
+              borders: cellBorders,
+              margins: { top: 70, bottom: 70, left: 90, right: 90 },
+              shading: {
+                type: ShadingType.CLEAR,
+                fill:
+                  a.rating === 'tam_uyumlu'
+                    ? 'E6F9F0'
+                    : a.rating === 'kismen_uyumlu'
+                    ? 'FFF8E6'
+                    : 'FDE8E8'
+              },
+              children: [
+                new Paragraph({
+                  alignment: AlignmentType.CENTER,
+                  children: [
+                    new TextRun({
+                      text: a.ratingLabel || (a.rating === 'tam_uyumlu' ? 'Birebir Örtüşüyor' : 'Farklı/Güncel'),
+                      size: 13,
+                      bold: true,
+                      color:
+                        a.rating === 'tam_uyumlu'
+                          ? '0E7044'
+                          : a.rating === 'kismen_uyumlu'
+                          ? 'A05500'
+                          : 'B91C1C'
+                    })
+                  ]
+                })
+              ]
+            }),
+            new TableCell({
+              borders: cellBorders,
+              margins: { top: 70, bottom: 70, left: 90, right: 90 },
+              children: [
+                new Paragraph({
+                  children: [
+                    new TextRun({
+                      text: a.note && a.note.trim() ? a.note : '-',
+                      size: 14,
+                      italics: !!(a.note && a.note.trim())
+                    })
+                  ]
+                })
+              ]
+            })
+          ]
+        })
+      )
+    ]
+  });
+}
+
+/**
+ * HER BİR DERS İÇİN ÇERÇEVELİ "DIV / KART" VE BOŞLUKLU DÜZEN
+ * Kullanıcı isteği: "her bir ders bir div, her birinde boşluk olsun, karışık durmasın"
+ */
+function createCourseCard(record: EvaluationRecordDoc, index: number): (Table | Paragraph)[] {
+  // Parse week answers safely
+  let answers: any[] = [];
+  if (Array.isArray(record.week_answers)) {
+    answers = record.week_answers;
+  } else if (typeof record.week_answers === 'string') {
+    try {
+      const parsed = JSON.parse(record.week_answers);
+      if (Array.isArray(parsed)) answers = parsed;
+    } catch {}
+  }
+
+  const statusColor =
+    record.general_status === 'Büyük ölçüde örtüşüyor'
+      ? '0E7044'
+      : record.general_status === 'Açıklığa kavuşturulması gereken noktalar var'
+      ? 'A05500'
+      : 'B91C1C';
+
+  const cardBorders = {
+    top: { style: BorderStyle.SINGLE, size: 8, color: '1A5C4A' },
+    bottom: { style: BorderStyle.SINGLE, size: 10, color: 'CBD5E1' },
+    left: { style: BorderStyle.SINGLE, size: 24, color: '0F382C' }, // Kalın zümrüt vurgu çizgisi (HTML border-left: 4px solid)
+    right: { style: BorderStyle.SINGLE, size: 8, color: 'CBD5E1' }
+  };
+
+  // 1. KART BAŞLIĞI (Kurumsal Yeşil Banner)
+  const headerRow = new TableRow({
+    children: [
+      new TableCell({
+        shading: { type: ShadingType.CLEAR, fill: '1A5C4A' },
+        borders: {
+          top: cardBorders.top,
+          bottom: { style: BorderStyle.SINGLE, size: 4, color: '14493A' },
+          left: cardBorders.left,
+          right: cardBorders.right
+        },
+        margins: { top: 140, bottom: 140, left: 180, right: 180 },
+        children: [
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: `${index + 1}. DERS: [${record.course_code}] ${record.course_name}`,
+                bold: true,
+                size: 20,
+                color: 'FFFFFF'
+              })
+            ]
+          }),
+          new Paragraph({
+            spacing: { before: 40 },
+            children: [
+              new TextRun({
+                text: `Öğretim Elemanı: ${record.instructor || '-'}`,
+                size: 16,
+                color: 'E2F2EC'
+              })
+            ]
+          })
+        ]
+      })
+    ]
+  });
+
+  // 2. KART META ŞERİDİ (Hafta, Durum, Öğrenci)
+  const metaRow = new TableRow({
+    children: [
+      new TableCell({
+        shading: { type: ShadingType.CLEAR, fill: 'F1F5F9' },
+        borders: {
+          top: { style: BorderStyle.NONE, size: 0, color: 'auto' },
+          bottom: { style: BorderStyle.SINGLE, size: 4, color: 'E2E8F0' },
+          left: cardBorders.left,
+          right: cardBorders.right
+        },
+        margins: { top: 90, bottom: 90, left: 180, right: 180 },
+        children: [
+          new Paragraph({
+            children: [
+              new TextRun({ text: 'İncelenen Hafta: ', bold: true, size: 16 }),
+              new TextRun({ text: `${record.reviewed_weeks || '-'}     |     `, size: 16 }),
+              new TextRun({ text: 'Genel Durum: ', bold: true, size: 16 }),
+              new TextRun({ text: `${record.general_status}     |     `, bold: true, size: 16, color: statusColor }),
+              new TextRun({ text: 'Değerlendiren: ', bold: true, size: 16 }),
+              new TextRun({ text: `${record.student_name || 'Sınıf Temsilcisi'}`, size: 16, bold: true })
+            ]
+          })
+        ]
+      })
+    ]
+  });
+
+  // 3. KART GÖVDESİ (4 Maddelik Resmi Metin, Somut Örnek ve Haftalık Döküm)
+  const bodyChildren: any[] = [
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: 'Öğretim Üyesine İletilecek Resmi Geri Bildirim Metni (4 Madde):',
+          bold: true,
+          size: 17,
+          color: '1A5C4A'
+        })
+      ]
+    }),
+    new Paragraph({
+      spacing: { before: 80, after: 120 },
+      shading: { type: ShadingType.CLEAR, fill: 'F8FAFC' },
+      children: [
+        new TextRun({
+          text: record.summary_report,
+          size: 16,
+          font: 'Consolas',
+          color: '1E293B'
+        })
+      ]
+    })
+  ];
+
+  if (record.example_note && record.example_note.trim()) {
+    bodyChildren.push(
+      new Paragraph({
+        spacing: { before: 80 },
+        children: [
+          new TextRun({
+            text: 'Öğrencinin Somut Örnek ve Açıklama Notu:',
+            bold: true,
+            size: 16,
+            color: '92400E'
+          })
+        ]
+      }),
+      new Paragraph({
+        spacing: { before: 60, after: 120 },
+        shading: { type: ShadingType.CLEAR, fill: 'FFFDF5' },
+        children: [
+          new TextRun({
+            text: record.example_note,
+            size: 16,
+            italics: true,
+            color: '451A03'
+          })
+        ]
+      })
+    );
+  }
+
+  // Haftalık Konu Dökümü (varsa)
+  if (answers.length > 0) {
+    bodyChildren.push(
+      new Paragraph({
+        spacing: { before: 100, after: 80 },
+        children: [
+          new TextRun({
+            text: 'Hafta Bazında Konu Karşılaştırma ve Not Dökümü:',
+            bold: true,
+            size: 16,
+            color: '1A5C4A'
+          })
+        ]
+      }),
+      createCompactWeeklyTable(answers)
+    );
+  }
+
+  const bodyRow = new TableRow({
+    children: [
+      new TableCell({
+        shading: { type: ShadingType.CLEAR, fill: 'FAFBFC' },
+        borders: {
+          top: { style: BorderStyle.NONE, size: 0, color: 'auto' },
+          bottom: cardBorders.bottom,
+          left: cardBorders.left,
+          right: cardBorders.right
+        },
+        margins: { top: 160, bottom: 180, left: 180, right: 180 },
+        children: bodyChildren
+      })
+    ]
+  });
+
+  const cardTable = new Table({
+    width: { size: 100, type: WidthType.PERCENTAGE },
+    rows: [headerRow, metaRow, bodyRow]
+  });
+
+  // Dersler Arası Nefes Alan Boşluk ("her bir ders bir div, 2px boşluk olsun"):
+  const cardSpacer = new Paragraph({
+    spacing: { before: 300, after: 150 },
+    children: []
+  });
+
+  return [cardTable, cardSpacer];
+}
+
+/**
  * 1) TEKİL DERS İÇİN WORD RAPORU (.docx)
  */
 export async function downloadSingleCourseDocx(record: EvaluationRecordDoc) {
@@ -241,56 +571,11 @@ export async function downloadSingleCourseDocx(record: EvaluationRecordDoc) {
 
           new Paragraph({ spacing: { before: 300, after: 150 }, children: [] }),
 
-          // Bölüm 1: 4 Maddelik Resmi Format
-          new Paragraph({
-            heading: HeadingLevel.HEADING_2,
-            children: [
-              new TextRun({
-                text: '1. Öğretim Üyesine İletilecek Resmi Geri Bildirim Şablonu (4 Madde)',
-                bold: true,
-                size: 20,
-                color: '1A5C4A'
-              })
-            ]
-          }),
-          new Paragraph({
-            spacing: { before: 100, after: 200 },
-            children: [
-              new TextRun({
-                text: record.summary_report,
-                size: 19,
-                font: 'Consolas'
-              })
-            ]
-          }),
-
-          // Bölüm 2: Varsa Somut Örnek
-          new Paragraph({
-            heading: HeadingLevel.HEADING_2,
-            children: [
-              new TextRun({
-                text: '2. Tespit Edilen Somut Örnekler ve Açıklamalar',
-                bold: true,
-                size: 20,
-                color: '1A5C4A'
-              })
-            ]
-          }),
-          new Paragraph({
-            spacing: { before: 100, after: 300 },
-            children: [
-              new TextRun({
-                text: record.example_note || 'Herhangi bir uyumsuzluk bildirilmemiş, ders planına uygun yürütülmüştür.',
-                size: 18
-              })
-            ]
-          }),
-
-          // Bölüm 3: Haftalık Detaylar (varsa)
-          ...(renderWeeklyDetails(record)),
+          // Course Card (Çerçeveli Kutu Görünümü)
+          ...createCourseCard(record, 0),
 
           // Signatures
-          new Paragraph({ spacing: { before: 600 }, children: [] }),
+          new Paragraph({ spacing: { before: 400 }, children: [] }),
           new Table({
             width: { size: 100, type: WidthType.PERCENTAGE },
             rows: [
@@ -349,8 +634,7 @@ export async function downloadSingleCourseDocx(record: EvaluationRecordDoc) {
 
 /**
  * 2) SINIF BAZLI (VE MÜKERRER BİLDİRİMLERİ AYRIŞTIRAN) RESMİ WORD RAPORU (.docx)
- * Kullanıcı isteği: Sınıf bazlı gruplama ve mükerrer sınıf kayıtlarında (örn. 4. sınıftan hem A hem B bildirdiyse)
- * isimlerin ve derslerin ayrı ayrı düzenlenmesi.
+ * Her bir ders çerçeveli bir kart/div şeklinde, aralarında nefes alan boşluklarla düzenlenir.
  */
 export async function downloadClassGroupedDocx(records: EvaluationRecordDoc[]) {
   if (!records.length) return;
@@ -513,7 +797,7 @@ export async function downloadClassGroupedDocx(records: EvaluationRecordDoc[]) {
       })
     ];
 
-    // If multiple students submitted for this same class (mükerrer bildirim):
+    // Mükerrer bildirim kutusu
     if (hasMultipleStudents) {
       children.push(
         new Paragraph({ spacing: { before: 200, after: 100 }, children: [] }),
@@ -555,7 +839,7 @@ export async function downloadClassGroupedDocx(records: EvaluationRecordDoc[]) {
       );
     }
 
-    // Combined Course Overview Table for this Class
+    // Sınıf Genel Özeti Tablosu
     children.push(
       new Paragraph({ spacing: { before: 250, after: 120 }, children: [] }),
       new Paragraph({
@@ -660,14 +944,14 @@ export async function downloadClassGroupedDocx(records: EvaluationRecordDoc[]) {
       new Paragraph({ spacing: { before: 250 }, children: [] })
     );
 
-    // Now, loop through each distinct student in this class and output their distinct section & detailed reports
+    // Her öğrenci için ayrı bölüm ve her ders için çerçeveli kart (div)
     studentNames.forEach((sName, sIdx) => {
       const studentRecs = studentMap[sName];
 
       children.push(
         new Paragraph({
           heading: HeadingLevel.HEADING_2,
-          spacing: { before: 300, after: 120 },
+          spacing: { before: 300, after: 150 },
           children: [
             new TextRun({
               text: hasMultipleStudents
@@ -681,70 +965,9 @@ export async function downloadClassGroupedDocx(records: EvaluationRecordDoc[]) {
         })
       );
 
-      // Render each course reported by this student
+      // Render each course reported by this student as an encapsulated Div Card with spacing
       studentRecs.forEach((record, cIdx) => {
-        children.push(
-          new Paragraph({
-            spacing: { before: 180, after: 80 },
-            children: [
-              new TextRun({
-                text: `${cIdx + 1}. ${record.course_code} - ${record.course_name}`,
-                bold: true,
-                size: 18,
-                color: '1A5C4A'
-              }),
-              new TextRun({
-                text: ` (${record.instructor})`,
-                size: 16,
-                color: '666666'
-              })
-            ]
-          }),
-          new Paragraph({
-            children: [
-              new TextRun({ text: 'Değerlendiren Öğrenci: ', bold: true, size: 16 }),
-              new TextRun({ text: `${record.student_name}    `, size: 16 }),
-              new TextRun({ text: 'İncelenen Hafta: ', bold: true, size: 16 }),
-              new TextRun({ text: `${record.reviewed_weeks}    `, size: 16 }),
-              new TextRun({ text: 'Genel Durum: ', bold: true, size: 16 }),
-              new TextRun({
-                text: record.general_status,
-                bold: true,
-                size: 16,
-                color: record.general_status === 'Büyük ölçüde örtüşüyor' ? '0E7044' : 'A05500'
-              })
-            ]
-          }),
-          new Paragraph({
-            spacing: { before: 80, after: 80 },
-            shading: { type: ShadingType.CLEAR, fill: 'F7F9FA' },
-            children: [
-              new TextRun({
-                text: 'Hocaya İletilecek Resmi 4 Maddelik Metin:\n',
-                bold: true,
-                size: 16,
-                color: '333333'
-              }),
-              new TextRun({
-                text: record.summary_report,
-                size: 16,
-                font: 'Consolas'
-              })
-            ]
-          })
-        );
-
-        if (record.example_note) {
-          children.push(
-            new Paragraph({
-              spacing: { after: 120 },
-              children: [
-                new TextRun({ text: 'Öğrencinin Somut Örnek ve Notu: ', bold: true, size: 16 }),
-                new TextRun({ text: record.example_note, size: 16, italics: true })
-              ]
-            })
-          );
-        }
+        children.push(...createCourseCard(record, cIdx));
       });
 
       // Signature block for this student
@@ -818,90 +1041,3 @@ export async function downloadClassGroupedDocx(records: EvaluationRecordDoc[]) {
 
 // Keep downloadStudentGroupedDocx as an alias so existing callers work seamlessly
 export const downloadStudentGroupedDocx = downloadClassGroupedDocx;
-
-// Render weekly breakdown if available
-function renderWeeklyDetails(record: EvaluationRecordDoc): any[] {
-  let answers: any[] = [];
-  if (Array.isArray(record.week_answers)) {
-    answers = record.week_answers;
-  } else if (typeof record.week_answers === 'string') {
-    try {
-      const parsed = JSON.parse(record.week_answers);
-      if (Array.isArray(parsed)) answers = parsed;
-    } catch {}
-  }
-
-  if (!answers.length) return [];
-
-  const rows: TableRow[] = [
-    new TableRow({
-      children: [
-        new TableCell({
-          width: { size: 12, type: WidthType.PERCENTAGE },
-          shading: { type: ShadingType.CLEAR, fill: 'EAEFEF' },
-          borders: cellBorders,
-          children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: 'Hafta', bold: true, size: 16 })] })]
-        }),
-        new TableCell({
-          width: { size: 48, type: WidthType.PERCENTAGE },
-          shading: { type: ShadingType.CLEAR, fill: 'EAEFEF' },
-          borders: cellBorders,
-          children: [new Paragraph({ children: [new TextRun({ text: 'Bologna Konu Başlığı', bold: true, size: 16 })] })]
-        }),
-        new TableCell({
-          width: { size: 20, type: WidthType.PERCENTAGE },
-          shading: { type: ShadingType.CLEAR, fill: 'EAEFEF' },
-          borders: cellBorders,
-          children: [new Paragraph({ children: [new TextRun({ text: 'Değerlendirme', bold: true, size: 16 })] })]
-        }),
-        new TableCell({
-          width: { size: 20, type: WidthType.PERCENTAGE },
-          shading: { type: ShadingType.CLEAR, fill: 'EAEFEF' },
-          borders: cellBorders,
-          children: [new Paragraph({ children: [new TextRun({ text: 'Öğrenci Notu', bold: true, size: 16 })] })]
-        })
-      ]
-    }),
-    ...answers.map(
-      (a: any) =>
-        new TableRow({
-          children: [
-            new TableCell({
-              borders: cellBorders,
-              children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: `${a.week}. Hafta`, size: 16 })] })]
-            }),
-            new TableCell({
-              borders: cellBorders,
-              children: [new Paragraph({ children: [new TextRun({ text: a.topic || '-', size: 16 })] })]
-            }),
-            new TableCell({
-              borders: cellBorders,
-              children: [new Paragraph({ children: [new TextRun({ text: a.ratingLabel || a.rating || '-', size: 16 })] })]
-            }),
-            new TableCell({
-              borders: cellBorders,
-              children: [new Paragraph({ children: [new TextRun({ text: a.note || '-', size: 16, italics: true })] })]
-            })
-          ]
-        })
-    )
-  ];
-
-  return [
-    new Paragraph({
-      heading: HeadingLevel.HEADING_2,
-      children: [
-        new TextRun({
-          text: '3. Hafta Bazında Detaylı Bologna Konu Karşılaştırması',
-          bold: true,
-          size: 20,
-          color: '1A5C4A'
-        })
-      ]
-    }),
-    new Table({
-      width: { size: 100, type: WidthType.PERCENTAGE },
-      rows
-    })
-  ];
-}
