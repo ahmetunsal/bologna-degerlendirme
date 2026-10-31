@@ -38,9 +38,15 @@ import {
   FileSpreadsheet,
   ChevronDown,
   ChevronUp,
-  MessageSquare
+  MessageSquare,
+  AlertTriangle
 } from 'lucide-react';
-import { downloadSingleCourseDocx, downloadClassGroupedDocx } from '@/utils/docxExport';
+import {
+  downloadSingleCourseDocx,
+  downloadClassGroupedDocx,
+  downloadMismatchesOnlyDocx,
+  isMismatchRecord
+} from '@/utils/docxExport';
 
 const SCALE_OPTIONS: ScaleOption[] = [
   {
@@ -140,6 +146,8 @@ export default function MobileBolognaShopifyApp() {
   };
 
   // Table filters & Modal state
+  const [activeHistoryTab, setActiveHistoryTab] = useState<'all' | 'mismatches'>('all');
+  const [isExportingMismatchesDocx, setIsExportingMismatchesDocx] = useState(false);
   const [tableSearch, setTableSearch] = useState('');
   const [tableYearFilter, setTableYearFilter] = useState<'all' | number>('all');
   const [tableStatusFilter, setTableStatusFilter] = useState<'all' | string>('all');
@@ -181,6 +189,11 @@ export default function MobileBolognaShopifyApp() {
   // Filtered history records for Table
   const filteredHistoryRecords = useMemo(() => {
     return historyRecords.filter((item) => {
+      // Sadece Uyuşmayanlar sekmesi filtresi
+      if (activeHistoryTab === 'mismatches' && !isMismatchRecord(item)) {
+        return false;
+      }
+
       const q = tableSearch.toLowerCase().trim();
       const matchSearch =
         !q ||
@@ -197,7 +210,7 @@ export default function MobileBolognaShopifyApp() {
 
       return matchSearch && matchYear && matchStatus;
     });
-  }, [historyRecords, tableSearch, tableYearFilter, tableStatusFilter]);
+  }, [historyRecords, tableSearch, tableYearFilter, tableStatusFilter, activeHistoryTab]);
 
   // Table summary stats
   const historyStats = useMemo(() => {
@@ -211,7 +224,8 @@ export default function MobileBolognaShopifyApp() {
     const ulasilamadi = historyRecords.filter(
       (r) => r.general_status === 'Bilgi paketine ulaşılamadı'
     ).length;
-    return { total, uyumlu, aciklik, ulasilamadi };
+    const mismatchesCount = historyRecords.filter((r) => isMismatchRecord(r)).length;
+    return { total, uyumlu, aciklik, ulasilamadi, mismatchesCount };
   }, [historyRecords]);
 
   // Export records to CSV / Excel
@@ -255,7 +269,9 @@ export default function MobileBolognaShopifyApp() {
     link.href = url;
     link.setAttribute(
       'download',
-      `bologna_ders_degerlendirmeleri_${new Date().toISOString().slice(0, 10)}.csv`
+      activeHistoryTab === 'mismatches'
+        ? `bologna_uyusmayan_dersler_${new Date().toISOString().slice(0, 10)}.csv`
+        : `bologna_ders_degerlendirmeleri_${new Date().toISOString().slice(0, 10)}.csv`
     );
     document.body.appendChild(link);
     link.click();
@@ -289,6 +305,19 @@ export default function MobileBolognaShopifyApp() {
     }
   };
   const handleDownloadStudentWordReport = handleDownloadClassWordReport;
+
+  const handleDownloadMismatchesWordReport = async () => {
+    if (!historyRecords.length) return;
+    setIsExportingMismatchesDocx(true);
+    try {
+      await downloadMismatchesOnlyDocx(historyRecords);
+    } catch (err) {
+      console.error('Mismatches Word export error:', err);
+      alert('Uyuşmayan dersler Word raporu oluşturulurken bir hata oluştu.');
+    } finally {
+      setIsExportingMismatchesDocx(false);
+    }
+  };
 
   const handleDownloadSingleCourseWord = async (record: any) => {
     try {
@@ -1318,6 +1347,20 @@ export default function MobileBolognaShopifyApp() {
 
                     <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
                       <button
+                        onClick={handleDownloadMismatchesWordReport}
+                        disabled={historyStats.mismatchesCount === 0 || isExportingMismatchesDocx}
+                        className="py-2 px-3.5 rounded-pill bg-amber-950/40 hover:bg-amber-950/70 border border-amber-500/50 hover:border-amber-400 text-amber-300 text-xs font-light flex items-center gap-1.5 transition active:scale-95 disabled:opacity-50 disabled:pointer-events-none shadow-sm"
+                        title="Bologna müfredatıyla uyuşmayan veya açıklık gerektiren derslerin özel Word raporunu indir (.docx)"
+                      >
+                        <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
+                        <span>
+                          {isExportingMismatchesDocx
+                            ? 'Hazırlanıyor...'
+                            : `Uyuşmayanlar Word Raporu (${historyStats.mismatchesCount})`}
+                        </span>
+                      </button>
+
+                      <button
                         onClick={handleDownloadClassWordReport}
                         disabled={filteredHistoryRecords.length === 0 || isExportingDocx}
                         className="py-2 px-3.5 rounded-pill bg-forest hover:bg-forest/80 border border-neon-green/40 text-neon-green text-xs font-light flex items-center gap-1.5 transition active:scale-95 disabled:opacity-50 disabled:pointer-events-none shadow-sm"
@@ -1349,15 +1392,32 @@ export default function MobileBolognaShopifyApp() {
                     </div>
                   </div>
 
-                  {/* Summary Metric Badges */}
+                  {/* Summary Metric Badges (Tıklanabilir Filtreler) */}
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-4 mt-4 border-t border-dark-border/80">
-                    <div className="bg-dark-forest/80 border border-dark-border rounded-xl p-3">
-                      <div className="text-[11px] text-muted-text font-mono">Toplam Kayıt</div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveHistoryTab('all');
+                        setTableStatusFilter('all');
+                      }}
+                      className="text-left bg-dark-forest/80 hover:bg-dark-forest border border-dark-border hover:border-shade-70 rounded-xl p-3 transition active:scale-95 cursor-pointer group"
+                      title="Tüm kayıtları listele"
+                    >
+                      <div className="text-[11px] text-muted-text group-hover:text-white font-mono transition">Toplam Kayıt</div>
                       <div className="text-lg font-light text-white font-mono mt-0.5">
                         {historyStats.total}
                       </div>
-                    </div>
-                    <div className="bg-forest/50 border border-neon-green/20 rounded-xl p-3">
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveHistoryTab('all');
+                        setTableStatusFilter('Büyük ölçüde örtüşüyor');
+                      }}
+                      className="text-left bg-forest/50 hover:bg-forest/70 border border-neon-green/20 hover:border-neon-green/50 rounded-xl p-3 transition active:scale-95 cursor-pointer group"
+                      title="Müfredatla örtüşen dersleri filtrele"
+                    >
                       <div className="text-[11px] text-neon-green font-mono flex items-center gap-1.5">
                         <span className="w-1.5 h-1.5 rounded-full bg-neon-green" />
                         Örtüşüyor
@@ -1365,8 +1425,17 @@ export default function MobileBolognaShopifyApp() {
                       <div className="text-lg font-light text-white font-mono mt-0.5">
                         {historyStats.uyumlu}
                       </div>
-                    </div>
-                    <div className="bg-amber-950/20 border border-amber-600/30 rounded-xl p-3">
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveHistoryTab('mismatches');
+                        setTableStatusFilter('Açıklığa kavuşturulması gereken noktalar var');
+                      }}
+                      className="text-left bg-amber-950/20 hover:bg-amber-950/40 border border-amber-600/30 hover:border-amber-500/60 rounded-xl p-3 transition active:scale-95 cursor-pointer group"
+                      title="Açıklık gereken uyuşmazlıkları filtrele"
+                    >
                       <div className="text-[11px] text-amber-300 font-mono flex items-center gap-1.5">
                         <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
                         Açıklık Gereken
@@ -1374,8 +1443,17 @@ export default function MobileBolognaShopifyApp() {
                       <div className="text-lg font-light text-white font-mono mt-0.5">
                         {historyStats.aciklik}
                       </div>
-                    </div>
-                    <div className="bg-rose-950/20 border border-rose-600/30 rounded-xl p-3">
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveHistoryTab('mismatches');
+                        setTableStatusFilter('Bilgi paketine ulaşılamadı');
+                      }}
+                      className="text-left bg-rose-950/20 hover:bg-rose-950/40 border border-rose-600/30 hover:border-rose-500/60 rounded-xl p-3 transition active:scale-95 cursor-pointer group"
+                      title="Bilgi paketine ulaşılamayan dersleri filtrele"
+                    >
                       <div className="text-[11px] text-rose-300 font-mono flex items-center gap-1.5">
                         <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
                         Ulaşılamadı
@@ -1383,9 +1461,113 @@ export default function MobileBolognaShopifyApp() {
                       <div className="text-lg font-light text-white font-mono mt-0.5">
                         {historyStats.ulasilamadi}
                       </div>
-                    </div>
+                    </button>
                   </div>
                 </div>
+
+                {/* View Toggle Tabs: Tüm Değerlendirmeler vs Sadece Uyuşmayanlar */}
+                <div className="flex flex-wrap items-center justify-between gap-2.5 pt-1">
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveHistoryTab('all');
+                        setTableStatusFilter('all');
+                      }}
+                      className={`py-2 px-4 rounded-pill text-xs font-mono flex items-center gap-2 transition cursor-pointer ${
+                        activeHistoryTab === 'all'
+                          ? 'bg-forest text-neon-green border border-neon-green/50 shadow-sm font-medium'
+                          : 'bg-dark-forest/80 text-shade-30 hover:text-white border border-dark-border hover:border-shade-70'
+                      }`}
+                    >
+                      <Layers className="w-3.5 h-3.5" />
+                      <span>📋 Tüm Değerlendirmeler</span>
+                      <span
+                        className={`px-2 py-0.5 rounded-full text-[10px] ${
+                          activeHistoryTab === 'all'
+                            ? 'bg-neon-green/20 text-neon-green font-medium'
+                            : 'bg-forest text-shade-30'
+                        }`}
+                      >
+                        {historyStats.total}
+                      </span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveHistoryTab('mismatches');
+                        setTableStatusFilter('all');
+                      }}
+                      className={`py-2 px-4 rounded-pill text-xs font-mono flex items-center gap-2 transition cursor-pointer ${
+                        activeHistoryTab === 'mismatches'
+                          ? 'bg-amber-950/70 text-amber-300 border border-amber-500/80 shadow-sm font-medium ring-1 ring-amber-500/30'
+                          : 'bg-dark-forest/80 text-shade-30 hover:text-amber-300 border border-dark-border hover:border-amber-500/40'
+                      }`}
+                    >
+                      <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
+                      <span>⚠️ Sadece Uyuşmayanlar</span>
+                      <span
+                        className={`px-2 py-0.5 rounded-full text-[10px] ${
+                          activeHistoryTab === 'mismatches'
+                            ? 'bg-amber-500/30 text-amber-200 font-bold'
+                            : 'bg-amber-950/50 text-amber-400 border border-amber-600/30'
+                        }`}
+                      >
+                        {historyStats.mismatchesCount}
+                      </span>
+                    </button>
+                  </div>
+
+                  {activeHistoryTab === 'mismatches' && (
+                    <span className="text-[11px] font-mono text-amber-400/90 bg-amber-950/30 border border-amber-600/30 px-3 py-1 rounded-pill">
+                      ⚠️ Müfredat Uyuşmazlığı Filtresi Aktif
+                    </span>
+                  )}
+                </div>
+
+                {/* Sadece Uyuşmayanlar Uyarı ve Hızlı Aksiyon Banner'ı */}
+                {activeHistoryTab === 'mismatches' && (
+                  <div className="bg-amber-950/30 border border-amber-600/40 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-shopify-card animate-fadeIn">
+                    <div className="flex items-start gap-3">
+                      <div className="p-2.5 rounded-xl bg-amber-900/50 border border-amber-500/40 text-amber-400 shrink-0">
+                        <AlertTriangle className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium text-amber-200 flex items-center gap-2">
+                          <span>Müfredatla Uyuşmayan / Açıklık Gerektiren Dersler İzole Edildi</span>
+                          <span className="px-2 py-0.5 rounded-full text-[10px] bg-amber-900/60 text-amber-300 border border-amber-500/40 font-mono">
+                            {filteredHistoryRecords.length} Ders
+                          </span>
+                        </div>
+                        <p className="text-xs text-amber-300/80 mt-1 font-light leading-relaxed">
+                          Bologna bilgi paketindeki ders izlencesi ile sınıfta işlenen müfredat arasında farklılık veya açıklığa kavuşturulması gereken noktalar bildirilen dersler listelenmektedir.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 self-stretch sm:self-auto shrink-0">
+                      <button
+                        onClick={handleDownloadMismatchesWordReport}
+                        disabled={isExportingMismatchesDocx || historyStats.mismatchesCount === 0}
+                        className="w-full sm:w-auto py-2 px-3.5 rounded-pill bg-amber-500 hover:bg-amber-400 text-black font-medium text-xs flex items-center justify-center gap-1.5 transition active:scale-95 shadow-sm"
+                        title="Uyuşmayan dersler için özel Word raporu indir (.docx)"
+                      >
+                        <FileText className="w-3.5 h-3.5 text-black" />
+                        <span>{isExportingMismatchesDocx ? 'Hazırlanıyor...' : 'Uyuşmayanlar Word Raporu (.docx)'}</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          setActiveHistoryTab('all');
+                          setTableStatusFilter('all');
+                        }}
+                        className="py-2 px-3 rounded-pill bg-dark-forest hover:bg-forest border border-dark-border text-shade-30 hover:text-white text-xs font-mono transition"
+                        title="Tüm değerlendirmeleri göster"
+                      >
+                        Tümünü Göster
+                      </button>
+                    </div>
+                  </div>
+                )}
 
                 {/* Filter and Search Bar */}
                 <div className="bg-deep-teal border border-dark-border rounded-2xl p-3 shadow-shopify-card flex flex-col md:flex-row gap-2.5 items-stretch md:items-center justify-between">
@@ -1468,6 +1650,7 @@ export default function MobileBolognaShopifyApp() {
                         <tbody className="divide-y divide-dark-border/50 text-xs font-light">
                           {filteredHistoryRecords.map((item) => {
                             const isExpanded = expandedRowId === item.id;
+                            const isMismatch = isMismatchRecord(item);
                             const weeks = parseWeekAnswers(item.week_answers);
                             const weeksWithNotesCount = weeks.filter((w: any) => w.note && w.note.trim()).length;
 
@@ -1475,7 +1658,11 @@ export default function MobileBolognaShopifyApp() {
                               <React.Fragment key={item.id}>
                                 <tr
                                   className={`hover:bg-dark-forest/70 transition-colors group cursor-pointer ${
-                                    isExpanded ? 'bg-dark-forest/60' : ''
+                                    isExpanded
+                                      ? 'bg-dark-forest/60'
+                                      : isMismatch
+                                      ? 'bg-amber-950/15 hover:bg-amber-950/25'
+                                      : ''
                                   }`}
                                   onClick={() => setExpandedRowId(isExpanded ? null : item.id)}
                                 >
@@ -1501,13 +1688,22 @@ export default function MobileBolognaShopifyApp() {
                                     {formatDate(item.created_at)}
                                   </td>
                                   <td className="py-3.5 px-3.5">
-                                    <div className="flex items-center gap-2">
+                                    <div className="flex flex-wrap items-center gap-2">
                                       <span className="font-mono text-[10px] font-medium px-2 py-0.5 rounded bg-forest text-neon-green border border-dark-border shrink-0">
                                         {item.course_code}
                                       </span>
                                       <span className="text-white font-medium group-hover:text-neon-green transition-colors line-clamp-1">
                                         {item.course_name}
                                       </span>
+                                      {isMismatch && (
+                                        <span
+                                          title="Bu derste Bologna izlencesiyle uyuşmazlık veya açıklık gereken hususlar bildirildi"
+                                          className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-amber-950/60 text-amber-300 border border-amber-600/40 shrink-0"
+                                        >
+                                          <AlertTriangle className="w-2.5 h-2.5 text-amber-400" />
+                                          <span>Uyuşmazlık</span>
+                                        </span>
+                                      )}
                                     </div>
                                   </td>
                                   <td className="py-3.5 px-3.5 whitespace-nowrap font-mono text-shade-30 text-[11px]">

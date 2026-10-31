@@ -31,6 +31,38 @@ export interface EvaluationRecordDoc {
   summary_report: string;
 }
 
+export interface ClassGroupedOptions {
+  isMismatchesOnly?: boolean;
+  reportTitle?: string;
+  filename?: string;
+}
+
+/**
+ * Bir ders kaydının Bologna müfredatı ile uyuşmazlık içerip içermediğini tespit eder
+ */
+export function isMismatchRecord(record: EvaluationRecordDoc): boolean {
+  if (!record) return false;
+  // 1) Genel durum tam uyumlu ('Büyük ölçüde örtüşüyor') değilse
+  if (record.general_status && record.general_status !== 'Büyük ölçüde örtüşüyor') {
+    return true;
+  }
+  // 2) Hafta cevaplarında 'farkli' veya 'islenmedi' işaretlenmişse
+  let answers: any[] = [];
+  if (Array.isArray(record.week_answers)) {
+    answers = record.week_answers;
+  } else if (typeof record.week_answers === 'string') {
+    try {
+      const parsed = JSON.parse(record.week_answers);
+      if (Array.isArray(parsed)) answers = parsed;
+    } catch {}
+  }
+
+  return answers.some((a) => {
+    const r = String(a?.rating || '').toLowerCase().trim();
+    return r === 'farkli' || r === 'islenmedi';
+  });
+}
+
 // Format date helper
 function formatDate(isoString?: string): string {
   if (!isoString) return new Date().toLocaleDateString('tr-TR');
@@ -222,6 +254,8 @@ function createCourseCard(record: EvaluationRecordDoc, index: number): (Table | 
     } catch {}
   }
 
+  const isMismatch = isMismatchRecord(record);
+
   const statusColor =
     record.general_status === 'Büyük ölçüde örtüşüyor'
       ? '0E7044'
@@ -229,21 +263,34 @@ function createCourseCard(record: EvaluationRecordDoc, index: number): (Table | 
       ? 'A05500'
       : 'B91C1C';
 
+  // Kart sol vurgu ve başlık rengi (Uyuşmazlık durumunda amber/kırmızı, uyumluysa zümrüt yeşili)
+  const cardAccentColor = !isMismatch
+    ? '0F382C'
+    : record.general_status === 'Bilgi paketine ulaşılamadı'
+    ? '991B1B'
+    : 'B45309';
+
+  const cardHeaderBg = !isMismatch
+    ? '1A5C4A'
+    : record.general_status === 'Bilgi paketine ulaşılamadı'
+    ? '7F1D1D'
+    : '78350F';
+
   const cardBorders = {
-    top: { style: BorderStyle.SINGLE, size: 8, color: '1A5C4A' },
+    top: { style: BorderStyle.SINGLE, size: 8, color: cardHeaderBg },
     bottom: { style: BorderStyle.SINGLE, size: 10, color: 'CBD5E1' },
-    left: { style: BorderStyle.SINGLE, size: 24, color: '0F382C' }, // Kalın zümrüt vurgu çizgisi (HTML border-left: 4px solid)
+    left: { style: BorderStyle.SINGLE, size: 24, color: cardAccentColor }, // Kalın vurgu çizgisi (HTML border-left)
     right: { style: BorderStyle.SINGLE, size: 8, color: 'CBD5E1' }
   };
 
-  // 1. KART BAŞLIĞI (Kurumsal Yeşil Banner)
+  // 1. KART BAŞLIĞI (Kurumsal Banner)
   const headerRow = new TableRow({
     children: [
       new TableCell({
-        shading: { type: ShadingType.CLEAR, fill: '1A5C4A' },
+        shading: { type: ShadingType.CLEAR, fill: cardHeaderBg },
         borders: {
           top: cardBorders.top,
-          bottom: { style: BorderStyle.SINGLE, size: 4, color: '14493A' },
+          bottom: { style: BorderStyle.SINGLE, size: 4, color: cardHeaderBg },
           left: cardBorders.left,
           right: cardBorders.right
         },
@@ -256,7 +303,17 @@ function createCourseCard(record: EvaluationRecordDoc, index: number): (Table | 
                 bold: true,
                 size: 20,
                 color: 'FFFFFF'
-              })
+              }),
+              ...(isMismatch
+                ? [
+                    new TextRun({
+                      text: '   [⚠️ UYUŞMAZLIK / AÇIKLIK GEREKİYOR]',
+                      bold: true,
+                      size: 15,
+                      color: 'FEF08A'
+                    })
+                  ]
+                : [])
             ]
           }),
           new Paragraph({
@@ -635,13 +692,31 @@ export async function downloadSingleCourseDocx(record: EvaluationRecordDoc) {
 /**
  * 2) SINIF BAZLI (VE MÜKERRER BİLDİRİMLERİ AYRIŞTIRAN) RESMİ WORD RAPORU (.docx)
  * Her bir ders çerçeveli bir kart/div şeklinde, aralarında nefes alan boşluklarla düzenlenir.
+ * options.isMismatchesOnly = true verilirse yalnızca Bologna planıyla örtüşmeyen dersler listelenir.
  */
-export async function downloadClassGroupedDocx(records: EvaluationRecordDoc[]) {
-  if (!records.length) return;
+export async function downloadClassGroupedDocx(
+  records: EvaluationRecordDoc[],
+  options?: ClassGroupedOptions
+) {
+  const isMismatchesOnly = options?.isMismatchesOnly ?? false;
+  const effectiveRecords = isMismatchesOnly
+    ? records.filter(isMismatchRecord)
+    : records;
+
+  if (!effectiveRecords.length) {
+    if (typeof window !== 'undefined') {
+      alert(
+        isMismatchesOnly
+          ? 'Müfredatla uyuşmayan veya açıklık gerektiren ders kaydı bulunamadı.'
+          : 'Raporlanacak ders kaydı bulunamadı.'
+      );
+    }
+    return;
+  }
 
   // Group primarily by class_year (1, 2, 3, 4)
   const classMap: { [year: number]: EvaluationRecordDoc[] } = {};
-  for (const r of records) {
+  for (const r of effectiveRecords) {
     const yr = Number(r.class_year) || 1;
     if (!classMap[yr]) {
       classMap[yr] = [];
@@ -705,7 +780,7 @@ export async function downloadClassGroupedDocx(records: EvaluationRecordDoc[]) {
             text: 'SAĞLIK YÖNETİMİ BÖLÜMÜ BOLOGNA AKREDİTASYON ÇALIŞMASI',
             bold: true,
             size: 20,
-            color: '1A5C4A'
+            color: isMismatchesOnly ? '92400E' : '1A5C4A'
           })
         ]
       }),
@@ -714,10 +789,12 @@ export async function downloadClassGroupedDocx(records: EvaluationRecordDoc[]) {
         spacing: { after: 250 },
         children: [
           new TextRun({
-            text: `${year}. SINIF DERS İÇERİK UYUM VE AKREDİTASYON DEĞERLENDİRME RAPORU`,
+            text: isMismatchesOnly
+              ? `${year}. SINIF UYUŞMAYAN VE AÇIKLIK GEREKTİREN DERSLER ÖZEL RAPORU`
+              : `${year}. SINIF DERS İÇERİK UYUM VE AKREDİTASYON DEĞERLENDİRME RAPORU`,
             bold: true,
             size: 20,
-            color: '222222'
+            color: isMismatchesOnly ? '92400E' : '222222'
           })
         ]
       }),
@@ -730,21 +807,21 @@ export async function downloadClassGroupedDocx(records: EvaluationRecordDoc[]) {
             children: [
               new TableCell({
                 width: { size: 28, type: WidthType.PERCENTAGE },
-                shading: { type: ShadingType.CLEAR, fill: 'EAEFEF' },
+                shading: { type: ShadingType.CLEAR, fill: isMismatchesOnly ? 'FEF3C7' : 'EAEFEF' },
                 borders: cellBorders,
                 children: [new Paragraph({ children: [new TextRun({ text: 'Sınıf Düzeyi ve Dönem:', bold: true, size: 18 })] })]
               }),
               new TableCell({
                 width: { size: 72, type: WidthType.PERCENTAGE },
                 borders: cellBorders,
-                children: [new Paragraph({ children: [new TextRun({ text: `${year}. Sınıf (${term} Dönemi)`, bold: true, size: 18, color: '1A5C4A' })] })]
+                children: [new Paragraph({ children: [new TextRun({ text: `${year}. Sınıf (${term} Dönemi)`, bold: true, size: 18, color: isMismatchesOnly ? '92400E' : '1A5C4A' })] })]
               })
             ]
           }),
           new TableRow({
             children: [
               new TableCell({
-                shading: { type: ShadingType.CLEAR, fill: 'EAEFEF' },
+                shading: { type: ShadingType.CLEAR, fill: isMismatchesOnly ? 'FEF3C7' : 'EAEFEF' },
                 borders: cellBorders,
                 children: [new Paragraph({ children: [new TextRun({ text: 'Bildirim Yapan Öğrenciler:', bold: true, size: 18 })] })]
               }),
@@ -770,20 +847,20 @@ export async function downloadClassGroupedDocx(records: EvaluationRecordDoc[]) {
           new TableRow({
             children: [
               new TableCell({
-                shading: { type: ShadingType.CLEAR, fill: 'EAEFEF' },
+                shading: { type: ShadingType.CLEAR, fill: isMismatchesOnly ? 'FEF3C7' : 'EAEFEF' },
                 borders: cellBorders,
-                children: [new Paragraph({ children: [new TextRun({ text: 'Değerlendirilen Ders Sayısı:', bold: true, size: 18 })] })]
+                children: [new Paragraph({ children: [new TextRun({ text: isMismatchesOnly ? 'Uyuşmayan Ders Sayısı:' : 'Değerlendirilen Ders Sayısı:', bold: true, size: 18 })] })]
               }),
               new TableCell({
                 borders: cellBorders,
-                children: [new Paragraph({ children: [new TextRun({ text: `${classRecords.length} Ders Kaydı Bulunmaktadır`, size: 18, bold: true })] })]
+                children: [new Paragraph({ children: [new TextRun({ text: `${classRecords.length} Ders Kaydı Bulunmaktadır`, size: 18, bold: true, color: isMismatchesOnly ? 'B91C1C' : '111111' })] })]
               })
             ]
           }),
           new TableRow({
             children: [
               new TableCell({
-                shading: { type: ShadingType.CLEAR, fill: 'EAEFEF' },
+                shading: { type: ShadingType.CLEAR, fill: isMismatchesOnly ? 'FEF3C7' : 'EAEFEF' },
                 borders: cellBorders,
                 children: [new Paragraph({ children: [new TextRun({ text: 'Rapor Oluşturma Tarihi:', bold: true, size: 18 })] })]
               }),
@@ -796,6 +873,49 @@ export async function downloadClassGroupedDocx(records: EvaluationRecordDoc[]) {
         ]
       })
     ];
+
+    // Uyuşmayanlar Özel Bilgilendirme Kutusu
+    if (isMismatchesOnly) {
+      children.push(
+        new Paragraph({ spacing: { before: 180, after: 100 }, children: [] }),
+        new Table({
+          width: { size: 100, type: WidthType.PERCENTAGE },
+          rows: [
+            new TableRow({
+              children: [
+                new TableCell({
+                  shading: { type: ShadingType.CLEAR, fill: 'FEF3C7' },
+                  borders: {
+                    top: { style: BorderStyle.SINGLE, size: 6, color: 'D97706' },
+                    bottom: { style: BorderStyle.SINGLE, size: 6, color: 'D97706' },
+                    left: { style: BorderStyle.SINGLE, size: 18, color: 'D97706' },
+                    right: { style: BorderStyle.SINGLE, size: 6, color: 'D97706' }
+                  },
+                  margins: { top: 120, bottom: 120, left: 160, right: 160 },
+                  children: [
+                    new Paragraph({
+                      children: [
+                        new TextRun({
+                          text: `⚠️ DİKKAT: ${year}. SINIF UYUŞMAZLIK VE AÇIKLIK GEREKTİREN DERSLER ÖZEL LİSTESİ\n`,
+                          bold: true,
+                          size: 17,
+                          color: '92400E'
+                        }),
+                        new TextRun({
+                          text: `Bu raporda yalnızca Bologna bilgi paketindeki haftalık izlence ile sınıfta işlenen müfredat arasında farklılık veya uyuşmazlık bildirilmiş (${classRecords.length} adet) ders yer almaktadır. Müfredatla tam uyumlu dersler filtrelenmiştir. Akreditasyon komisyonunun ilgili derslerin öğretim elemanları ile koordinasyon sağlaması önerilir.`,
+                          size: 15,
+                          color: '78350F'
+                        })
+                      ]
+                    })
+                  ]
+                })
+              ]
+            })
+          ]
+        })
+      );
+    }
 
     // Mükerrer bildirim kutusu
     if (hasMultipleStudents) {
@@ -846,10 +966,12 @@ export async function downloadClassGroupedDocx(records: EvaluationRecordDoc[]) {
         heading: HeadingLevel.HEADING_2,
         children: [
           new TextRun({
-            text: `${year}. Sınıf Dersleri Genel Uyum Özeti Tablosu`,
+            text: isMismatchesOnly
+              ? `${year}. Sınıf Uyuşmayan / Açıklık Gerektiren Dersler Özeti`
+              : `${year}. Sınıf Dersleri Genel Uyum Özeti Tablosu`,
             bold: true,
             size: 20,
-            color: '1A5C4A'
+            color: isMismatchesOnly ? '92400E' : '1A5C4A'
           })
         ]
       }),
@@ -1035,8 +1157,24 @@ export async function downloadClassGroupedDocx(records: EvaluationRecordDoc[]) {
   }
 
   const doc = new Document({ sections });
-  const filename = `Bologna_Sinif_Bazli_Degerlendirme_Raporu_${new Date().toISOString().slice(0, 10)}.docx`;
+  const filename =
+    options?.filename ||
+    (isMismatchesOnly
+      ? `Bologna_Uyusmayan_Dersler_Raporu_${new Date().toISOString().slice(0, 10)}.docx`
+      : `Bologna_Sinif_Bazli_Degerlendirme_Raporu_${new Date().toISOString().slice(0, 10)}.docx`);
   await saveDocx(doc, filename);
+}
+
+/**
+ * 3) YALNIZCA MÜFREDATLA UYUŞMAYAN / AÇIKLIK GEREKTİREN DERSLERİN ÖZEL WORD RAPORU (.docx)
+ * Kullanıcı isteği: "Bunda bir de sadece uyuşmayanlar kısmının listelendiği bir şey yapalım abi"
+ */
+export async function downloadMismatchesOnlyDocx(records: EvaluationRecordDoc[]) {
+  return downloadClassGroupedDocx(records, {
+    isMismatchesOnly: true,
+    reportTitle: 'BOLOGNA DERS İÇERİK UYUMSUZLUKLARI VE AÇIKLIK GEREKTİREN DERSLER ÖZEL RAPORU',
+    filename: `Bologna_Uyusmayan_Dersler_Raporu_${new Date().toISOString().slice(0, 10)}.docx`
+  });
 }
 
 // Keep downloadStudentGroupedDocx as an alias so existing callers work seamlessly
