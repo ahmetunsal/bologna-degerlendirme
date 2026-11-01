@@ -65,10 +65,11 @@ export function isMismatchRecord(record: EvaluationRecordDoc): boolean {
 }
 
 // Format date helper
-function formatDate(isoString?: string): string {
+function formatDate(isoString?: string | any): string {
   if (!isoString) return new Date().toLocaleDateString('tr-TR');
   try {
     const d = new Date(isoString);
+    if (isNaN(d.getTime())) return new Date().toLocaleDateString('tr-TR');
     const day = String(d.getDate()).padStart(2, '0');
     const month = String(d.getMonth() + 1).padStart(2, '0');
     const year = d.getFullYear();
@@ -76,7 +77,7 @@ function formatDate(isoString?: string): string {
     const minutes = String(d.getMinutes()).padStart(2, '0');
     return `${day}.${month}.${year} ${hours}:${minutes}`;
   } catch {
-    return isoString;
+    return new Date().toLocaleDateString('tr-TR');
   }
 }
 

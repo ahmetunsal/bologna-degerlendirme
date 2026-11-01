@@ -31,10 +31,14 @@ export function sanitizeTurkishText(str?: string | null): string {
 }
 
 /**
- * Derin nesne veya dizi içerisindeki tüm string alanları sanitize eder
+ * Derin nesne veya dizi içerisindeki tüm string alanları sanitize eder.
+ * Date ve diğer özel nesneleri bozmaz.
  */
 export function sanitizeObject<T>(obj: T): T {
   if (!obj) return obj;
+  if (obj instanceof Date || Object.prototype.toString.call(obj) === '[object Date]') {
+    return obj;
+  }
   if (typeof obj === 'string') return sanitizeTurkishText(obj) as any;
   if (Array.isArray(obj)) return obj.map(sanitizeObject) as any;
   if (typeof obj === 'object') {
