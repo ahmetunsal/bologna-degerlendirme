@@ -153,7 +153,9 @@ export default function MobileBolognaShopifyApp() {
   const [tableStatusFilter, setTableStatusFilter] = useState<'all' | string>('all');
   const [selectedRecordModal, setSelectedRecordModal] = useState<any | null>(null);
   const [drawerRecord, setDrawerRecord] = useState<any | null>(null);
+  const [drawerShowAllWeeks, setDrawerShowAllWeeks] = useState(false);
   const [expandedRowId, setExpandedRowId] = useState<number | null>(null);
+  const [expandedAllWeeksRowIds, setExpandedAllWeeksRowIds] = useState<{ [id: number]: boolean }>({});
   const [modalCopied, setModalCopied] = useState(false);
   const [rowCopiedId, setRowCopiedId] = useState<number | null>(null);
 
@@ -317,6 +319,11 @@ export default function MobileBolognaShopifyApp() {
     } finally {
       setIsExportingMismatchesDocx(false);
     }
+  };
+
+  const openDrawer = (record: any) => {
+    setDrawerRecord(record);
+    setDrawerShowAllWeeks(false);
   };
 
   const handleDownloadSingleCourseWord = async (record: any) => {
@@ -1653,6 +1660,12 @@ export default function MobileBolognaShopifyApp() {
                             const isMismatch = isMismatchRecord(item);
                             const weeks = parseWeekAnswers(item.week_answers);
                             const weeksWithNotesCount = weeks.filter((w: any) => w.note && w.note.trim()).length;
+                            const unhandledWeeks = weeks.filter((w: any) => {
+                              const r = String(w.rating || '').toLowerCase().trim();
+                              return r === 'islenmedi' || r === 'farkli' || r === 'kismen_uyumlu';
+                            });
+                            const showAllThisRow = !!expandedAllWeeksRowIds[item.id];
+                            const displayedWeeksInAccordion = showAllThisRow ? weeks : unhandledWeeks;
 
                             return (
                               <React.Fragment key={item.id}>
@@ -1715,15 +1728,23 @@ export default function MobileBolognaShopifyApp() {
                                   <td className="py-3.5 px-3.5 whitespace-nowrap">
                                     <div className="flex items-center gap-1.5 font-mono text-shade-50 text-[11px]">
                                       <span>{item.reviewed_weeks}</span>
-                                      {weeksWithNotesCount > 0 && (
+                                      {unhandledWeeks.length > 0 ? (
                                         <span
-                                          title={`${weeksWithNotesCount} haftada özel temsilci notu/analizi var`}
+                                          title={`${unhandledWeeks.length} haftada işlenmeyen/farklı konu bildirildi`}
+                                          className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-amber-950/70 text-amber-300 text-[9px] border border-amber-600/40"
+                                        >
+                                          <AlertTriangle className="w-2.5 h-2.5 text-amber-400" />
+                                          {unhandledWeeks.length} Hafta İşlenmedi
+                                        </span>
+                                      ) : weeksWithNotesCount > 0 ? (
+                                        <span
+                                          title={`${weeksWithNotesCount} haftada temsilci notu var`}
                                           className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-forest text-neon-green text-[9px] border border-neon-green/30"
                                         >
                                           <MessageSquare className="w-2.5 h-2.5" />
                                           {weeksWithNotesCount}
                                         </span>
-                                      )}
+                                      ) : null}
                                     </div>
                                   </td>
                                   <td className="py-3.5 px-3.5 whitespace-nowrap">
@@ -1753,7 +1774,7 @@ export default function MobileBolognaShopifyApp() {
                                   >
                                     <div className="flex items-center justify-end gap-1.5">
                                       <button
-                                        onClick={() => setDrawerRecord(item)}
+                                        onClick={() => openDrawer(item)}
                                         title="Haftalık Yorum & Analiz Çekmecesini Aç (Drawer)"
                                         className="p-1.5 rounded-lg bg-dark-forest border border-neon-green/30 text-neon-green hover:bg-forest hover:border-neon-green transition active:scale-95"
                                       >
@@ -1797,20 +1818,20 @@ export default function MobileBolognaShopifyApp() {
                                           <div>
                                             <div className="flex items-center gap-2 mb-1">
                                               <span className="text-[10px] font-mono uppercase text-neon-green bg-forest px-2.5 py-0.5 rounded-pill border border-dark-border">
-                                                Hafta Hafta Müfredat Analizi
+                                                Haftalık Müfredat Analizi
                                               </span>
                                               <span className="text-xs text-white font-medium">
                                                 {item.course_code} - {item.course_name}
                                               </span>
                                             </div>
                                             <p className="text-[11px] text-muted-text">
-                                              Bologna ders planındaki haftalık konular ile derste işlenenlerin karşılaştırması ve öğrenci yorumları.
+                                              Yalnızca işlenmeyen veya farklı işlenen haftalar öne çıkarılır; müfredata uygun işlenen konular sadeleştirilmiştir.
                                             </p>
                                           </div>
                                           
                                           <div className="flex items-center gap-2 self-start sm:self-auto">
                                             <button
-                                              onClick={() => setDrawerRecord(item)}
+                                              onClick={() => openDrawer(item)}
                                               className="py-1.5 px-3 rounded-pill bg-deep-teal border border-dark-border hover:border-neon-green text-neon-green text-xs font-mono flex items-center gap-1.5 transition active:scale-95"
                                             >
                                               <MessageSquare className="w-3 h-3 text-neon-green" />
@@ -1827,62 +1848,122 @@ export default function MobileBolognaShopifyApp() {
                                         </div>
 
                                         {weeks.length > 0 ? (
-                                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                            {weeks.map((w: any) => (
-                                              <div
-                                                key={w.week}
-                                                className={`p-3.5 rounded-xl border transition-all ${
-                                                  w.rating === 'tam_uyumlu'
-                                                    ? 'bg-deep-teal/90 border-dark-border hover:border-neon-green/30'
-                                                    : w.rating === 'kismen_uyumlu'
-                                                    ? 'bg-amber-950/20 border-amber-800/40'
-                                                    : 'bg-rose-950/20 border-rose-800/40'
-                                                }`}
-                                              >
-                                                <div className="flex items-center justify-between gap-2 mb-2">
-                                                  <div className="flex items-center gap-1.5">
-                                                    <span className="w-5 h-5 rounded-full bg-forest border border-neon-green/30 text-neon-green text-[10px] font-mono font-bold flex items-center justify-center">
-                                                      {w.week}
-                                                    </span>
-                                                    <span className="text-xs font-medium text-white">{w.week}. Hafta</span>
+                                          unhandledWeeks.length === 0 && !showAllThisRow ? (
+                                            /* TÜM HAFTALAR UYUMLUYSA (1-7 SEÇİLDİYSE HEPSİNİ DÖKME, TEMİZ ÖZET KART GÖSTER) */
+                                            <div className="p-4 rounded-xl bg-forest/20 border border-neon-green/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                              <div className="flex items-center gap-2.5">
+                                                <CheckCircle2 className="w-5 h-5 text-neon-green shrink-0" />
+                                                <div>
+                                                  <div className="text-xs font-medium text-white">
+                                                    {item.reviewed_weeks || '1-7. Haftalar'} Arasındaki Tüm Konular Eksiksiz İşlenmiştir
                                                   </div>
-                                                  <span
-                                                    className={`text-[10px] font-mono px-2 py-0.5 rounded-pill border ${
-                                                      w.rating === 'tam_uyumlu'
-                                                        ? 'bg-forest text-neon-green border-neon-green/30'
-                                                        : w.rating === 'kismen_uyumlu'
-                                                        ? 'bg-amber-950/60 text-amber-300 border-amber-600/40'
-                                                        : 'bg-rose-950/60 text-rose-300 border-rose-600/40'
-                                                    }`}
-                                                  >
-                                                    {w.ratingLabel || (w.rating === 'tam_uyumlu' ? 'Birebir Örtüşüyor' : 'Farklı/Güncel')}
+                                                  <p className="text-[11px] text-muted-text mt-0.5 font-light">
+                                                    Bu derste amfide işlenen tüm konular Bologna izlencesine tam uyumludur; işlenmeyen veya farklı işlenen bir hafta bildirilmemiştir.
+                                                  </p>
+                                                </div>
+                                              </div>
+                                              <button
+                                                type="button"
+                                                onClick={() => setExpandedAllWeeksRowIds((prev) => ({ ...prev, [item.id]: true }))}
+                                                className="py-1.5 px-3 rounded-lg bg-dark-forest hover:bg-forest border border-dark-border text-neon-green text-[11px] font-mono shrink-0 transition"
+                                              >
+                                                Tüm {weeks.length} Haftayı Gör
+                                              </button>
+                                            </div>
+                                          ) : (
+                                            /* İŞLENMEYEN HAFTALAR VARSA VEYA TÜMÜNÜ GÖSTER TIKLANDIYSA */
+                                            <div className="space-y-3">
+                                              <div className="flex flex-wrap items-center justify-between gap-2 bg-dark-forest/60 p-2.5 rounded-xl border border-dark-border">
+                                                <div className="flex items-center gap-2">
+                                                  <span className="text-xs font-mono font-medium text-amber-300 flex items-center gap-1.5">
+                                                    <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
+                                                    <span>İşlenmeyen / Farklı Konu Bildirilen Haftalar ({unhandledWeeks.length} Hafta)</span>
+                                                  </span>
+                                                  <span className="text-[10px] font-mono text-shade-50">
+                                                    ({showAllThisRow ? `Tüm ${weeks.length} Hafta Açık` : `Yalnızca İşlenmeyenler Listeleniyor`})
                                                   </span>
                                                 </div>
 
-                                                <div className="text-xs text-white font-light">
-                                                  <span className="text-[10px] font-mono text-muted-text block mb-0.5">Bologna Konusu:</span>
-                                                  <p className="line-clamp-2 leading-relaxed">{w.topic}</p>
-                                                </div>
-
-                                                {/* Student Week Comment / Analysis */}
-                                                <div className="mt-2.5 pt-2 border-t border-dark-border/60">
-                                                  <div className="flex items-center gap-1 text-[10px] font-mono text-neon-green mb-1">
-                                                    <MessageSquare className="w-3 h-3" />
-                                                    <span>Öğrencinin Bu Hafta İçin Notu & Yorumu:</span>
-                                                  </div>
-                                                  {w.note && w.note.trim() ? (
-                                                    <div className="text-xs text-aloe bg-void/80 p-2.5 rounded-lg border border-dark-border font-mono leading-relaxed">
-                                                      &ldquo;{w.note}&rdquo;
-                                                    </div>
-                                                  ) : (
-                                                    <div className="text-[11px] text-shade-50 italic font-light p-1.5 rounded bg-void/30">
-                                                      Özel bir not girilmedi (Müfredatla tam uyumlu işlendi).
-                                                    </div>
-                                                  )}
-                                                </div>
+                                                <button
+                                                  type="button"
+                                                  onClick={() => {
+                                                    setExpandedAllWeeksRowIds((prev) => ({
+                                                      ...prev,
+                                                      [item.id]: !prev[item.id]
+                                                    }));
+                                                  }}
+                                                  className="px-2.5 py-1 rounded-lg bg-deep-teal hover:bg-forest border border-dark-border text-shade-30 hover:text-white text-xs font-mono transition"
+                                                >
+                                                  {showAllThisRow ? `Sadece İşlenmeyenleri Göster (${unhandledWeeks.length})` : `Tüm Haftaları Göster (1-${weeks.length})`}
+                                                </button>
                                               </div>
-                                            ))}
-                                          </div>
+
+                                              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                {displayedWeeksInAccordion.map((w: any) => (
+                                                  <div
+                                                    key={w.week}
+                                                    className={`p-3.5 rounded-xl border transition-all ${
+                                                      w.rating === 'tam_uyumlu'
+                                                        ? 'bg-deep-teal/90 border-dark-border hover:border-neon-green/30'
+                                                        : w.rating === 'kismen_uyumlu'
+                                                        ? 'bg-amber-950/20 border-amber-800/40'
+                                                        : 'bg-rose-950/20 border-rose-800/40'
+                                                    }`}
+                                                  >
+                                                    <div className="flex items-center justify-between gap-2 mb-2">
+                                                      <div className="flex items-center gap-1.5">
+                                                        <span className="w-5 h-5 rounded-full bg-forest border border-neon-green/30 text-neon-green text-[10px] font-mono font-bold flex items-center justify-center">
+                                                          {w.week}
+                                                        </span>
+                                                        <span className="text-xs font-medium text-white">{w.week}. Hafta</span>
+                                                      </div>
+                                                      <span
+                                                        className={`text-[10px] font-mono px-2 py-0.5 rounded-pill border ${
+                                                          w.rating === 'tam_uyumlu'
+                                                            ? 'bg-forest text-neon-green border-neon-green/30'
+                                                            : w.rating === 'kismen_uyumlu'
+                                                            ? 'bg-amber-950/60 text-amber-300 border-amber-600/40'
+                                                            : 'bg-rose-950/60 text-rose-300 border-rose-600/40'
+                                                        }`}
+                                                      >
+                                                        {w.ratingLabel || (w.rating === 'tam_uyumlu' ? 'Birebir Örtüşüyor' : 'Farklı/Güncel')}
+                                                      </span>
+                                                    </div>
+
+                                                    <div className="text-xs text-white font-light">
+                                                      <span className="text-[10px] font-mono text-muted-text block mb-0.5">Bologna Konusu:</span>
+                                                      <p className="line-clamp-2 leading-relaxed">{w.topic}</p>
+                                                    </div>
+
+                                                    {/* Student Week Comment / Analysis */}
+                                                    <div className="mt-2.5 pt-2 border-t border-dark-border/60">
+                                                      <div className="flex items-center gap-1 text-[10px] font-mono text-neon-green mb-1">
+                                                        <MessageSquare className="w-3 h-3" />
+                                                        <span>Öğrencinin Bu Hafta İçin Notu & Yorumu:</span>
+                                                      </div>
+                                                      {w.note && w.note.trim() ? (
+                                                        <div className="text-xs text-aloe bg-void/80 p-2.5 rounded-lg border border-dark-border font-mono leading-relaxed">
+                                                          &ldquo;{w.note}&rdquo;
+                                                        </div>
+                                                      ) : (
+                                                        <div className="text-[11px] text-shade-50 italic font-light p-1.5 rounded bg-void/30">
+                                                          {w.rating === 'tam_uyumlu'
+                                                            ? 'Özel bir not girilmedi (Müfredatla tam uyumlu işlendi).'
+                                                            : 'Özel açıklama notu girilmedi.'}
+                                                        </div>
+                                                      )}
+                                                    </div>
+                                                  </div>
+                                                ))}
+                                              </div>
+
+                                              {!showAllThisRow && unhandledWeeks.length > 0 && (
+                                                <p className="text-[11px] text-shade-50 font-mono italic">
+                                                  * İncelenen {item.reviewed_weeks || '1-7. haftalar'} kapsamındaki diğer haftalar Bologna ders planına uygun olarak amfide işlenmiştir.
+                                                </p>
+                                              )}
+                                            </div>
+                                          )
                                         ) : (
                                           <div className="p-4 rounded-xl bg-deep-teal border border-dark-border text-center text-xs text-muted-text font-mono">
                                             Haftalık detaylı konu yanıtı bulunamadı.
@@ -1991,7 +2072,7 @@ export default function MobileBolognaShopifyApp() {
                         onClick={() => {
                           const rec = selectedRecordModal;
                           setSelectedRecordModal(null);
-                          setDrawerRecord(rec);
+                          openDrawer(rec);
                         }}
                         className="w-full py-2.5 px-4 rounded-xl bg-forest/50 hover:bg-forest border border-neon-green/30 text-neon-green text-xs font-mono flex items-center justify-center gap-2 transition active:scale-95"
                       >
@@ -2132,20 +2213,59 @@ export default function MobileBolognaShopifyApp() {
                           </div>
                         )}
 
-                        {/* Week-by-Week Section Title */}
-                        <div className="flex items-center justify-between pt-1">
+                        {/* Week-by-Week Section Title & Toggle */}
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1 border-b border-dark-border pb-3">
                           <h4 className="text-xs font-mono uppercase text-muted-text flex items-center gap-1.5">
                             <Calendar className="w-3.5 h-3.5 text-neon-green" />
                             <span>Haftalık Konu ve Öğrenci Not Dökümü</span>
                           </h4>
-                          <span className="text-[10px] font-mono text-shade-50">
-                            {parseWeekAnswers(drawerRecord.week_answers).length} Hafta Kayıtlı
-                          </span>
+
+                          {/* Sadece İşlenmeyenler vs Tüm Haftalar Toggle */}
+                          {(() => {
+                            const rawWeeks = parseWeekAnswers(drawerRecord.week_answers);
+                            const unhandledCount = rawWeeks.filter((w: any) => {
+                              const r = String(w.rating || '').toLowerCase().trim();
+                              return r === 'islenmedi' || r === 'farkli' || r === 'kismen_uyumlu';
+                            }).length;
+
+                            return (
+                              <div className="flex items-center gap-1.5">
+                                <button
+                                  type="button"
+                                  onClick={() => setDrawerShowAllWeeks(false)}
+                                  className={`px-2.5 py-1 rounded-pill text-[11px] font-mono transition cursor-pointer ${
+                                    !drawerShowAllWeeks
+                                      ? 'bg-amber-950/70 text-amber-300 border border-amber-500/60 font-medium'
+                                      : 'bg-dark-forest text-shade-50 hover:text-white border border-dark-border'
+                                  }`}
+                                >
+                                  ⚠️ Sadece İşlenmeyenler ({unhandledCount})
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => setDrawerShowAllWeeks(true)}
+                                  className={`px-2.5 py-1 rounded-pill text-[11px] font-mono transition cursor-pointer ${
+                                    drawerShowAllWeeks
+                                      ? 'bg-forest text-neon-green border border-neon-green/40 font-medium'
+                                      : 'bg-dark-forest text-shade-50 hover:text-white border border-dark-border'
+                                  }`}
+                                >
+                                  📋 Tüm Haftalar ({rawWeeks.length})
+                                </button>
+                              </div>
+                            );
+                          })()}
                         </div>
 
                         {/* List of weeks */}
                         {(() => {
                           const weeks = parseWeekAnswers(drawerRecord.week_answers);
+                          const unhandled = weeks.filter((w: any) => {
+                            const r = String(w.rating || '').toLowerCase().trim();
+                            return r === 'islenmedi' || r === 'farkli' || r === 'kismen_uyumlu';
+                          });
+                          const displayed = drawerShowAllWeeks ? weeks : unhandled;
+
                           if (!weeks.length) {
                             return (
                               <div className="p-6 rounded-xl bg-dark-forest border border-dark-border text-center text-xs text-muted-text font-mono">
@@ -2153,9 +2273,32 @@ export default function MobileBolognaShopifyApp() {
                               </div>
                             );
                           }
+
+                          if (!drawerShowAllWeeks && unhandled.length === 0) {
+                            return (
+                              <div className="p-6 rounded-xl bg-forest/20 border border-neon-green/30 text-center space-y-2.5 animate-fadeIn">
+                                <CheckCircle2 className="w-8 h-8 text-neon-green mx-auto" />
+                                <div className="text-sm font-medium text-white">
+                                  {drawerRecord.reviewed_weeks || '1-7. Haftalar'} Arasında İşlenmeyen Hafta Bulunmuyor
+                                </div>
+                                <p className="text-xs text-muted-text font-light max-w-md mx-auto leading-relaxed">
+                                  Bologna ders planındaki haftalık konular sınıfta amfide eksiksiz ve tam uyumlu olarak işlenmiştir.
+                                </p>
+                                <button
+                                  type="button"
+                                  onClick={() => setDrawerShowAllWeeks(true)}
+                                  className="mt-2 text-xs font-mono text-neon-green hover:underline cursor-pointer inline-flex items-center gap-1"
+                                >
+                                  <span>Tüm {weeks.length} haftayı ayrıntılı incele</span>
+                                  <ArrowRight className="w-3 h-3" />
+                                </button>
+                              </div>
+                            );
+                          }
+
                           return (
                             <div className="space-y-3">
-                              {weeks.map((w: any) => (
+                              {displayed.map((w: any) => (
                                 <div
                                   key={w.week}
                                   className={`p-4 rounded-xl border transition-all ${
@@ -2216,12 +2359,20 @@ export default function MobileBolognaShopifyApp() {
                                       </div>
                                     ) : (
                                       <div className="text-[11px] text-shade-50 italic font-light p-2 rounded-lg bg-void/40 border border-dark-border/40">
-                                        Özel bir not girilmedi. Konu müfredatla tam uyumlu ve eksiksiz işlendi.
+                                        {w.rating === 'tam_uyumlu'
+                                          ? 'Özel bir not girilmedi. Konu müfredatla tam uyumlu ve eksiksiz işlendi.'
+                                          : 'Özel açıklama notu girilmedi.'}
                                       </div>
                                     )}
                                   </div>
                                 </div>
                               ))}
+
+                              {!drawerShowAllWeeks && unhandled.length > 0 && (
+                                <p className="text-xs text-shade-50 font-mono italic text-center pt-1">
+                                  * Listelenmeyen diğer haftalar amfide Bologna ders planına uygun şekilde işlenmiştir.
+                                </p>
+                              )}
                             </div>
                           );
                         })()}

@@ -413,22 +413,60 @@ function createCourseCard(record: EvaluationRecordDoc, index: number): (Table | 
     );
   }
 
-  // Haftalık Konu Dökümü (varsa)
+  // Haftalık Konu Dökümü (Yalnızca işlenmeyen / farklı işlenen haftalar listelenir; 1-7 seçildiyse hepsi dökülmez)
   if (answers.length > 0) {
-    bodyChildren.push(
-      new Paragraph({
-        spacing: { before: 100, after: 80 },
-        children: [
-          new TextRun({
-            text: 'Hafta Bazında Konu Karşılaştırma ve Not Dökümü:',
-            bold: true,
-            size: 16,
-            color: '1A5C4A'
-          })
-        ]
-      }),
-      createCompactWeeklyTable(answers)
-    );
+    const unhandledWeeks = answers.filter((a: any) => {
+      const r = String(a?.rating || '').toLowerCase().trim();
+      return r === 'islenmedi' || r === 'farkli' || r === 'kismen_uyumlu';
+    });
+
+    if (unhandledWeeks.length > 0) {
+      bodyChildren.push(
+        new Paragraph({
+          spacing: { before: 120, after: 80 },
+          children: [
+            new TextRun({
+              text: `İşlenmeyen / Müfredattan Farklı İşlenen Haftalar (${unhandledWeeks.length} Hafta):`,
+              bold: true,
+              size: 16,
+              color: '92400E'
+            })
+          ]
+        }),
+        createCompactWeeklyTable(unhandledWeeks),
+        new Paragraph({
+          spacing: { before: 60, after: 80 },
+          children: [
+            new TextRun({
+              text: `* İncelenen ${record.reviewed_weeks || '1-7. haftalar'} kapsamındaki diğer haftalar amfide Bologna ders planına uygun şekilde işlenmiştir.`,
+              size: 14,
+              italics: true,
+              color: '64748B'
+            })
+          ]
+        })
+      );
+    } else {
+      // 1-7 hafta seçildiyse ve tümü işlendiyse hepsini tek tek dökmek yerine özet geç
+      bodyChildren.push(
+        new Paragraph({
+          spacing: { before: 100, after: 60 },
+          children: [
+            new TextRun({
+              text: 'Haftalık Konu İşleniş Durumu: ',
+              bold: true,
+              size: 16,
+              color: '1A5C4A'
+            }),
+            new TextRun({
+              text: `İncelenen ${record.reviewed_weeks || '1-7. haftalar'} arasındaki tüm ders konuları Bologna izlencesine tam uyumlu olarak eksiksiz işlenmiştir (İşlenmeyen veya farklı işlenen hafta bulunmamaktadır).`,
+              size: 15,
+              color: '1E293B'
+            })
+          ]
+        })
+      );
+    }
   }
 
   const bodyRow = new TableRow({
