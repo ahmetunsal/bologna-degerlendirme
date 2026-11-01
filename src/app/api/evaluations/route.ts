@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { pool } from '@/lib/db';
+import { sanitizeTurkishText, sanitizeObject } from '@/utils/textUtils';
 
 export async function POST(req: NextRequest) {
   try {
@@ -67,24 +68,32 @@ export async function POST(req: NextRequest) {
       RETURNING *;
     `;
 
+    const sanitizedCourseName = sanitizeTurkishText(course_name);
+    const sanitizedInstructor = sanitizeTurkishText(instructor || '');
+    const sanitizedStudentName = sanitizeTurkishText(student_name || 'Öğrenci Temsilcisi');
+    const sanitizedReviewedWeeks = sanitizeTurkishText(reviewed_weeks || '1-7. haftalar');
+    const sanitizedExampleNote = sanitizeTurkishText(example_note || '');
+    const sanitizedSummaryReport = sanitizeTurkishText(summary_report || '');
+    const sanitizedWeekAnswers = sanitizeObject(week_answers || []);
+
     const values = [
       class_year || 1,
       semester || 1,
       term || 'Güz',
       course_id || '',
       course_code,
-      course_name,
-      instructor || '',
-      student_name || 'Öğrenci Temsilcisi',
-      reviewed_weeks || '1-7. haftalar',
+      sanitizedCourseName,
+      sanitizedInstructor,
+      sanitizedStudentName,
+      sanitizedReviewedWeeks,
       general_status,
-      example_note || '',
-      JSON.stringify(week_answers || []),
-      summary_report || '',
+      sanitizedExampleNote,
+      JSON.stringify(sanitizedWeekAnswers),
+      sanitizedSummaryReport,
     ];
 
     const result = await pool.query(insertQuery, values);
-    return NextResponse.json({ success: true, data: result.rows[0] });
+    return NextResponse.json({ success: true, data: sanitizeObject(result.rows[0]) });
   } catch (error: any) {
     console.error('Error inserting evaluation:', error);
     return NextResponse.json(
@@ -121,7 +130,11 @@ export async function GET(req: NextRequest) {
     query += ' ORDER BY created_at DESC LIMIT 100;';
 
     const result = await pool.query(query, params);
-    return NextResponse.json({ success: true, count: result.rows.length, data: result.rows });
+    return NextResponse.json({
+      success: true,
+      count: result.rows.length,
+      data: sanitizeObject(result.rows)
+    });
   } catch (error: any) {
     console.error('Error fetching evaluations:', error);
     return NextResponse.json(

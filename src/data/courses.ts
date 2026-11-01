@@ -523,7 +523,7 @@ export const COURSES_DATA: Course[] = [
       },
       {
         "week": 10,
-        "topic": "MG&#180;in Hesaplama Şekilleri ve MG Yorumları MG&#180;in Toplam Arz, Toplam Talep ve Yatırım Tasarruf Açısından Denge Düzeyinin Belirlenmesi.",
+        "topic": "MG'in Hesaplama Şekilleri ve MG Yorumları MG'in Toplam Arz, Toplam Talep ve Yatırım Tasarruf Açısından Denge Düzeyinin Belirlenmesi.",
         "resources": "Salih Şimşek- M Kemal Aydın, İktisat Bilimine Giriş, Değişim Yayınları, İstanbul, 2004 (4.Baskı)"
       },
       {
@@ -669,12 +669,12 @@ export const COURSES_DATA: Course[] = [
       },
       {
         "week": 4,
-        "topic": "II. İNÖNÜ SAVAŞI (31 MART-1 NİSAN 1921) AFYON-ESKİŞEHİR-KÜTAHYA SAVAŞI, Mustafa Kemal Paşanın Başkomutan Olması, Tekalif-i Mill&#238;ye Emirleri, SAKARYA SAVAŞI (23 Ağustos-13 Eylül 1921), Sakarya Savaşının Sonuçları",
+        "topic": "II. İNÖNÜ SAVAŞI (31 MART-1 NİSAN 1921) AFYON-ESKİŞEHİR-KÜTAHYA SAVAŞI, Mustafa Kemal Paşanın Başkomutan Olması, Tekalif-i Millîye Emirleri, SAKARYA SAVAŞI (23 Ağustos-13 Eylül 1921), Sakarya Savaşının Sonuçları",
         "resources": "1-M. K. Atatürk, Nutuk,  Atatürk Kültür Dil ve Tarih Yüksek Kurumu, Ankara 1990, 2- Atatürk, M. K.  Atatürkün Söylev ve Demeçleri, Atatürk Kültür Dil ve Tarih Yüksek Kurumu, Ankara 3- Adıvar, H. E.. Türkün Ateşle İmtihanı. Atlas Kitabevi 1987, İstanbul 4-AKÇURA, Yusuf, Osmanlı Devletinin Dağılma Devri ,5- ARMAOĞLU, Fahir, 20. Yüzyıl Siyasi Tarihi 1914-1980, Ankara 1980 6- Semiz. Y., - Akandere O., (2013), Türkiye Cumhuriyeti Tarihi, Eğitim Kitabevi, Konya"
       },
       {
         "week": 5,
-        "topic": "BÜYÜK TAARRUZ Taarruza Hazırlık, Başkomutanlık Meselesi, Büyük Taarruz, Yunanistanda İhtil&#226;l, Mütareke Öncesi Türk-İngiliz Askeri Bunalım",
+        "topic": "BÜYÜK TAARRUZ Taarruza Hazırlık, Başkomutanlık Meselesi, Büyük Taarruz, Yunanistanda İhtilâl, Mütareke Öncesi Türk-İngiliz Askeri Bunalım",
         "resources": "1-M. K. Atatürk, Nutuk,  Atatürk Kültür Dil ve Tarih Yüksek Kurumu, Ankara 1990, 2- Atatürk, M. K.  Atatürkün Söylev ve Demeçleri, Atatürk Kültür Dil ve Tarih Yüksek Kurumu, Ankara 3- Adıvar, H. E.. Türkün Ateşle İmtihanı. Atlas Kitabevi 1987, İstanbul 4-AKÇURA, Yusuf, Osmanlı Devletinin Dağılma Devri ,5- ARMAOĞLU, Fahir, 20. Yüzyıl Siyasi Tarihi 1914-1980, Ankara 1980 6- Semiz. Y., - Akandere O., (2013), Türkiye Cumhuriyeti Tarihi, Eğitim Kitabevi, Konya"
       },
       {
@@ -684,7 +684,7 @@ export const COURSES_DATA: Course[] = [
       },
       {
         "week": 7,
-        "topic": "TÜRK İNKIL&#194;BI Siyasi Alanda Yapılan İnkıl&#226;plar, Saltanatın Kaldırılması, Cumhuriyetin İlanı, Hil&#226;fetin Kaldırılması, ANAYASA HAREKETLERİ Teşkil&#194;t-ı Esasiye Kanunu, 20 Nisan 1924 Anayasası, TBMM de Kurulan Gruplar ve Siyasi Partiler, Sosyalist-Komünist Gruplaşmalar, Müdafaa-i Hukuk Grupları",
+        "topic": "TÜRK İNKILÂBI Siyasi Alanda Yapılan İnkılâplar, Saltanatın Kaldırılması, Cumhuriyetin İlanı, Hilâfetin Kaldırılması, ANAYASA HAREKETLERİ TeşkilÂt-ı Esasiye Kanunu, 20 Nisan 1924 Anayasası, TBMM de Kurulan Gruplar ve Siyasi Partiler, Sosyalist-Komünist Gruplaşmalar, Müdafaa-i Hukuk Grupları",
         "resources": "1-M. K. Atatürk, Nutuk,  Atatürk Kültür Dil ve Tarih Yüksek Kurumu, Ankara 1990, 2- Atatürk, M. K.  Atatürkün Söylev ve Demeçleri, Atatürk Kültür Dil ve Tarih Yüksek Kurumu, Ankara 3- Adıvar, H. E.. Türkün Ateşle İmtihanı. Atlas Kitabevi 1987, İstanbul 4-AKÇURA, Yusuf, Osmanlı Devletinin Dağılma Devri ,5- ARMAOĞLU, Fahir, 20. Yüzyıl Siyasi Tarihi 1914-1980, Ankara 1980 6- Semiz. Y., - Akandere O., (2013), Türkiye Cumhuriyeti Tarihi, Eğitim Kitabevi, Konya"
       },
       {
@@ -699,32 +699,32 @@ export const COURSES_DATA: Course[] = [
       },
       {
         "week": 10,
-        "topic": "REJİME KARŞI YAPILAN TEPKİLER, Şeyh Sait İsyanı, Takrir-i Sükun Kanunu, İstikl&#226;l Mahkemelerinin Yeniden Kurulması, Atatürke İzmirde Düzenlenen Suikast",
+        "topic": "REJİME KARŞI YAPILAN TEPKİLER, Şeyh Sait İsyanı, Takrir-i Sükun Kanunu, İstiklâl Mahkemelerinin Yeniden Kurulması, Atatürke İzmirde Düzenlenen Suikast",
         "resources": "1-M. K. Atatürk, Nutuk,  Atatürk Kültür Dil ve Tarih Yüksek Kurumu, Ankara 1990, 2- Atatürk, M. K.  Atatürkün Söylev ve Demeçleri, Atatürk Kültür Dil ve Tarih Yüksek Kurumu, Ankara 3- Adıvar, H. E.. Türkün Ateşle İmtihanı. Atlas Kitabevi 1987, İstanbul 4-AKÇURA, Yusuf, Osmanlı Devletinin Dağılma Devri ,5- ARMAOĞLU, Fahir, 20. Yüzyıl Siyasi Tarihi 1914-1980, Ankara 1980 6- Semiz. Y., - Akandere O., (2013), Türkiye Cumhuriyeti Tarihi, Eğitim Kitabevi, Konya"
       },
       {
         "week": 11,
-        "topic": "HUKUK ALANINDA İNKIL&#194;P, Medeni Kanunun Kabulü, EĞİTİM ALANINDA iNKIL&#194;P Tevhid-i Tedrisat Kanunu, Atatürk ve Türk Tarih Tezi, Türk Dili İnkıl&#226;bı,",
+        "topic": "HUKUK ALANINDA İNKILÂP, Medeni Kanunun Kabulü, EĞİTİM ALANINDA iNKILÂP Tevhid-i Tedrisat Kanunu, Atatürk ve Türk Tarih Tezi, Türk Dili İnkılâbı,",
         "resources": "1-M. K. Atatürk, Nutuk,  Atatürk Kültür Dil ve Tarih Yüksek Kurumu, Ankara 1990, 2- Atatürk, M. K.  Atatürkün Söylev ve Demeçleri, Atatürk Kültür Dil ve Tarih Yüksek Kurumu, Ankara 3- Adıvar, H. E.. Türkün Ateşle İmtihanı. Atlas Kitabevi 1987, İstanbul 4-AKÇURA, Yusuf, Osmanlı Devletinin Dağılma Devri ,5- ARMAOĞLU, Fahir, 20. Yüzyıl Siyasi Tarihi 1914-1980, Ankara 1980 6- Semiz. Y., - Akandere O., (2013), Türkiye Cumhuriyeti Tarihi, Eğitim Kitabevi, Konya"
       },
       {
         "week": 12,
-        "topic": "SOSYAL ALANDA YAPILAN İNKIL&#194;PLAR Kılık Kıyafet Değişimi ve Şapka İnkıl&#226;bı, Tekke, Zaviye ve Türbelerin Kapatılması, Saatlerin ve Takvimin Değiştirilmesi, Ölçü ve Tartıda Değişiklik, Kadın Haklarının Kabulü, Milli Bayramlar ve Tatil Günleri",
+        "topic": "SOSYAL ALANDA YAPILAN İNKILÂPLAR Kılık Kıyafet Değişimi ve Şapka İnkılâbı, Tekke, Zaviye ve Türbelerin Kapatılması, Saatlerin ve Takvimin Değiştirilmesi, Ölçü ve Tartıda Değişiklik, Kadın Haklarının Kabulü, Milli Bayramlar ve Tatil Günleri",
         "resources": "1-M. K. Atatürk, Nutuk,  Atatürk Kültür Dil ve Tarih Yüksek Kurumu, Ankara 1990, 2- Atatürk, M. K.  Atatürkün Söylev ve Demeçleri, Atatürk Kültür Dil ve Tarih Yüksek Kurumu, Ankara 3- Adıvar, H. E.. Türkün Ateşle İmtihanı. Atlas Kitabevi 1987, İstanbul 4-AKÇURA, Yusuf, Osmanlı Devletinin Dağılma Devri ,5- ARMAOĞLU, Fahir, 20. Yüzyıl Siyasi Tarihi 1914-1980, Ankara 1980 6- Semiz. Y., - Akandere O., (2013), Türkiye Cumhuriyeti Tarihi, Eğitim Kitabevi, Konya"
       },
       {
         "week": 13,
-        "topic": "ATATÜRK İLKELERİ VE İNKIL&#194;PLARI Milli Hakimiyet-Egemenlik, Tam bağımsızlık, Cumhuriyetçilik, Milliyetçilik, İnkıl&#226;pçılık",
+        "topic": "ATATÜRK İLKELERİ VE İNKILÂPLARI Milli Hakimiyet-Egemenlik, Tam bağımsızlık, Cumhuriyetçilik, Milliyetçilik, İnkılâpçılık",
         "resources": "1-M. K. Atatürk, Nutuk,  Atatürk Kültür Dil ve Tarih Yüksek Kurumu, Ankara 1990, 2- Atatürk, M. K.  Atatürkün Söylev ve Demeçleri, Atatürk Kültür Dil ve Tarih Yüksek Kurumu, Ankara 3- Adıvar, H. E.. Türkün Ateşle İmtihanı. Atlas Kitabevi 1987, İstanbul 4-AKÇURA, Yusuf, Osmanlı Devletinin Dağılma Devri ,5- ARMAOĞLU, Fahir, 20. Yüzyıl Siyasi Tarihi 1914-1980, Ankara 1980 6- Semiz. Y., - Akandere O., (2013), Türkiye Cumhuriyeti Tarihi, Eğitim Kitabevi, Konya"
       },
       {
         "week": 14,
-        "topic": "Laiklik, İsl&#226;m ve L&#226;iklik, Atatürk Döneminde L&#226;iklikle İlgili Düzenlemeler, Atatürk ve L&#226;iklik, Halkçılık, Devletçilik",
+        "topic": "Laiklik, İslâm ve Lâiklik, Atatürk Döneminde Lâiklikle İlgili Düzenlemeler, Atatürk ve Lâiklik, Halkçılık, Devletçilik",
         "resources": "1-M. K. Atatürk, Nutuk,  Atatürk Kültür Dil ve Tarih Yüksek Kurumu, Ankara 1990, 2- Atatürk, M. K.  Atatürkün Söylev ve Demeçleri, Atatürk Kültür Dil ve Tarih Yüksek Kurumu, Ankara 3- Adıvar, H. E.. Türkün Ateşle İmtihanı. Atlas Kitabevi 1987, İstanbul 4-AKÇURA, Yusuf, Osmanlı Devletinin Dağılma Devri ,5- ARMAOĞLU, Fahir, 20. Yüzyıl Siyasi Tarihi 1914-1980, Ankara 1980 6- Semiz. Y., - Akandere O., (2013), Türkiye Cumhuriyeti Tarihi, Eğitim Kitabevi, Konya"
       },
       {
         "week": 15,
-        "topic": "ATATÜRK DÖNEMİ DIŞ POLİTİKA Genel Özellikler, 1923-1930 Dönemi Dış Politika, 1930-1938 Dönemi Türk Dış Politikası, Balkan Paktı, Akdenizde İtalyan Tehlikesi, Montreux Boğazlar Sözleşmesi,  İsl&#226;m Dünyası ile Olan İlişkiler ve Sadabat Paktı, Hatay Meselesinin Çözümü",
+        "topic": "ATATÜRK DÖNEMİ DIŞ POLİTİKA Genel Özellikler, 1923-1930 Dönemi Dış Politika, 1930-1938 Dönemi Türk Dış Politikası, Balkan Paktı, Akdenizde İtalyan Tehlikesi, Montreux Boğazlar Sözleşmesi,  İslâm Dünyası ile Olan İlişkiler ve Sadabat Paktı, Hatay Meselesinin Çözümü",
         "resources": "1-M. K. Atatürk, Nutuk,  Atatürk Kültür Dil ve Tarih Yüksek Kurumu, Ankara 1990, 2- Atatürk, M. K.  Atatürkün Söylev ve Demeçleri, Atatürk Kültür Dil ve Tarih Yüksek Kurumu, Ankara 3- Adıvar, H. E.. Türkün Ateşle İmtihanı. Atlas Kitabevi 1987, İstanbul 4-AKÇURA, Yusuf, Osmanlı Devletinin Dağılma Devri ,5- ARMAOĞLU, Fahir, 20. Yüzyıl Siyasi Tarihi 1914-1980, Ankara 1980 6- Semiz. Y., - Akandere O., (2013), Türkiye Cumhuriyeti Tarihi, Eğitim Kitabevi, Konya"
       }
     ]
@@ -1637,7 +1637,7 @@ export const COURSES_DATA: Course[] = [
       },
       {
         "week": 4,
-        "topic": "Merkez&#238; eğilim ölçüleri: aritmetik ortalama, ortanca ve tepe değer; hesaplanmaları, kullanım koşulları ve karşılaştırılması",
+        "topic": "Merkezî eğilim ölçüleri: aritmetik ortalama, ortanca ve tepe değer; hesaplanmaları, kullanım koşulları ve karşılaştırılması",
         "resources": "Daniel, W. W. & Cross, C. L. (2018). Biostatistics: A Foundation for Analysis in the Health Sciences (11th ed.). Hoboken, NJ: Wiley.  Rosner, B. (2016). Fundamentals of Biostatistics (8th ed.). Boston, MA: Cengage Learning."
       },
       {
@@ -1692,7 +1692,7 @@ export const COURSES_DATA: Course[] = [
       },
       {
         "week": 15,
-        "topic": "Sağlık verileri üzerinde bütünleşik uygulama: uygun istatistiksel yöntemin seçilmesi, analiz sonuçlarının yorumlanması ve tablolar h&#226;linde raporlanması, genel değerlendirme",
+        "topic": "Sağlık verileri üzerinde bütünleşik uygulama: uygun istatistiksel yöntemin seçilmesi, analiz sonuçlarının yorumlanması ve tablolar hâlinde raporlanması, genel değerlendirme",
         "resources": "Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.  Field, A. (2024). Discovering Statistics Using IBM SPSS Statistics (6th ed.). London: SAGE Publications."
       }
     ]
@@ -1799,37 +1799,37 @@ export const COURSES_DATA: Course[] = [
       {
         "week": 1,
         "topic": "kalite tanımı, amaçları, hizmet sektöründe kalite kavramı, TKY tanımı, amaçları, prensipleri",
-        "resources": "Applying Quality Approach in Healthcare, Second edition: A system&#180;s Approach, Diane L. Kelly, 2006."
+        "resources": "Applying Quality Approach in Healthcare, Second edition: A system's Approach, Diane L. Kelly, 2006."
       },
       {
         "week": 2,
         "topic": "Kalite planlaması",
-        "resources": "Applying Quality Approach in Healthcare, Second edition: A system&#180;s Approach, Diane L. Kelly, 2006."
+        "resources": "Applying Quality Approach in Healthcare, Second edition: A system's Approach, Diane L. Kelly, 2006."
       },
       {
         "week": 3,
         "topic": "Takımlar",
-        "resources": "Applying Quality Approach in Healthcare, Second edition: A system&#180;s Approach, Diane L. Kelly, 2006."
+        "resources": "Applying Quality Approach in Healthcare, Second edition: A system's Approach, Diane L. Kelly, 2006."
       },
       {
         "week": 4,
         "topic": "Temel Kalite Araçları",
-        "resources": "Applying Quality Approach in Healthcare, Second edition: A system&#180;s Approach, Diane L. Kelly, 2006."
+        "resources": "Applying Quality Approach in Healthcare, Second edition: A system's Approach, Diane L. Kelly, 2006."
       },
       {
         "week": 5,
         "topic": "İleri Kailte Araçları",
-        "resources": "Applying Quality Approach in Healthcare, Second edition: A system&#180;s Approach, Diane L. Kelly, 2006."
+        "resources": "Applying Quality Approach in Healthcare, Second edition: A system's Approach, Diane L. Kelly, 2006."
       },
       {
         "week": 6,
         "topic": "Kalite Kültürü ve değişim",
-        "resources": "Applying Quality Approach in Healthcare, Second edition: A system&#180;s Approach, Diane L. Kelly, 2006."
+        "resources": "Applying Quality Approach in Healthcare, Second edition: A system's Approach, Diane L. Kelly, 2006."
       },
       {
         "week": 7,
         "topic": "Sağlık İşletmelerinde Kıyaslama",
-        "resources": "Applying Quality Approach in Healthcare, Second edition: A system&#180;s Approach, Diane L. Kelly, 2006."
+        "resources": "Applying Quality Approach in Healthcare, Second edition: A system's Approach, Diane L. Kelly, 2006."
       },
       {
         "week": 8,
@@ -1839,32 +1839,32 @@ export const COURSES_DATA: Course[] = [
       {
         "week": 9,
         "topic": "Hizmet kalite kriterleri (kamu ve özel hastaneler)",
-        "resources": "Applying Quality Approach in Healthcare, Second edition: A system&#180;s Approach, Diane L. Kelly, 2006."
+        "resources": "Applying Quality Approach in Healthcare, Second edition: A system's Approach, Diane L. Kelly, 2006."
       },
       {
         "week": 10,
         "topic": "Kalite Fonksiyon Yayılımı",
-        "resources": "Applying Quality Approach in Healthcare, Second edition: A system&#180;s Approach, Diane L. Kelly, 2006."
+        "resources": "Applying Quality Approach in Healthcare, Second edition: A system's Approach, Diane L. Kelly, 2006."
       },
       {
         "week": 11,
         "topic": "Hizmet Kalitesinin Ölçülmesi: Servqual",
-        "resources": "Applying Quality Approach in Healthcare, Second edition: A system&#180;s Approach, Diane L. Kelly, 2006."
+        "resources": "Applying Quality Approach in Healthcare, Second edition: A system's Approach, Diane L. Kelly, 2006."
       },
       {
         "week": 12,
         "topic": "ISO 9000 Standartları ve sağlıkta uygulanması",
-        "resources": "Applying Quality Approach in Healthcare, Second edition: A system&#180;s Approach, Diane L. Kelly, 2006."
+        "resources": "Applying Quality Approach in Healthcare, Second edition: A system's Approach, Diane L. Kelly, 2006."
       },
       {
         "week": 13,
         "topic": "Akreditasyon",
-        "resources": "Applying Quality Approach in Healthcare, Second edition: A system&#180;s Approach, Diane L. Kelly, 2006."
+        "resources": "Applying Quality Approach in Healthcare, Second edition: A system's Approach, Diane L. Kelly, 2006."
       },
       {
         "week": 14,
         "topic": "Altı Sigma metodolojisi",
-        "resources": "Applying Quality Approach in Healthcare, Second edition: A system&#180;s Approach, Diane L. Kelly, 2006."
+        "resources": "Applying Quality Approach in Healthcare, Second edition: A system's Approach, Diane L. Kelly, 2006."
       },
       {
         "week": 15,
@@ -1887,37 +1887,37 @@ export const COURSES_DATA: Course[] = [
       {
         "week": 1,
         "topic": "Epidemiyolojinin tanımı, tarihsel gelişimi ve temel kavramları; epidemiyolojinin amaçları ve sağlık yönetimi alanındaki kullanım alanları",
-        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage&#39;s Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers&#39; Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
+        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage's Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers' Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
       },
       {
         "week": 2,
         "topic": "Sağlık ve hastalık kavramı, hastalığın doğal seyri; etken-konak-çevre etkileşimi (epidemiyolojik üçgen) ve bulaşma yolları",
-        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage&#39;s Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers&#39; Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
+        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage's Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers' Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
       },
       {
         "week": 3,
         "topic": "Korunma düzeyleri: primordiyal, birincil, ikincil ve üçüncül korunma; korunma düzeylerinin sağlık hizmetleri sunumundaki karşılıkları",
-        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage&#39;s Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers&#39; Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
+        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage's Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers' Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
       },
       {
         "week": 4,
         "topic": "Hastalık sıklığı ölçütleri: hız, oran ve orantı kavramları; insidans ve prevalans hızlarının hesaplanması ve aralarındaki ilişki",
-        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage&#39;s Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers&#39; Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
+        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage's Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers' Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
       },
       {
         "week": 5,
         "topic": "Ölüm ve doğurganlık ölçütleri; kaba ve özel hızlar, hız standardizasyonu; toplumun sağlık düzeyini gösteren temel göstergeler",
-        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage&#39;s Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers&#39; Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
+        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage's Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers' Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
       },
       {
         "week": 6,
         "topic": "Epidemiyolojik araştırma tiplerinin sınıflandırılması; tanımlayıcı araştırmalar: olgu sunumu, olgu serisi ve kesitsel araştırmalar",
-        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage&#39;s Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers&#39; Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
+        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage's Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers' Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
       },
       {
         "week": 7,
         "topic": "Analitik araştırmalar I: olgu-kontrol araştırmalarının tasarımı, kontrol grubunun seçimi, üstünlükleri ve sınırlılıkları",
-        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage&#39;s Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers&#39; Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
+        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage's Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers' Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
       },
       {
         "week": 8,
@@ -1927,37 +1927,37 @@ export const COURSES_DATA: Course[] = [
       {
         "week": 9,
         "topic": "Analitik araştırmalar II: kohort araştırmaları; prospektif ve retrospektif kohort, izlem süreci, izlemden çıkma ve üstünlük-sınırlılıkların karşılaştırılması",
-        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage&#39;s Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers&#39; Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
+        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage's Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers' Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
       },
       {
         "week": 10,
         "topic": "Müdahale (deneysel) araştırmalar: randomize kontrollü çalışmalar, randomizasyon ve körleme, saha denemeleri ve araştırma etiği ilkeleri",
-        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage&#39;s Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers&#39; Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
+        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage's Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers' Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
       },
       {
         "week": 11,
         "topic": "Risk ölçütleri: rölatif risk, odds oranı ve atfedilen risk; iki-çarpı-iki tablo üzerinden hesaplama ve sonuçların yorumlanması",
-        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage&#39;s Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers&#39; Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
+        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage's Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers' Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
       },
       {
         "week": 12,
         "topic": "Epidemiyolojik araştırmalarda yanlılık türleri, karıştırıcı etken ve şans faktörü; nedensellik ölçütleri ve nedensel çıkarım",
-        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage&#39;s Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers&#39; Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
+        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage's Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers' Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
       },
       {
         "week": 13,
         "topic": "Tarama ve tanı testleri: duyarlılık, özgüllük, pozitif ve negatif kestirim değerleri; bir tarama programının uygunluk ölçütleri",
-        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage&#39;s Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers&#39; Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
+        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage's Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers' Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
       },
       {
         "week": 14,
         "topic": "Bulaşıcı hastalık epidemiyolojisi ve sürveyans sistemleri; salgın tanımı, salgın inceleme basamakları ve kontrol önlemleri",
-        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage&#39;s Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers&#39; Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
+        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage's Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers' Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
       },
       {
         "week": 15,
         "topic": "Kronik hastalık epidemiyolojisi ve sağlık yönetiminde uygulama: epidemiyolojik verilerin sağlık hizmeti planlaması ve karar verme süreçlerinde kullanılması, genel değerlendirme",
-        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage&#39;s Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers&#39; Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
+        "resources": "\"Celentano, D. D., Szklo, M. & Farag, Y. (2024). Gordis Epidemiology (7th ed.). Philadelphia, PA: Elsevier. Aschengrau, A. & Seage, G. R. (2025). Aschengrau & Seage's Essentials of Epidemiology in Public Health (5th ed.). Burlington, MA: Jones & Bartlett Learning. Buka, S. L. & Goedel, W. C. (2025). Friis & Sellers' Epidemiology for Public Health Practice (7th ed.). Burlington, MA: Jones & Bartlett Learning. Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization. Sullivan, L. M. (2023). Essentials of Biostatistics in Public Health (4th ed.). Burlington, MA: Jones & Bartlett Learning.\""
       }
     ]
   },
@@ -2429,7 +2429,7 @@ export const COURSES_DATA: Course[] = [
       },
       {
         "week": 4,
-        "topic": "Etik Teoriler-2: Gertin Ahl&#226;k Teorisi, Klinik Etik Model, Ahl&#226;k&#238; Haklar Teorisi",
+        "topic": "Etik Teoriler-2: Gertin Ahlâk Teorisi, Klinik Etik Model, Ahlâkî Haklar Teorisi",
         "resources": "Aslan, Ş. ve Ulutaş, Akarçay D. (2021), Evrensel Değerler Bağlamında Etik, Konya: Eğitim Yayınevi."
       },
       {
@@ -2454,12 +2454,12 @@ export const COURSES_DATA: Course[] = [
       },
       {
         "week": 9,
-        "topic": "Meslek&#238; Etiğin Kapsamı",
+        "topic": "Meslekî Etiğin Kapsamı",
         "resources": "Aslan, Ş. ve Ulutaş, Akarçay D. (2021), Evrensel Değerler Bağlamında Etik, Konya: Eğitim Yayınevi."
       },
       {
         "week": 10,
-        "topic": "Sağlık Alanında Meslek&#238; Etik Kodlar",
+        "topic": "Sağlık Alanında Meslekî Etik Kodlar",
         "resources": "Aslan, Ş. ve Ulutaş, Akarçay D. (2021), Evrensel Değerler Bağlamında Etik, Konya: Eğitim Yayınevi."
       },
       {
@@ -2855,77 +2855,77 @@ export const COURSES_DATA: Course[] = [
       {
         "week": 1,
         "topic": "Halk sağlığı kavramı, tanımı ve tarihsel gelişimi; koruyucu sağlık hizmetleri ile tedavi edici hizmetlerin karşılaştırılması",
-        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
+        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
       },
       {
         "week": 2,
         "topic": "Sağlığın belirleyicileri; sağlığın sosyal belirleyicileri, sağlık eşitsizlikleri ve eşitsizliklerin oluşum mekanizmaları",
-        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
+        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
       },
       {
         "week": 3,
-        "topic": "Türkiye&#39;de sağlık hizmetlerinin örgütlenme yapısı; sağlık hizmetlerinin basamaklandırılması ve sevk sistemi",
-        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
+        "topic": "Türkiye'de sağlık hizmetlerinin örgütlenme yapısı; sağlık hizmetlerinin basamaklandırılması ve sevk sistemi",
+        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
       },
       {
         "week": 4,
         "topic": "Birinci basamak sağlık hizmetleri: aile hekimliği uygulaması, toplum sağlığı merkezleri ve sağlıklı hayat merkezlerinin işleyişi",
-        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
+        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
       },
       {
         "week": 5,
         "topic": "Toplumun sağlık düzeyini gösteren temel göstergeler; göstergelerin okunması ve ülkeler arası karşılaştırmalarda kullanılması",
-        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
+        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
       },
       {
         "week": 6,
         "topic": "Demografi ve nüfus yapısı; demografik dönüşüm, nüfusun yaşlanması ve bunun sağlık hizmeti talebine etkileri",
-        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
+        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
       },
       {
         "week": 7,
         "topic": "Ana-çocuk sağlığı ve üreme sağlığı hizmetlerinin kapsamı; bu alandaki ulusal programlar ve izlem göstergeleri",
-        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
+        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
       },
       {
         "week": 8,
         "topic": "Ara Sınav (Yarıyıl Sınavı)",
-        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
+        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
       },
       {
         "week": 9,
         "topic": "Bulaşıcı hastalıkların kontrolü: bağışıklama ve ulusal aşı programı, bildirim sistemi ve kontrol hizmetlerinin yönetsel gerekleri",
-        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
+        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
       },
       {
         "week": 10,
         "topic": "Bulaşıcı olmayan (kronik) hastalıkların kontrolü: ulusal kontrol programları ve risk etmenlerine yönelik toplum düzeyindeki politikalar",
-        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
+        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
       },
       {
         "week": 11,
         "topic": "Çevre sağlığı: su, hava, atık yönetimi ve gıda güvenliği; sağlık kurumları açısından çevresel riskler ve alınması gereken önlemler",
-        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
+        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
       },
       {
         "week": 12,
         "topic": "İş sağlığı ve güvenliği; sağlık çalışanlarının sağlığı, mesleki riskler ve sağlık kurumlarında iş güvenliği uygulamaları",
-        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
+        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
       },
       {
         "week": 13,
         "topic": "Sağlığın geliştirilmesi yaklaşımı ve sağlık eğitimi; davranış değişikliği modelleri ve toplum temelli sağlık eğitimi programları",
-        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
+        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
       },
       {
         "week": 14,
         "topic": "Sağlık politikası ve sağlık finansmanı; uluslararası sağlık kuruluşlarının rolü ve küresel sağlık gündemi",
-        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
+        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
       },
       {
         "week": 15,
         "topic": "Afetlerde sağlık hizmetleri ve toplum temelli uygulama: öncelikli sağlık sorunlarının belirlenmesi, sağlık kurumu düzeyinde koruyucu hizmet önerisi geliştirilmesi, genel değerlendirme",
-        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
+        "resources": "Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning.  Bonita, R., Beaglehole, R. & Kjellström, T. (2006). Basic Epidemiology (2nd ed.). Geneva: World Health Organization."
       }
     ]
   },
@@ -3119,77 +3119,77 @@ export const COURSES_DATA: Course[] = [
       {
         "week": 1,
         "topic": "Sağlık ve hastalık kavramı; hastalıkların sınıflandırma ölçütleri, hastalığın doğal seyri ve etiyoloji, patogenez, prognoz kavramları",
-        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould&#39;s Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
+        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould's Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
       },
       {
         "week": 2,
         "topic": "Temel tıbbi terminoloji: kök, ön ek ve son ek yapısı; organ ve sistem adlandırmaları ile hastalık adlarının çözümlenmesi",
-        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould&#39;s Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
+        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould's Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
       },
       {
         "week": 3,
         "topic": "Hastalıkların uluslararası sınıflandırılması: ICD sisteminin yapısı, ICD-10 ve ICD-11, tıbbi kayıt ve kodlamadaki kullanımı",
-        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould&#39;s Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
+        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould's Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
       },
       {
         "week": 4,
         "topic": "Enflamasyon, enfeksiyon ve bağışıklık; bulaşıcı hastalıkların etkenleri, bulaşma yolları ve korunma yaklaşımları",
-        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould&#39;s Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
+        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould's Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
       },
       {
         "week": 5,
         "topic": "Dolaşım sistemi hastalıkları: hipertansiyon, koroner arter hastalığı ve kalp yetmezliği; bu hastalıkların sağlık hizmeti gereksinimleri",
-        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould&#39;s Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
+        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould's Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
       },
       {
         "week": 6,
         "topic": "Solunum sistemi hastalıkları: kronik obstrüktif akciğer hastalığı, astım, pnömoni ve tüberküloz; hizmet gereksinimleri",
-        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould&#39;s Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
+        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould's Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
       },
       {
         "week": 7,
         "topic": "Sindirim sistemi ve karaciğer hastalıkları; başlıca belirtileri, seyri ve gerektirdiği tanı-tedavi hizmetleri",
-        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould&#39;s Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
+        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould's Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
       },
       {
         "week": 8,
         "topic": "Ara Sınav (Yarıyıl Sınavı)",
-        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould&#39;s Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
+        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould's Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
       },
       {
         "week": 9,
         "topic": "Endokrin sistem ve metabolizma hastalıkları: diyabet ve tiroid hastalıkları; kronik hastalıklarda uzun dönemli izlem gereksinimi",
-        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould&#39;s Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
+        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould's Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
       },
       {
         "week": 10,
         "topic": "Üriner sistem hastalıkları ve kronik böbrek yetmezliği; diyaliz hizmetlerinin örgütlenmesi ve kaynak yükü",
-        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould&#39;s Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
+        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould's Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
       },
       {
         "week": 11,
         "topic": "Sinir sistemi hastalıkları: serebrovasküler hastalıklar, demans ve epilepsi; uzun süreli bakım gereksinimi",
-        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould&#39;s Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
+        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould's Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
       },
       {
         "week": 12,
         "topic": "Kas-iskelet sistemi hastalıkları ve travma; rehabilitasyon hizmetlerinin kapsamı ve iş gücü kaybı boyutu",
-        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould&#39;s Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
+        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould's Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
       },
       {
         "week": 13,
         "topic": "Kanserler: temel kavramlar, evreleme, tarama ve tedavi süreçleri ile bu süreçlerin sağlık hizmeti karşılıkları",
-        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould&#39;s Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
+        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould's Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
       },
       {
         "week": 14,
         "topic": "Tanı ve tedavi süreçlerinde kullanılan başlıca tıbbi işlem ve tetkikler; hasta yolculuğu ve sağlık hizmeti basamaklarının belirlenmesi",
-        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould&#39;s Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
+        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould's Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
       },
       {
         "week": 15,
         "topic": "Hastalık gruplarının sağlık kurumları üzerindeki kaynak yükü: yatış süresi, iş gücü ve maliyet boyutu; vaka analizi ve genel değerlendirme",
-        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould&#39;s Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
+        "resources": "VanMeter, K. C. & Hubert, R. J. (2023). Gould's Pathophysiology for the Health Professions (7th ed.). St. Louis, MO: Elsevier. World Health Organization. International Classification of Diseases, 11th Revision (ICD-11) for Mortality and Morbidity Statistics. Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning. World Health Organization. World Health Statistics (current year). Geneva: WHO."
       }
     ]
   },
@@ -3295,37 +3295,37 @@ export const COURSES_DATA: Course[] = [
       {
         "week": 1,
         "topic": "Demografik dönüşüm ve dünyada yaşlı nüfus",
-        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE&#39;DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
+        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE'DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
       },
       {
         "week": 2,
         "topic": "Demografik dönüşüm ve Türkiyede yaşlı nüfus",
-        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE&#39;DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
+        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE'DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
       },
       {
         "week": 3,
         "topic": "Geleceğe ilişkin nüfus projeksiyonlarının  ortaya konulması",
-        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE&#39;DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
+        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE'DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
       },
       {
         "week": 4,
         "topic": "Yaşli Hakları ve Hukuku/Yasal Düzenlemeler",
-        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE&#39;DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
+        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE'DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
       },
       {
         "week": 5,
         "topic": "Yaşlı işgücü, emeklilik sistemi",
-        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE&#39;DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
+        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE'DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
       },
       {
         "week": 6,
         "topic": "Aktif yaşlanma politikaları",
-        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE&#39;DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
+        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE'DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
       },
       {
         "week": 7,
         "topic": "Aktif yaşlanma politikaları",
-        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE&#39;DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
+        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE'DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
       },
       {
         "week": 8,
@@ -3335,37 +3335,37 @@ export const COURSES_DATA: Course[] = [
       {
         "week": 9,
         "topic": "Yaşlı Yoksulluğu",
-        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE&#39;DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
+        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE'DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
       },
       {
         "week": 10,
         "topic": "Aile ve Sosyal Politikalar Bakanlığının Yaşlılara Yönelik Hizmetleri",
-        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE&#39;DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
+        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE'DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
       },
       {
         "week": 11,
         "topic": "Aile ve Sosyal Politikalar Bakanlığının Yaşlılara Yönelik Hizmetleri",
-        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE&#39;DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
+        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE'DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
       },
       {
         "week": 12,
         "topic": "Yerel Yönetimlerin Yaşlılara Yönelik Hizmetleri",
-        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE&#39;DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
+        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE'DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
       },
       {
         "week": 13,
         "topic": "Yaşlı Nüfusa Yönelik sağlık hizmetleri ve Sağlık Harcama Politikaları",
-        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE&#39;DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
+        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE'DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
       },
       {
         "week": 14,
         "topic": "Yaşlı Nüfusa Yönelik sağlık hizmetleri ve Sağlık Harcama Politikaları",
-        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE&#39;DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
+        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE'DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
       },
       {
         "week": 15,
         "topic": "Kurum ziyareti",
-        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE&#39;DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
+        "resources": "1. GÜRSOY ÇUHADAR, S., & Lordoğlu, K. (2016). DEMOGRAFİK DÖNÜŞÜM SÜRECİNDE TÜRKİYE'DE YAŞLANMA VE SORUNLAR. Journal of Faculty of Political Science, (54). 2. Aile ve Sosyal Politikalar Bakanlığı (ASPB) Engelli ve Yaşlı Hizmetleri Genel Müdürlüğü (2017), Aktif Yaşlanma Strateji Belgesi 2017-2020. Ankara. 3. Ceylan, H. (2015), Yaşlılık ve Refah Devleti. Açılım Kitap. İstanbul."
       }
     ]
   },
@@ -4610,77 +4610,77 @@ export const COURSES_DATA: Course[] = [
       {
         "week": 1,
         "topic": "Sağlık sistemi kavramı: tanımı, bir sağlık sisteminin temel işlevleri (yönetişim, finansman, kaynak üretimi, hizmet sunumu) ve bileşenleri",
-        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
+        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
       },
       {
         "week": 2,
         "topic": "Sağlık sistemlerinin sınıflandırılması: tipolojiler, refah devleti rejimleriyle ilişkisi ve sistemlerin karşılaştırılmasında kullanılan ölçütler",
-        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
+        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
       },
       {
         "week": 3,
         "topic": "Sağlık sistemlerinin finansmanı I: vergi temelli ve sosyal sigorta modelleri; kaynak toplama ve risk havuzlama yöntemleri",
-        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
+        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
       },
       {
         "week": 4,
         "topic": "Sağlık sistemlerinin finansmanı II: özel sigorta ve cepten ödeme; finansal koruma, katastrofik sağlık harcamaları ve yoksullaştırıcı etki",
-        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
+        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
       },
       {
         "week": 5,
         "topic": "Sağlık hizmeti sunum biçimleri ve hizmet satın alma yöntemleri; sağlayıcı ödeme yöntemlerinin hizmet sunumu üzerindeki etkileri",
-        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
+        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
       },
       {
         "week": 6,
         "topic": "Beveridge modeli: İngiltere ve İskandinav ülkelerinin sağlık sistemleri; yapı, finansman ve erişim açısından çözümlenmesi",
-        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
+        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
       },
       {
         "week": 7,
         "topic": "Bismarck modeli: Almanya ve Fransa sağlık sistemleri; hastalık kasaları, sigortacılık yapısı ve hizmet sunumu",
-        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
+        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
       },
       {
         "week": 8,
         "topic": "Ara Sınav (Yarıyıl Sınavı)",
-        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
+        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
       },
       {
         "week": 9,
         "topic": "Piyasa temelli sistem örneği olarak Amerika Birleşik Devletleri ve düzenlenmiş rekabet örneği olarak Hollanda sağlık sistemi",
-        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
+        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
       },
       {
         "week": 10,
         "topic": "Merkezi planlamaya dayalı sistemler ve düşük maliyetli sistem örnekleri; sistemlerin üstünlük ve sınırlılıklarının karşılaştırılması",
-        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
+        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
       },
       {
         "week": 11,
         "topic": "Asya-Pasifik örnekleri: Japonya, Güney Kore ve Singapur sağlık sistemlerinin finansman ve sunum yapısı",
-        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
+        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
       },
       {
         "week": 12,
         "topic": "Gelişmekte olan ülkelerin sağlık sistemleri ve evrensel sağlık kapsayıcılığına yönelik reform deneyimleri",
-        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
+        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
       },
       {
         "week": 13,
         "topic": "Türkiye sağlık sistemi: tarihsel gelişimi, Sağlıkta Dönüşüm Programı ve sistemin güncel yapısı",
-        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
+        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
       },
       {
         "week": 14,
         "topic": "Sağlık sistemlerinin performansının değerlendirilmesi: erişim, eşitlik, kalite, verimlilik ve finansal koruma ölçütleri ile gösterge kaynakları",
-        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
+        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
       },
       {
         "week": 15,
         "topic": "Karşılaştırmalı değerlendirme ve politika çıkarımları: ülke deneyimlerinden Türkiye sağlık sistemine yönelik politika önerilerinin geliştirilmesi, genel değerlendirme",
-        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider&#39;s Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
+        "resources": "European Observatory on Health Systems and Policies. Health Systems in Transition (HiT) Country Reviews. Copenhagen: WHO Regional Office for Europe. https://eurohealthobservatory.who.int European Observatory on Health Systems and Policies (2022). Health Systems in Action: Türkiye. Copenhagen: WHO Regional Office for Europe. OECD. Health at a Glance (current edition). Paris: OECD Publishing. World Health Organization. World Health Statistics (current year). Geneva: WHO. Kruger, J., Moralez, A. & Siqueira, C. E. Schneider's Introduction to Public Health (7th ed.). Burlington, MA: Jones & Bartlett Learning."
       }
     ]
   },
@@ -4698,37 +4698,37 @@ export const COURSES_DATA: Course[] = [
       {
         "week": 1,
         "topic": "Dünyada ve ülkemizde sigortacılık",
-        "resources": "&#160;www.hazine.gov.tr www.tsrb.org.tr"
+        "resources": " www.hazine.gov.tr www.tsrb.org.tr"
       },
       {
         "week": 2,
         "topic": "Sigortacılığın gelişimi",
-        "resources": "&#160;www.hazine.gov.tr www.tsrb.org.tr"
+        "resources": " www.hazine.gov.tr www.tsrb.org.tr"
       },
       {
         "week": 3,
         "topic": "Sigortacılığın gelişimi",
-        "resources": "&#160;www.hazine.gov.tr www.tsrb.org.tr"
+        "resources": " www.hazine.gov.tr www.tsrb.org.tr"
       },
       {
         "week": 4,
         "topic": "Hukuki yapı genel ve özel şartlar",
-        "resources": "&#160;www.hazine.gov.tr www.tsrb.org.tr"
+        "resources": " www.hazine.gov.tr www.tsrb.org.tr"
       },
       {
         "week": 5,
         "topic": "İş kabul ilkeleri",
-        "resources": "&#160;www.hazine.gov.tr www.tsrb.org.tr"
+        "resources": " www.hazine.gov.tr www.tsrb.org.tr"
       },
       {
         "week": 6,
         "topic": "Fiyatlandırma ve aktuarya",
-        "resources": "&#160;www.hazine.gov.tr www.tsrb.org.tr"
+        "resources": " www.hazine.gov.tr www.tsrb.org.tr"
       },
       {
         "week": 7,
         "topic": "Fiyatlandırma ve aktuarya",
-        "resources": "&#160;www.hazine.gov.tr www.tsrb.org.tr"
+        "resources": " www.hazine.gov.tr www.tsrb.org.tr"
       },
       {
         "week": 8,
@@ -4738,32 +4738,32 @@ export const COURSES_DATA: Course[] = [
       {
         "week": 9,
         "topic": "Ürün çeşitleri sürelerine göre ,teminatlarına göre",
-        "resources": "&#160;www.hazine.gov.tr www.tsrb.org.tr"
+        "resources": " www.hazine.gov.tr www.tsrb.org.tr"
       },
       {
         "week": 10,
         "topic": "Yenileme esasları(Tecdit) hasarsızlık uygulamaları",
-        "resources": "&#160;www.hazine.gov.tr www.tsrb.org.tr"
+        "resources": " www.hazine.gov.tr www.tsrb.org.tr"
       },
       {
         "week": 11,
         "topic": "Aracı kuruluşların rolü ve işlevi (TPA)",
-        "resources": "&#160;www.hazine.gov.tr www.tsrb.org.tr"
+        "resources": " www.hazine.gov.tr www.tsrb.org.tr"
       },
       {
         "week": 12,
         "topic": "Reassürans teknikleri",
-        "resources": "&#160;www.hazine.gov.tr www.tsrb.org.tr"
+        "resources": " www.hazine.gov.tr www.tsrb.org.tr"
       },
       {
         "week": 13,
         "topic": "Tazminat ödemeleri(Hasar)",
-        "resources": "&#160;www.hazine.gov.tr www.tsrb.org.tr"
+        "resources": " www.hazine.gov.tr www.tsrb.org.tr"
       },
       {
         "week": 14,
         "topic": "Sigortacılığın Dünyadaki uygulamaları",
-        "resources": "&#160;www.hazine.gov.tr www.tsrb.org.tr"
+        "resources": " www.hazine.gov.tr www.tsrb.org.tr"
       },
       {
         "week": 15,
@@ -4928,7 +4928,7 @@ export const COURSES_DATA: Course[] = [
       },
       {
         "week": 12,
-        "topic": "K&#226;r dağıtım tablosu",
+        "topic": "Kâr dağıtım tablosu",
         "resources": "1.Akgüç, Öztin (2017).Mali Tablolar Analizi, Avcıol Basın Yayın, İstanbul. 2. Çabuk, Adem ve İbrahim Lazol (2018). Mali Tablolar Analizi, Ekin Kitabevi, Bursa."
       },
       {
@@ -5225,78 +5225,78 @@ export const COURSES_DATA: Course[] = [
     "weeks": [
       {
         "week": 1,
-        "topic": "Liderlikle ilgili kavramlar (Duygu, Zek&#226;, Duygusal Zek&#226;, Beynin Yapısı, vb)",
-        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zek&#226; ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
+        "topic": "Liderlikle ilgili kavramlar (Duygu, Zekâ, Duygusal Zekâ, Beynin Yapısı, vb)",
+        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zekâ ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
       },
       {
         "week": 2,
         "topic": "Liderlik, Yöneticilik, Liderlikte Cinsiyet ve Kültürel Faktörler",
-        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zek&#226; ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
+        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zekâ ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
       },
       {
         "week": 3,
         "topic": "Liderlikte Güç Kavramı ve Kapsamı",
-        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zek&#226; ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
+        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zekâ ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
       },
       {
         "week": 4,
         "topic": "Liderliğe Özellikler Yaklaşımı",
-        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zek&#226; ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
+        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zekâ ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
       },
       {
         "week": 5,
         "topic": "Liderliğe Davranışsal Yaklaşım",
-        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zek&#226; ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
+        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zekâ ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
       },
       {
         "week": 6,
         "topic": "Liderliğe Durumsallık Yaklaşımları",
-        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zek&#226; ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
+        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zekâ ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
       },
       {
         "week": 7,
         "topic": "Modern Liderlik Kuramları: Vizyoner, Karizmatik, Etkileşimci, Dönüşümcü Yaklaşımlar",
-        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zek&#226; ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
+        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zekâ ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
       },
       {
         "week": 8,
         "topic": "ara sınav",
-        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zek&#226; ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
+        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zekâ ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
       },
       {
         "week": 9,
         "topic": "Alternatif Liderlik Yaklaşımları, Dünyadaki Liderlerin kitaplarını Liderlik Kuramları Açısından İnceleme",
-        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zek&#226; ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
+        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zekâ ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
       },
       {
         "week": 10,
         "topic": "Alternatif Liderlik Yaklaşımları, Dünyadaki Liderlerin kitaplarını Liderlik Kuramları Açısından İnceleme",
-        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zek&#226; ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
+        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zekâ ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
       },
       {
         "week": 11,
         "topic": "Liderlik kuramlarının Dünya liderleri üzerinde incelenmesi çalışması",
-        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zek&#226; ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
+        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zekâ ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
       },
       {
         "week": 12,
         "topic": "Liderlik kuramlarının Dünya liderleri üzerinde incelenmesi çalışması",
-        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zek&#226; ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
+        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zekâ ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
       },
       {
         "week": 13,
         "topic": "Liderlik kuramlarının Dünya liderleri üzerinde incelenmesi çalışması",
-        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zek&#226; ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
+        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zekâ ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
       },
       {
         "week": 14,
         "topic": "Liderlik kuramlarının Dünya liderleri üzerinde incelenmesi çalışması",
-        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zek&#226; ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
+        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zekâ ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
       },
       {
         "week": 15,
         "topic": "final",
-        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zek&#226; ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
+        "resources": "Aslan, Ş., (2013), Geçmişten Günümüze Liderlik Kuramları, Eğitim Kitabevi. Konya. Aslan, Ş., (2009), Duygusal Zekâ ve Dönüşümcü, Etkileşimci Liderlik, Nobel Yayınevi, Ankara."
       }
     ]
   },
@@ -5333,7 +5333,7 @@ export const COURSES_DATA: Course[] = [
       },
       {
         "week": 5,
-        "topic": "Maliyet-Hacim-K&#226;r Analizi",
+        "topic": "Maliyet-Hacim-Kâr Analizi",
         "resources": "Büyükmirza, Kamil, Maliyet ve Yönetim Muhasebesi, Gazi Kitabevi, Ankara,Shim, Jae K., Joel G. Siegel, Theory and Problems of Managerial Accounting"
       },
       {
@@ -5406,7 +5406,7 @@ export const COURSES_DATA: Course[] = [
       },
       {
         "week": 2,
-        "topic": "Türkiye&#39;de sağlık yönetimi eğitiminin gelişimi ve mevcut durumun değerlendirilmesi",
+        "topic": "Türkiye'de sağlık yönetimi eğitiminin gelişimi ve mevcut durumun değerlendirilmesi",
         "resources": "1. İnternet kaynakları 2. Açık ders materyalleri 3. Haftanın kitabı ya da filmi 4. Haftanın araştırma konusu ve okuma materyalleri"
       },
       {
@@ -5461,12 +5461,12 @@ export const COURSES_DATA: Course[] = [
       },
       {
         "week": 13,
-        "topic": "Sağlık sektöründe yapay zek&#226;, makine öğrenmesi, mobil sağlık uygulamaları ve tıbbın geleceği",
+        "topic": "Sağlık sektöründe yapay zekâ, makine öğrenmesi, mobil sağlık uygulamaları ve tıbbın geleceği",
         "resources": "1. İnternet kaynakları 2. Açık ders materyalleri 3. Haftanın kitabı ya da filmi 4. Haftanın araştırma konusu ve okuma materyalleri"
       },
       {
         "week": 14,
-        "topic": "Türkiye&#39;de sağlık sektöründe iş fırsatları, iş arama ve bulma teknikleri",
+        "topic": "Türkiye'de sağlık sektöründe iş fırsatları, iş arama ve bulma teknikleri",
         "resources": "1. İnternet kaynakları 2. Açık ders materyalleri 3. Haftanın kitabı ya da filmi 4. Haftanın araştırma konusu ve okuma materyalleri"
       }
     ]

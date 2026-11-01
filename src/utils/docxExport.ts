@@ -12,6 +12,7 @@ import {
   BorderStyle,
   ShadingType
 } from 'docx';
+import { sanitizeTurkishText } from '@/utils/textUtils';
 
 export interface EvaluationRecordDoc {
   id: number;
@@ -181,7 +182,7 @@ function createCompactWeeklyTable(answers: any[]): Table {
               margins: { top: 70, bottom: 70, left: 90, right: 90 },
               children: [
                 new Paragraph({
-                  children: [new TextRun({ text: a.topic || '-', size: 15 })]
+                  children: [new TextRun({ text: sanitizeTurkishText(a.topic) || '-', size: 15 })]
                 })
               ]
             }),
@@ -202,7 +203,7 @@ function createCompactWeeklyTable(answers: any[]): Table {
                   alignment: AlignmentType.CENTER,
                   children: [
                     new TextRun({
-                      text: a.ratingLabel || (a.rating === 'tam_uyumlu' ? 'Birebir Örtüşüyor' : 'Farklı/Güncel'),
+                      text: sanitizeTurkishText(a.ratingLabel) || (a.rating === 'tam_uyumlu' ? 'Birebir Örtüşüyor' : 'Farklı/Güncel'),
                       size: 13,
                       bold: true,
                       color:
@@ -223,7 +224,7 @@ function createCompactWeeklyTable(answers: any[]): Table {
                 new Paragraph({
                   children: [
                     new TextRun({
-                      text: a.note && a.note.trim() ? a.note : '-',
+                      text: a.note && a.note.trim() ? sanitizeTurkishText(a.note) : '-',
                       size: 14,
                       italics: !!(a.note && a.note.trim())
                     })
@@ -299,7 +300,7 @@ function createCourseCard(record: EvaluationRecordDoc, index: number): (Table | 
           new Paragraph({
             children: [
               new TextRun({
-                text: `${index + 1}. DERS: [${record.course_code}] ${record.course_name}`,
+                text: `${index + 1}. DERS: [${record.course_code}] ${sanitizeTurkishText(record.course_name)}`,
                 bold: true,
                 size: 20,
                 color: 'FFFFFF'
@@ -320,7 +321,7 @@ function createCourseCard(record: EvaluationRecordDoc, index: number): (Table | 
             spacing: { before: 40 },
             children: [
               new TextRun({
-                text: `Öğretim Elemanı: ${record.instructor || '-'}`,
+                text: `Öğretim Elemanı: ${sanitizeTurkishText(record.instructor) || '-'}`,
                 size: 16,
                 color: 'E2F2EC'
               })
@@ -347,11 +348,11 @@ function createCourseCard(record: EvaluationRecordDoc, index: number): (Table | 
           new Paragraph({
             children: [
               new TextRun({ text: 'İncelenen Hafta: ', bold: true, size: 16 }),
-              new TextRun({ text: `${record.reviewed_weeks || '-'}     |     `, size: 16 }),
+              new TextRun({ text: `${sanitizeTurkishText(record.reviewed_weeks) || '-'}     |     `, size: 16 }),
               new TextRun({ text: 'Genel Durum: ', bold: true, size: 16 }),
-              new TextRun({ text: `${record.general_status}     |     `, bold: true, size: 16, color: statusColor }),
+              new TextRun({ text: `${sanitizeTurkishText(record.general_status)}     |     `, bold: true, size: 16, color: statusColor }),
               new TextRun({ text: 'Değerlendiren: ', bold: true, size: 16 }),
-              new TextRun({ text: `${record.student_name || 'Sınıf Temsilcisi'}`, size: 16, bold: true })
+              new TextRun({ text: `${sanitizeTurkishText(record.student_name) || 'Sınıf Temsilcisi'}`, size: 16, bold: true })
             ]
           })
         ]
@@ -376,7 +377,7 @@ function createCourseCard(record: EvaluationRecordDoc, index: number): (Table | 
       shading: { type: ShadingType.CLEAR, fill: 'F8FAFC' },
       children: [
         new TextRun({
-          text: record.summary_report,
+          text: sanitizeTurkishText(record.summary_report),
           size: 16,
           font: 'Consolas',
           color: '1E293B'
@@ -403,7 +404,7 @@ function createCourseCard(record: EvaluationRecordDoc, index: number): (Table | 
         shading: { type: ShadingType.CLEAR, fill: 'FFFDF5' },
         children: [
           new TextRun({
-            text: record.example_note,
+            text: sanitizeTurkishText(record.example_note),
             size: 16,
             italics: true,
             color: '451A03'
@@ -438,7 +439,7 @@ function createCourseCard(record: EvaluationRecordDoc, index: number): (Table | 
           spacing: { before: 60, after: 80 },
           children: [
             new TextRun({
-              text: `* İncelenen ${record.reviewed_weeks || '1-7. haftalar'} kapsamındaki diğer haftalar amfide Bologna ders planına uygun şekilde işlenmiştir.`,
+              text: `* İncelenen ${sanitizeTurkishText(record.reviewed_weeks) || '1-7. haftalar'} kapsamındaki diğer haftalar amfide Bologna ders planına uygun şekilde işlenmiştir.`,
               size: 14,
               italics: true,
               color: '64748B'
@@ -459,7 +460,7 @@ function createCourseCard(record: EvaluationRecordDoc, index: number): (Table | 
               color: '1A5C4A'
             }),
             new TextRun({
-              text: `İncelenen ${record.reviewed_weeks || '1-7. haftalar'} arasındaki tüm ders konuları Bologna izlencesine tam uyumlu olarak eksiksiz işlenmiştir (İşlenmeyen veya farklı işlenen hafta bulunmamaktadır).`,
+              text: `İncelenen ${sanitizeTurkishText(record.reviewed_weeks) || '1-7. haftalar'} arasındaki tüm ders konuları Bologna izlencesine tam uyumlu olarak eksiksiz işlenmiştir (İşlenmeyen veya farklı işlenen hafta bulunmamaktadır).`,
               size: 15,
               color: '1E293B'
             })
@@ -570,7 +571,7 @@ export async function downloadSingleCourseDocx(record: EvaluationRecordDoc) {
                   new TableCell({
                     width: { size: 70, type: WidthType.PERCENTAGE },
                     borders: cellBorders,
-                    children: [new Paragraph({ children: [new TextRun({ text: `${record.course_code} - ${record.course_name}`, size: 18, bold: true })] })]
+                    children: [new Paragraph({ children: [new TextRun({ text: `${record.course_code} - ${sanitizeTurkishText(record.course_name)}`, size: 18, bold: true })] })]
                   })
                 ]
               }),
@@ -583,7 +584,7 @@ export async function downloadSingleCourseDocx(record: EvaluationRecordDoc) {
                   }),
                   new TableCell({
                     borders: cellBorders,
-                    children: [new Paragraph({ children: [new TextRun({ text: record.instructor || '-', size: 18 })] })]
+                    children: [new Paragraph({ children: [new TextRun({ text: sanitizeTurkishText(record.instructor) || '-', size: 18 })] })]
                   })
                 ]
               }),
@@ -596,7 +597,7 @@ export async function downloadSingleCourseDocx(record: EvaluationRecordDoc) {
                   }),
                   new TableCell({
                     borders: cellBorders,
-                    children: [new Paragraph({ children: [new TextRun({ text: `${record.class_year}. Sınıf / ${record.term} Dönemi`, size: 18 })] })]
+                    children: [new Paragraph({ children: [new TextRun({ text: `${record.class_year}. Sınıf / ${sanitizeTurkishText(record.term)} Dönemi`, size: 18 })] })]
                   })
                 ]
               }),
@@ -609,7 +610,7 @@ export async function downloadSingleCourseDocx(record: EvaluationRecordDoc) {
                   }),
                   new TableCell({
                     borders: cellBorders,
-                    children: [new Paragraph({ children: [new TextRun({ text: record.student_name || 'Sınıf Temsilcisi', size: 18, bold: true })] })]
+                    children: [new Paragraph({ children: [new TextRun({ text: sanitizeTurkishText(record.student_name) || 'Sınıf Temsilcisi', size: 18, bold: true })] })]
                   })
                 ]
               }),
@@ -622,7 +623,7 @@ export async function downloadSingleCourseDocx(record: EvaluationRecordDoc) {
                   }),
                   new TableCell({
                     borders: cellBorders,
-                    children: [new Paragraph({ children: [new TextRun({ text: record.reviewed_weeks || '-', size: 18 })] })]
+                    children: [new Paragraph({ children: [new TextRun({ text: sanitizeTurkishText(record.reviewed_weeks) || '-', size: 18 })] })]
                   })
                 ]
               }),
@@ -644,7 +645,7 @@ export async function downloadSingleCourseDocx(record: EvaluationRecordDoc) {
                           ? 'FFF8E6'
                           : 'FDE8E8'
                     },
-                    children: [new Paragraph({ children: [new TextRun({ text: record.general_status, size: 18, bold: true })] })]
+                    children: [new Paragraph({ children: [new TextRun({ text: sanitizeTurkishText(record.general_status), size: 18, bold: true })] })]
                   })
                 ]
               }),
@@ -689,7 +690,7 @@ export async function downloadSingleCourseDocx(record: EvaluationRecordDoc) {
                         alignment: AlignmentType.CENTER,
                         children: [
                           new TextRun({ text: 'Değerlendiren Öğrenci / Temsilci', bold: true, size: 18 }),
-                          new TextRun({ text: `\n\n\n${record.student_name || 'Sınıf Temsilcisi'}`, size: 18 }),
+                          new TextRun({ text: `\n\n\n${sanitizeTurkishText(record.student_name) || 'Sınıf Temsilcisi'}`, size: 18 }),
                           new TextRun({ text: '\nİmza: .......................................', size: 16, color: '777777' })
                         ]
                       })
@@ -723,7 +724,7 @@ export async function downloadSingleCourseDocx(record: EvaluationRecordDoc) {
     ]
   });
 
-  const filename = `Bologna_Raporu_${record.course_code}_${(record.student_name || 'Temsilci').replace(/\s+/g, '_')}.docx`;
+  const filename = `Bologna_Raporu_${record.course_code}_${(sanitizeTurkishText(record.student_name) || 'Temsilci').replace(/\s+/g, '_')}.docx`;
   await saveDocx(doc, filename);
 }
 
@@ -776,7 +777,7 @@ export async function downloadClassGroupedDocx(
     // Sub-group by student_name to detect duplicate / multiple representatives for the same class
     const studentMap: { [student: string]: EvaluationRecordDoc[] } = {};
     for (const r of classRecords) {
-      const sName = r.student_name?.trim() || `${year}. Sınıf Temsilcisi`;
+      const sName = sanitizeTurkishText(r.student_name?.trim()) || `${year}. Sınıf Temsilcisi`;
       if (!studentMap[sName]) {
         studentMap[sName] = [];
       }
@@ -1065,11 +1066,11 @@ export async function downloadClassGroupedDocx(
                 }),
                 new TableCell({
                   borders: cellBorders,
-                  children: [new Paragraph({ children: [new TextRun({ text: r.course_name, size: 16, bold: true })] })]
+                  children: [new Paragraph({ children: [new TextRun({ text: sanitizeTurkishText(r.course_name), size: 16, bold: true })] })]
                 }),
                 new TableCell({
                   borders: cellBorders,
-                  children: [new Paragraph({ children: [new TextRun({ text: r.instructor || '-', size: 16 })] })]
+                  children: [new Paragraph({ children: [new TextRun({ text: sanitizeTurkishText(r.instructor) || '-', size: 16 })] })]
                 }),
                 new TableCell({
                   borders: cellBorders,
@@ -1077,11 +1078,11 @@ export async function downloadClassGroupedDocx(
                     type: ShadingType.CLEAR,
                     fill: hasMultipleStudents ? 'F5F7FA' : 'FFFFFF'
                   },
-                  children: [new Paragraph({ children: [new TextRun({ text: r.student_name || '-', size: 15, bold: hasMultipleStudents })] })]
+                  children: [new Paragraph({ children: [new TextRun({ text: sanitizeTurkishText(r.student_name) || '-', size: 15, bold: hasMultipleStudents })] })]
                 }),
                 new TableCell({
                   borders: cellBorders,
-                  children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: r.reviewed_weeks || '-', size: 15 })] })]
+                  children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: sanitizeTurkishText(r.reviewed_weeks) || '-', size: 15 })] })]
                 }),
                 new TableCell({
                   borders: cellBorders,
@@ -1094,7 +1095,7 @@ export async function downloadClassGroupedDocx(
                         ? 'FFF8E6'
                         : 'FDE8E8'
                   },
-                  children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: r.general_status, size: 13, bold: true })] })]
+                  children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: sanitizeTurkishText(r.general_status), size: 13, bold: true })] })]
                 })
               ]
             })
